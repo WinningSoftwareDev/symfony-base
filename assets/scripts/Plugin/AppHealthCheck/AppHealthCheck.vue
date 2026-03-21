@@ -52,11 +52,11 @@ runChecks().then(() => {
 </script>
 
 <template>
-  <div class="p-2 rounded-md bg-purple-700/90">
-    <h2 class="text-white font-bold mt-1">Application Health Check</h2>
-    <div class="health-check-container">
+  <div class="px-4 py-3 rounded-lg bg-primary/10">
+    <h2 class="font-bold mt-1">Application Health Check</h2>
+    <div>
       <HealthCheckItem v-for="item in checkResults" :result="item" />
-      <i v-if="isLoading" class="fa-duotone fa-light fa-fan fa-spin fa-3x mt-2 text-blue-200"></i>
+      <i v-if="isLoading" class="fa-duotone fa-light fa-fan fa-spin fa-3x mt-2"></i>
     </div>
   </div>
 </template>
