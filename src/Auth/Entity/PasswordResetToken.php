@@ -6,6 +6,7 @@ namespace App\Auth\Entity;
 
 use App\_Core\Entity\AbstractBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Random\RandomException;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'tblPasswordResetToken', schema: 'Auth')]
@@ -27,16 +28,14 @@ class PasswordResetToken extends AbstractBaseEntity
     #[ORM\Column(name: 'dtmExpires', type: 'datetime')]
     private \DateTimeInterface $expiresAt;
 
+    /**
+     * @throws RandomException
+     */
     public function __construct(User $user)
     {
         $this->user = $user;
         $this->token = bin2hex(random_bytes(32));
         $this->expiresAt = new \DateTime('+1 hour');
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getUser(): User
@@ -57,15 +56,5 @@ class PasswordResetToken extends AbstractBaseEntity
     public function isExpired(): bool
     {
         return new \DateTime() > $this->expiresAt;
-    }
-
-    public function getCreatedAt(): \DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
     }
 }

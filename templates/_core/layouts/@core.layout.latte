@@ -1,6 +1,4 @@
-{varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
 {varType array $_ENV}
-{varType string $title}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +6,10 @@
     <body class="bg-animated-gradient bg-gradient-blur h-screen w-screen flex items-center justify-center overflow-hidden">
         {include '../components/flash-messages.latte'}
 
-        {block content}{/block}
+        <div id="app">{block content}{/block}</div>
 
-        {asset 'scripts/app.js'}
+        {if $_ENV['USE_HMR'] !== 'true'}
+            {asset 'app.js'}
+        {/if}
     </body>
 </html>

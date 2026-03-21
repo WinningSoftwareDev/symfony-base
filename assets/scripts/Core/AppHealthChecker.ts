@@ -9,7 +9,7 @@ export default class AppHealthChecker
     {
         if (this.healthCheckContainer instanceof HTMLElement) {
             this.runHealthChecks().then((): void => {
-                this.healthCheckContainer.querySelector('.fa-spin')?.remove();
+                this.healthCheckContainer?.querySelector('.fa-spin')?.remove();
             });
         }
     }

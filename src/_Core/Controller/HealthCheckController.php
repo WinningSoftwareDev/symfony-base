@@ -22,7 +22,7 @@ class HealthCheckController extends AbstractApplicationController
         } catch (\Throwable $e) {
             return $this->json([
                 'success' => false,
-            ], 500);
+            ], 200);
         }
     }
 
@@ -36,7 +36,7 @@ class HealthCheckController extends AbstractApplicationController
         } catch (\Exception $e) {
             return $this->json([
                 'success' => false,
-            ], 500);
+            ], 200);
         }
     }
 }
