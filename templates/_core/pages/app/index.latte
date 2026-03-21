@@ -5,11 +5,10 @@
 {varType App\Auth\Entity\User|null $user}
 
 {block content}
-    <div class="text-center bg-transparent border-3 border-auth-primary rounded-lg shadow-lg px-4 py-8 max-w-[400px] w-full">
-        <h1 class="text-3xl mb-6 font-bold">🎯 {$_ENV['APP_NAME']}</h1>
-        <p class="my-3">Welcome to your new Symfony application.</p>
-
+    <div class="text-center border-3 border-purple-700 rounded-lg shadow-lg px-4 py-8 max-w-[400px] w-full">
+        <IntroCardHeader data-name="{$_ENV['APP_NAME']}" />
         <AppHealthCheck />
+
         <div n:if="$app->getUser()">
             <div>
                 <p class="my-3">
@@ -31,7 +30,8 @@
         </div>
         <div n:if="!$app->getUser()">
             <p class="my-3">
-                <a href="{$app->generateUrl('auth_login')}" class="text-white font-medium hover:underline">Login</a> or <a href="{$app->generateUrl('auth_register')}" class="text-white font-medium hover:underline">Register</a>
+                <IntroCardLink data-url="{$app->generateUrl('auth_login')}" data-text="Login" /> or
+                <IntroCardLink data-url="{$app->generateUrl('auth_register')}" data-text="Register" />
             </p>
         </div>
         <div class="mt-6 pt-6 text-sm text-blue-100 border-t border-gray-700">

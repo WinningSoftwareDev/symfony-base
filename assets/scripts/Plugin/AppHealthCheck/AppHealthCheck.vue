@@ -52,7 +52,7 @@ runChecks().then(() => {
 </script>
 
 <template>
-  <div class="p-2 rounded-md bg-auth-primary/65">
+  <div class="p-2 rounded-md bg-purple-700/90">
     <h2 class="text-white font-bold mt-1">Application Health Check</h2>
     <div class="health-check-container">
       <HealthCheckItem v-for="item in checkResults" :result="item" />

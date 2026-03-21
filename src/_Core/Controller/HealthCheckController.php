@@ -18,12 +18,15 @@ class HealthCheckController extends AbstractApplicationController
         try {
             $entityManager->getConnection()->executeQuery('SELECT 1');
 
-            return $this->json(['success' => true]);
+            return $this->json([
+                'message' => 'Database connection successful',
+                'success' => true,
+            ]);
         } catch (\Throwable $e) {
             return $this->json([
                 'message' => 'Database connection error, please check your configuration.',
                 'success' => false,
-            ], 200);
+            ]);
         }
     }
 
@@ -36,7 +39,7 @@ class HealthCheckController extends AbstractApplicationController
             return $this->json(['success' => true]);
         } catch (\Exception $e) {
             return $this->json([
-                'message' => 'Default tables do not exist. Please run database setup scripts.',
+                'message' => 'Default tables do not exist. Please run the database setup script at data/setup.sql',
                 'success' => false,
             ], 200);
         }
