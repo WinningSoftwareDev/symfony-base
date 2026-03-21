@@ -1,12 +1,27 @@
-import { defineConfig } from 'vite';
+import {defineConfig, ViteDevServer} from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
 import * as fs from 'node:fs';
+import {fileURLToPath} from "node:url";
+
+const latteReloadPlugin = {
+    name: 'latte-reload',
+    configureServer(server: ViteDevServer) {
+        server.watcher.add(fileURLToPath(new URL('./templates/**/*/*.latte', import.meta.url)));
+        server.watcher.on('change', (path: string) => {
+            if (path.endsWith('.latte')) {
+                server.ws.send({
+                    type: 'full-reload',
+                });
+            }
+        });
+    }
+}
 
 export default defineConfig({
     base: './',
     publicDir: false,
-    plugins: [vuePlugin({}), tailwindcss()],
+    plugins: [vuePlugin({}), tailwindcss(), latteReloadPlugin],
     build: {
         outDir: './public/assets',
         emptyOutDir: true,
