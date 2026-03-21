@@ -9,12 +9,7 @@
         <h1 class="text-3xl mb-6 font-bold">🎯 {$_ENV['APP_NAME']}</h1>
         <p class="my-3">Welcome to your new Symfony application.</p>
 
-        <div class="p-2 rounded-md bg-auth-primary/65">
-            <h2 class="text-white font-bold mt-1">Application Health Check</h2>
-            <div class="health-check-container">
-                <i class="fa-solid fa-fan fa-spin fa-2x"></i>
-            </div>
-        </div>
+        <AppHealthCheck />
         <div n:if="$app->getUser()">
             <div>
                 <p class="my-3">
@@ -39,7 +34,7 @@
                 <a href="{$app->generateUrl('auth_login')}" class="text-white font-medium hover:underline">Login</a> or <a href="{$app->generateUrl('auth_register')}" class="text-white font-medium hover:underline">Register</a>
             </p>
         </div>
-        <div class="mt-6 pt-6 text-sm text-green-200 border-t border-gray-700">
+        <div class="mt-6 pt-6 text-sm text-blue-100 border-t border-gray-700">
             <p>Built with the Symfony Framework</p>
         </div>
     </div>

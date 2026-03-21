@@ -21,6 +21,7 @@ class HealthCheckController extends AbstractApplicationController
             return $this->json(['success' => true]);
         } catch (\Throwable $e) {
             return $this->json([
+                'message' => 'Database connection error, please check your configuration.',
                 'success' => false,
             ], 200);
         }
@@ -35,6 +36,7 @@ class HealthCheckController extends AbstractApplicationController
             return $this->json(['success' => true]);
         } catch (\Exception $e) {
             return $this->json([
+                'message' => 'Default tables do not exist. Please run database setup scripts.',
                 'success' => false,
             ], 200);
         }

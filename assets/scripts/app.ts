@@ -1,9 +1,9 @@
 import '../styles/app.scss';
 import { createApp } from 'vue';
-import Index from './Components/Page/Index.vue';
+import AppHealthCheck from './Plugin/AppHealthCheck/AppHealthCheck.vue';
 
 const components = {
-    Index,
+    AppHealthCheck,
 };
 
 Object.entries(components).forEach(([name, component]): void => {
