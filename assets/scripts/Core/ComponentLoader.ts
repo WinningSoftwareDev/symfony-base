@@ -9,10 +9,7 @@ export default class ComponentLoader
             const elements: NodeListOf<HTMLElement> = document.querySelectorAll(name);
 
             elements.forEach((el: HTMLElement): void => {
-                const props = { ...el.dataset };
-                const app: App<Element> = createApp(component, props);
-
-                app.mount(el);
+                createApp(component, { ...el.dataset }).mount(el);
             });
         });
     }
