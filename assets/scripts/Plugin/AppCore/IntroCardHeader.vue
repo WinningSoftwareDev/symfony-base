@@ -4,7 +4,7 @@ interface IProps
   name: string;
 }
 
-const props = withDefaults(defineProps<IProps>(), {
+withDefaults(defineProps<IProps>(), {
   name: 'My App',
 });
 </script>
@@ -15,7 +15,3 @@ const props = withDefaults(defineProps<IProps>(), {
     <p class="my-3">Welcome to your new Symfony application.</p>
   </div>
 </template>
-
-<style scoped>
-
-</style>
