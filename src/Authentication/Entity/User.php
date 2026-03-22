@@ -62,12 +62,12 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     /**
      * @see UserInterface
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public function getUserIdentifier(): string
     {
         if (empty($this->email)) {
-            throw new \Exception('Email is empty');
+            throw new \RuntimeException('Email is empty');
         }
 
         return $this->email;

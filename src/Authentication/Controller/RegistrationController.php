@@ -15,17 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractApplicationController
 {
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
+
     /**
      * @throws TransportExceptionInterface|RandomException
      */
     #[Route('/auth/register', name: 'auth_register')]
     public function register(
         Request $request,
-        EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher,
         EmailVerificationService $verificationService
     ): Response {
@@ -38,14 +41,16 @@ class RegistrationController extends AbstractApplicationController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $existingUser = $em->getRepository(User::class)->findOneBy(['email' => $data->getEmail()]);
+            $existingUser = $this->entityManager
+                ->getRepository(User::class)
+                ->findOneBy(['email' => $data->getEmail()]);
             $data->setUserExists($existingUser instanceof User);
 
             if ($form->isValid() && $data->validate()) {
                 $user = User::create($data, $passwordHasher);
 
-                $em->persist($user);
-                $em->flush();
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
                 $verificationService->sendVerificationEmail($user);
 
