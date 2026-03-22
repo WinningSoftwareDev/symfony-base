@@ -42,7 +42,7 @@ const handleSubmit = (event: SubmitEvent) => {
 
 <template>
   <AuthForm :title="title"
-            text="Welcome back. Sign in to your account."
+            text="Welcome back. Sign in to your account to access your information and members-only features."
             endpoint="/auth/login">
     <FormField v-for="item in formFields"
                :type="item.type"

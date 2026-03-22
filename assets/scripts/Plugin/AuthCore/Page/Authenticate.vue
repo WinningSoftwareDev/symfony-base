@@ -41,7 +41,7 @@ setActiveComponent(RegistrationForm);
 </script>
 
 <template>
-  <div class="border-2 border-gray-800 rounded-md overflow-hidden w-[600px]">
+  <div class="border-2 border-gray-800 rounded-md overflow-hidden w-[96vw] mx-auto sm:w-[500px] min-h-[530px]">
     <div class="flex border-b border-gray-700">
       <FormToggle text="Login"
                   :active="activeComponent === LoginForm"

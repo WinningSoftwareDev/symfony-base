@@ -9,9 +9,7 @@
         {include '../components/flash-messages.latte'}
         <ReturnToHomepage />
 
-        <div id="app">
-            {block content}{/block}
-        </div>
+        {block content}{/block}
 
         {if $_ENV['USE_HMR'] !== 'true'}
             {asset 'app.js'}
