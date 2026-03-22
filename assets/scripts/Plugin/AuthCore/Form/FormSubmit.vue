@@ -11,7 +11,7 @@ withDefaults(defineProps<IProps>(), {
 
 <template>
   <button type="submit"
-          class="w-full py-2 px-4 cursor-pointer bg-primary text-white rounded-lg hover:bg-purple-800">
+          class="w-full py-2 px-4 cursor-pointer bg-primary text-dark-text rounded-lg hover:bg-accent transition duration-150">
     {{ text }}
   </button>
 </template>

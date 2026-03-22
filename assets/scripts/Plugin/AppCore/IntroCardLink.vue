@@ -3,16 +3,18 @@ interface IProps
 {
   url: string;
   text: string;
+  classes?: string[];
 }
 
 withDefaults(defineProps<IProps>(), {
   url: '#',
-  text: 'Link',
+  text: 'Link'
 });
 </script>
 
 <template>
-  <a :href="url" class="text-white font-medium hover:underline">
+  <a :href="url"
+     class="font-medium hover:text-accent transition duration-150">
     {{ text }}
   </a>
 </template>
