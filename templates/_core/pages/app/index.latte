@@ -30,7 +30,9 @@
         </div>
         <div n:if="!$user">
             <p class="my-3">
-                <IntroCardLink url="{$app->generateUrl('authenticate')}" text="Authenticate" /> to access your application
+                <IntroCardLink url="{$app->generateUrl('authenticate', ['form' => 'LoginForm'])}" text="Login" />
+                or <IntroCardLink url="{$app->generateUrl('authenticate', ['form' => 'RegistrationForm'])}" text="Register" />
+                to access your application
             </p>
         </div>
         <div class="mt-6 pt-6 text-sm text-blue-100 border-t border-gray-700">

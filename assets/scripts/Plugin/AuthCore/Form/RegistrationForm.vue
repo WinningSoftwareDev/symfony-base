@@ -93,7 +93,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
                :id="`${name}_email`"
                :required="true"
                :errors="formFields.email.errors"
-               placeholder="Enter Your Email Address" @input="clearValidationErrors" />
+               placeholder="Enter Your Email Address"
+               @input="clearValidationErrors" />
     <FormField type="password"
                label="Password"
                v-model="password"
@@ -101,7 +102,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
                :id="`${name}_password`"
                :required="true"
                :errors="formFields.password.errors"
-               placeholder="Enter Your Password" />
+               placeholder="Enter Your Password"
+               @input="clearValidationErrors" />
     <FormField type="password"
                label="Confirm Password"
                v-model="confirmPassword"
@@ -109,7 +111,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
                :id="`${name}_confirm_password`"
                :required="true"
                :errors="formFields.confirm_password.errors"
-               placeholder="Confirm Your Password" @input="clearValidationErrors" />
-    <FormSubmit :text="title"></FormSubmit>
+               placeholder="Confirm Your Password"
+               @input="clearValidationErrors" />
+    <FormSubmit :text="title" />
   </AuthForm>
 </template>

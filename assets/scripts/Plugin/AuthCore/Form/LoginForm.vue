@@ -2,49 +2,89 @@
 import AuthForm from './AuthForm.vue';
 import FormSubmit from './FormSubmit.vue';
 import FormField from './FormField.vue';
-import {Ref, ref} from 'vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
+import {computed, reactive} from 'vue';
+import IFormField from '../Interface/IFormField';
 
-interface IFormField
-{
-  type: string;
-  label: string;
-  name: string;
-  id: string;
-  placeholder: string;
+const formFields = reactive<Record<string, IFormField>>({
+  'email': {
+    value: 'danielwinning@proton.me',
+    errors: [],
+  },
+  'password': {
+    value: 'Bella2016.',
+    errors: [],
+  },
+});
+const email = computed({
+  get: () => formFields.email.value,
+  set: (val: string) => {
+    formFields.email.value = val;
+  }
+});
+const password = computed({
+  get: () => formFields.password.value,
+  set: (val: string) => {
+    formFields.password.value = val;
+  }
+});
+
+const getFormData = (): Record<string, IFormField> => {
+  return formFields;
 }
 
-const newFormField = (name: string, type: string, label: string, placeholder: string): IFormField => {
-  return {
-    type: type,
-    label: label,
-    placeholder: placeholder,
-    name: `${props.name}[${name}]`,
-    id: `${props.name}_${name}`
-  };
+const clearValidationErrors = () => {
+  formFields.email.errors = [];
+  formFields.password.errors = [];
 }
 
-const props = withDefaults(defineProps<IAuthFormInternalProps>(), {});
-const formFields: Ref<IFormField[]> = ref([
-  newFormField('email', 'email', 'Email', 'Enter Your Email Address'),
-  newFormField('password', 'password', 'Password', 'Enter Your Password'),
-]);
+const validate = (): boolean => {
+  if (formFields.password.value.length < 8) {
+    formFields.password.errors.push('Password must contain a minimum of 8 characters.');
+  }
+
+  return !(formFields.password.errors.length);
+}
 const handleSubmit = async (): Promise<boolean> => {
-  console.log('Handling submit in LoginForm.vue');
-  return false;
+  clearValidationErrors();
+
+  return validate();
 }
+const handleFailedSubmit = (errors: Record<string, string[]>) => {
+  if (errors.email !== undefined) {
+    formFields.email.errors.push(...errors.email);
+  }
+}
+
+withDefaults(defineProps<IAuthFormInternalProps>(), {});
 </script>
 
 <template>
   <AuthForm :title="title"
             text="Welcome back. Sign in to your account to access your information and members-only features."
-            endpoint="/auth/login" :handler="handleSubmit">
-    <FormField v-for="item in formFields"
-               :type="item.type"
-               :label="item.label"
-               :name="item.name"
-               :id="item.id"
-               :placeholder="item.placeholder"/>
+            endpoint="/auth/login"
+            :handler="handleSubmit"
+            @submission:failed="handleFailedSubmit"
+            :name="name"
+            :data="getFormData()">
+    <FormField type="email"
+               label="Email"
+               v-model="email"
+               :name="`${name}[email]`"
+               :id="`${name}_email`"
+               :required="true"
+               :errors="formFields.email.errors"
+               placeholder="Enter Your Email Address"
+               @input="clearValidationErrors" />
+    <FormField type="password"
+               label="Password"
+               v-model="password"
+               :name="`${name}[password]`"
+               :id="`${name}_password`"
+               :required="true"
+               :errors="formFields.password.errors"
+               placeholder="Enter Your Password"
+               @input="clearValidationErrors" />
     <FormSubmit :text="title" />
   </AuthForm>
 </template>

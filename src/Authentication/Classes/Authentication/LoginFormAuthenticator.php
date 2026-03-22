@@ -7,6 +7,7 @@ namespace App\Authentication\Classes\Authentication;
 use App\Authentication\Classes\DTO\LoginDTO;
 use App\Authentication\Form\LoginForm;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,19 +41,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             throw new CustomUserMessageAuthenticationException('Invalid credentials');
         }
 
-        $loginFormData = $request->request->all()['login_form'];
-        $csrfToken = is_array($loginFormData) ? $loginFormData['_token'] : null;
-
-        if (!is_string($csrfToken)) {
-            throw new CustomUserMessageAuthenticationException('Invalid CSRF token');
-        }
-
         return new Passport(
             new UserBadge($data->getEmail()),
             new PasswordCredentials($data->getPassword()),
-            [
-                new CsrfTokenBadge('login_form', $csrfToken),
-            ]
+            []
         );
     }
 
@@ -69,7 +61,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             $flashBag->add('success', 'You have been logged in successfully.');
         }
 
-        return new RedirectResponse($this->router->generate('app_index'));
+        return new JsonResponse([
+            'success' => true,
+            'errors' => [],
+            'redirect' => $this->router->generate('app_index'),
+        ]);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
@@ -80,6 +76,9 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             $flashBag->add('error', 'Invalid credentials');
         }
 
-        return new RedirectResponse($this->router->generate('auth_login'));
+        return new JsonResponse([
+            'success' => false,
+            'errors' => [],
+        ]);
     }
 }
