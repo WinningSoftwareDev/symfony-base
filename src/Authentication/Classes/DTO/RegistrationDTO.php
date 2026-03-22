@@ -8,15 +8,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationDTO
 {
-    #[Assert\NotBlank]
-    #[Assert\Email]
+    #[Assert\NotBlank(message: 'Email is required')]
+    #[Assert\Email(message: 'The email {{ value }} is not a valid email address')]
     private string $email = '';
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Password is required')]
     #[Assert\Length(min: 8, minMessage: 'Your password should be at least {{ limit }} characters long')]
     private string $password = '';
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'Please confirm your password')]
     private string $confirmPassword = '';
 
     private bool $userExists = false;
@@ -69,5 +69,13 @@ class RegistrationDTO
     public function validate(): bool
     {
         return $this->passwordsMatch() && !$this->userExists();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getValidationFailures(): array
+    {
+        return [];
     }
 }

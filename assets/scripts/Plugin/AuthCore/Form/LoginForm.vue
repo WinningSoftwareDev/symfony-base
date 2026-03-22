@@ -29,22 +29,22 @@ const formFields: Ref<IFormField[]> = ref([
   newFormField('email', 'email', 'Email', 'Enter Your Email Address'),
   newFormField('password', 'password', 'Password', 'Enter Your Password'),
 ]);
-const handleSubmit = (event: SubmitEvent) => {
-  console.log(event);
-  event.preventDefault();
+const handleSubmit = async (): Promise<boolean> => {
+  console.log('Handling submit in LoginForm.vue');
+  return false;
 }
 </script>
 
 <template>
   <AuthForm :title="title"
             text="Welcome back. Sign in to your account to access your information and members-only features."
-            endpoint="/auth/login">
+            endpoint="/auth/login" :handler="handleSubmit">
     <FormField v-for="item in formFields"
                :type="item.type"
                :label="item.label"
                :name="item.name"
                :id="item.id"
                :placeholder="item.placeholder"/>
-    <FormSubmit :text="title" @click="handleSubmit" />
+    <FormSubmit :text="title" />
   </AuthForm>
 </template>

@@ -5,7 +5,13 @@ import FormToggle from '../Component/FormToggle.vue';
 import { ComponentInstance, Ref, ref, ShallowRef, shallowRef } from 'vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 
-const activeComponent: ShallowRef<ComponentInstance<any>> = shallowRef(RegistrationForm);
+interface IProps
+{
+  form: string|null;
+}
+
+const props = withDefaults(defineProps<IProps>(), {});
+const activeComponent: ShallowRef<ComponentInstance<any>> = shallowRef(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
 const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
     name: 'registration_form',
@@ -16,7 +22,7 @@ const componentProps: Record<string, IAuthFormInternalProps> = {
     title: 'Login',
   }
 }
-const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(componentProps.RegistrationForm);
+const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(props.form === 'LoginForm' ? componentProps.LoginForm : componentProps.RegistrationForm);
 
 const setActiveComponent = (component: ComponentInstance<any>): void => {
   activeComponent.value = component;
@@ -27,11 +33,11 @@ const setActiveComponent = (component: ComponentInstance<any>): void => {
     }
   });
 }
-setActiveComponent(RegistrationForm);
+setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
 </script>
 
 <template>
-  <div class="border-2 border-gray-800 rounded-md overflow-hidden w-[96vw] mx-auto sm:w-[500px] min-h-[530px]">
+  <div class="border-2 border-gray-800 rounded-md overflow-hidden w-[96vw] mx-auto sm:w-[500px] min-h-[580px]">
     <div class="flex border-b border-gray-700">
       <FormToggle text="Login"
                   :active="activeComponent === LoginForm"

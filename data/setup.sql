@@ -60,4 +60,4 @@ INSERT INTO ublEmailType
     (strEmailTypeSubject, strEmailTypeHandle, strTemplate)
 VALUES
     ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', '_core/emails/verify-email.latte'),
-('Reset your password', 'PASSWORD_RESET', '_core/emails/reset-password.latte');
+    ('Reset your password', 'PASSWORD_RESET', '_core/emails/reset-password.latte');
