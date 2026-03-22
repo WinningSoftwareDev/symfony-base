@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Classes\Authentication;
+namespace App\Authentication\Classes\Authentication;
 
-use App\Auth\Classes\DTO\LoginDTO;
-use App\Auth\Form\LoginForm;
+use App\Authentication\Classes\DTO\LoginDTO;
+use App\Authentication\Form\LoginForm;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

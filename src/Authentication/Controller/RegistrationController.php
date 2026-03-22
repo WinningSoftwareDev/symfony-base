@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Controller;
+namespace App\Authentication\Controller;
 
 use App\_Core\Controller\AbstractApplicationController;
-use App\Auth\Classes\DTO\RegistrationDTO;
-use App\Auth\Classes\Email\EmailVerificationService;
-use App\Auth\Entity\User;
-use App\Auth\Form\RegistrationForm;
+use App\Authentication\Classes\DTO\RegistrationDTO;
+use App\Authentication\Classes\Email\EmailVerificationService;
+use App\Authentication\Entity\User;
+use App\Authentication\Form\RegistrationForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +40,7 @@ class RegistrationController extends AbstractApplicationController
         $form = $this->createForm(RegistrationForm::class, $data);
         $form->handleRequest($request);
 
+        dd($form->isSubmitted());
         if ($form->isSubmitted()) {
             $existingUser = $this->entityManager
                 ->getRepository(User::class)

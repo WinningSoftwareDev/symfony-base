@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Controller;
+namespace App\Authentication\Controller;
 
 use App\_Core\Controller\AbstractApplicationController;
-use App\Auth\Classes\DTO\PasswordResetDTO;
-use App\Auth\Classes\DTO\RequestPasswordResetDTO;
-use App\Auth\Classes\Email\PasswordResetService;
-use App\Auth\Entity\PasswordResetToken;
-use App\Auth\Entity\User;
-use App\Auth\Form\PasswordResetForm;
-use App\Auth\Form\RequestPasswordResetLinkForm;
+use App\Authentication\Classes\DTO\PasswordResetDTO;
+use App\Authentication\Classes\DTO\RequestPasswordResetDTO;
+use App\Authentication\Classes\Email\PasswordResetService;
+use App\Authentication\Entity\PasswordResetToken;
+use App\Authentication\Entity\User;
+use App\Authentication\Form\PasswordResetForm;
+use App\Authentication\Form\RequestPasswordResetLinkForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class ForgotPasswordController extends AbstractApplicationController
 {

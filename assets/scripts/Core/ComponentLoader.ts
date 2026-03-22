@@ -1,5 +1,5 @@
 import { components } from '../_components';
-import { createApp } from 'vue';
+import {createApp, h} from 'vue';
 
 export default class ComponentLoader
 {
@@ -7,7 +7,13 @@ export default class ComponentLoader
     {
         Object.entries(components).forEach(([name, component]): void => {
             document.querySelectorAll(name).forEach((el: Element): void => {
-                createApp(component, { ...(el as HTMLElement).dataset }).mount(el);
+                const props: Record<string, string> = {};
+
+                Array.from(el.attributes).forEach(attr => {
+                    props[attr.name] = attr.value;
+                });
+
+                createApp(component, {...props, ...(el as HTMLElement).dataset}).mount(el);
             });
         });
     }

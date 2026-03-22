@@ -5,7 +5,7 @@ security:
   providers:
     app_user_provider:
       entity:
-        class: App\Auth\Entity\User
+        class: App\Authentication\Entity\User
         property: email
 
   firewalls:
@@ -17,7 +17,7 @@ security:
       provider: app_user_provider
 
       custom_authenticators:
-        - App\Auth\Classes\Authentication\LoginFormAuthenticator
+        - App\Authentication\Classes\Authentication\LoginFormAuthenticator
 
       logout:
         path: auth_logout

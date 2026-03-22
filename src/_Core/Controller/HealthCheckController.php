@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\_Core\Controller;
 
-use App\Auth\Entity\User;
+use App\Authentication\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,12 +36,15 @@ class HealthCheckController extends AbstractApplicationController
         try {
             $entityManager->getRepository(User::class)->findAll();
 
-            return $this->json(['success' => true]);
+            return $this->json([
+                'message' => 'Default database tables exist',
+                'success' => true,
+            ]);
         } catch (\Exception $e) {
             return $this->json([
                 'message' => 'Default tables do not exist. Please run the database setup script at data/setup.sql',
                 'success' => false,
-            ], 200);
+            ]);
         }
     }
 }

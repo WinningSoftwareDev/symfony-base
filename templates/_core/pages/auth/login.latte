@@ -1,7 +1,7 @@
 {layout '../../layouts/@auth.layout.latte'}
 
 {varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
-{varType App\Auth\Classes\DTO\LoginDTO $data}
+{varType App\Authentication\Classes\DTO\LoginDTO $data}
 
 {block content}
     <p class="my-3 text-center">
@@ -12,7 +12,7 @@
         {include '../../components/form-field.latte', type: 'email', field: $form['email']}
         {include '../../components/form-field.latte', type: 'password', field: $form['password']}
         {include '../../components/csrf-field.latte', form: $form}
-        {include '../../components/submit-button.latte', text: 'Login'}
+        <FormSubmit text="Login" />
     </form>
     <div>
         <p class="my-3 text-center">

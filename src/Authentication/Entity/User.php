@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Entity;
+namespace App\Authentication\Entity;
 
 use App\_Core\Entity\AbstractBaseEntity;
-use App\Auth\Classes\DTO\RegistrationDTO;
+use App\Authentication\Classes\DTO\RegistrationDTO;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;

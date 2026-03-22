@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Classes\Email;
+namespace App\Authentication\Classes\Email;
 
 use App\_Core\Controller\EmailBuilder;
 use App\_Core\Entity\EmailType;
-use App\Auth\Entity\User;
-use App\Auth\Entity\VerificationToken;
+use App\Authentication\Entity\User;
+use App\Authentication\Entity\VerificationToken;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

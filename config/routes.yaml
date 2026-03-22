@@ -10,6 +10,6 @@ Application:
   type: attribute
 Auth:
   resource:
-    path: ../src/Auth/Controller/
-    namespace: App\Auth\Controller
+    path: ../src/Authentication/Controller/
+    namespace: App\Authentication\Controller
   type: attribute

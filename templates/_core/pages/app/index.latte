@@ -2,12 +2,12 @@
 
 {varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
 {varType array $_ENV}
-{varType App\Auth\Entity\User|null $user}
-{var App\Auth\Entity\User|null $user = $app->getUser()}
+{varType App\Authentication\Entity\User|null $user}
+{var App\Authentication\Entity\User|null $user = $app->getUser()}
 
 {block content}
     <div class="text-center border-3 border-primary rounded-lg shadow-lg px-4 py-8 max-w-[400px] w-full">
-        <IntroCardHeader data-name="{$_ENV['APP_NAME']}" />
+        <IntroCardHeader name="{$_ENV['APP_NAME']}" />
         <AppHealthCheck />
 
         <div n:if="$user">
@@ -16,7 +16,7 @@
                     Logged in as <strong>{$user->getUserIdentifier()}</strong>.
                 </p>
             </div>
-            <div n:if="$user instanceof App\Auth\Entity\User && !$user->isVerified()"
+            <div n:if="$user instanceof App\Authentication\Entity\User && !$user->isVerified()"
                     class="bg-red-300 p-2 rounded-md border-2 border-red-500">
                 <p>
                     Your email is not verified yet.
@@ -24,14 +24,13 @@
             </div>
             <div>
                 <p class="my-3">
-                    <IntroCardLink data-url="{$app->generateUrl('auth_logout')}" data-text="Logout" />
+                    <IntroCardLink url="{$app->generateUrl('auth_logout')}" text="Logout" />
                 </p>
             </div>
         </div>
         <div n:if="!$user">
             <p class="my-3">
-                <IntroCardLink data-url="{$app->generateUrl('auth_login')}" data-text="Login" /> or
-                <IntroCardLink data-url="{$app->generateUrl('auth_register')}" data-text="Register" />
+                <IntroCardLink url="{$app->generateUrl('authenticate')}" text="Authenticate" /> to access your application
             </p>
         </div>
         <div class="mt-6 pt-6 text-sm text-blue-100 border-t border-gray-700">

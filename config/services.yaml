@@ -23,8 +23,8 @@ services:
     calls:
       - setLatteFactory: ['@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory']
 
-  App\Auth\Controller\:
-    resource: '../src/Auth/Controller'
+  App\Authentication\Controller\:
+    resource: '../src/Authentication/Controller'
     tags: [ 'controller.service_arguments' ]
     calls:
       - setLatteFactory: ['@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory']

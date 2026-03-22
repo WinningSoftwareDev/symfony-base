@@ -6,7 +6,7 @@
     <body class="bg-page text-default-text h-screen w-screen flex items-center justify-center overflow-hidden">
         {include '../components/flash-messages.latte'}
 
-        <div id="app">{block content}{/block}</div>
+        {block content}{/block}
 
         {if $_ENV['USE_HMR'] !== 'true'}
             {asset 'app.js'}

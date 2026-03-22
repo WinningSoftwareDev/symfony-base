@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Controller;
+namespace App\Authentication\Controller;
 
 use App\_Core\Controller\AbstractApplicationController;
-use App\Auth\Form\LoginForm;
+use App\Authentication\Form\LoginForm;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LoginController extends AbstractApplicationController
 {

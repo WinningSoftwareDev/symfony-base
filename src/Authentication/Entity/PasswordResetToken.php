@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Entity;
+namespace App\Authentication\Entity;
 
 use App\_Core\Entity\AbstractBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
