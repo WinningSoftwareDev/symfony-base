@@ -3,12 +3,7 @@ import AuthForm from './AuthForm.vue';
 import FormSubmit from './FormSubmit.vue';
 import FormField from './FormField.vue';
 import {reactive} from 'vue';
-
-interface IProps
-{
-  name: string;
-  title: string;
-}
+import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 
 const formFields = reactive({
   email: {
@@ -25,7 +20,7 @@ const formFields = reactive({
   }
 })
 
-withDefaults(defineProps<IProps>(), {
+withDefaults(defineProps<IAuthFormInternalProps>(), {
   name: 'registration_form',
   title: 'Register',
 });

@@ -3,20 +3,10 @@ import LoginForm from '../Form/LoginForm.vue';
 import RegistrationForm from '../Form/RegistrationForm.vue';
 import FormToggle from '../Component/FormToggle.vue';
 import { ComponentInstance, Ref, ref, ShallowRef, shallowRef } from 'vue';
-
-interface IFormProps
-{
-  name: string;
-  title: string;
-}
+import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 
 const activeComponent: ShallowRef<ComponentInstance<any>> = shallowRef(RegistrationForm);
-const activeComponentProps: Ref<IFormProps> = ref<IFormProps>({
-  name: '',
-  title: ''
-});
-
-const componentProps: Record<string, IFormProps> = {
+const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
     name: 'registration_form',
     title: 'Register'
@@ -26,14 +16,14 @@ const componentProps: Record<string, IFormProps> = {
     title: 'Login',
   }
 }
+const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(componentProps.RegistrationForm);
 
 const setActiveComponent = (component: ComponentInstance<any>): void => {
   activeComponent.value = component;
-  const name = component.__name;
 
-  Object.entries(componentProps).forEach((n) => {
-    if (n[0] === name) {
-      activeComponentProps.value = n[1];
+  Object.entries(componentProps).forEach((c: [string, IAuthFormInternalProps]) => {
+    if (c[0] === component.__name) {
+      activeComponentProps.value = c[1];
     }
   });
 }

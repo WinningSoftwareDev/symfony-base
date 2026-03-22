@@ -3,12 +3,7 @@ import AuthForm from './AuthForm.vue';
 import FormSubmit from './FormSubmit.vue';
 import FormField from './FormField.vue';
 import {Ref, ref} from 'vue';
-
-interface IProps
-{
-  title: string;
-  name: string;
-}
+import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 
 interface IFormField
 {
@@ -29,7 +24,7 @@ const newFormField = (name: string, type: string, label: string, placeholder: st
   };
 }
 
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<IAuthFormInternalProps>(), {});
 const formFields: Ref<IFormField[]> = ref([
   newFormField('email', 'email', 'Email', 'Enter Your Email Address'),
   newFormField('password', 'password', 'Password', 'Enter Your Password'),
