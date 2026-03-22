@@ -1,7 +1,5 @@
-import IntroCardHeader from './IntroCardHeader.vue';
-import IntroCardLink from './IntroCardLink.vue';
+import IntroCard from './IntroCard.vue';
 
 export const components = {
-    IntroCardHeader,
-    IntroCardLink,
+    IntroCard,
 }

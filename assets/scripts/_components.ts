@@ -6,11 +6,9 @@ This is called by ComponentLoader.watch() inside the default app.ts to automatic
 your Latte templates.
 */
 import {components as AppCoreComponents} from './Plugin/AppCore/_components';
-import {components as AppHealthCheckComponents} from './Plugin/AppHealthCheck/_components';
 import {components as AuthCoreComponents} from './Plugin/AuthCore/_components';
 
 export const components = {
     ...AppCoreComponents,
-    ...AppHealthCheckComponents,
     ...AuthCoreComponents,
 }

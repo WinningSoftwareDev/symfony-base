@@ -6,8 +6,5 @@ import ReturnToHomepage from './Component/ReturnToHomepage.vue';
 
 export const components = {
     Authenticate,
-    AuthForm,
-    FormSubmit,
-    RegistrationForm,
     ReturnToHomepage,
 }

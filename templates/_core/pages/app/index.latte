@@ -2,41 +2,7 @@
 
 {varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
 {varType array $_ENV}
-{varType App\Authentication\Entity\User|null $user}
-{var App\Authentication\Entity\User|null $user = $app->getUser()}
 
 {block content}
-    <div class="text-center border-3 border-primary rounded-lg shadow-lg px-4 py-8 max-w-[400px] w-full">
-        <IntroCardHeader name="{$_ENV['APP_NAME']}" />
-        <AppHealthCheck />
-
-        <div n:if="$user">
-            <div>
-                <p class="my-3">
-                    Logged in as <strong>{$user->getUserIdentifier()}</strong>.
-                </p>
-            </div>
-            <div n:if="$user instanceof App\Authentication\Entity\User && !$user->isVerified()"
-                    class="bg-red-300 p-2 rounded-md border-2 border-red-500">
-                <p>
-                    Your email is not verified yet.
-                </p>
-            </div>
-            <div>
-                <p class="my-3">
-                    <IntroCardLink url="{$app->generateUrl('auth_logout')}" text="Logout" />
-                </p>
-            </div>
-        </div>
-        <div n:if="!$user">
-            <p class="my-3">
-                <IntroCardLink url="{$app->generateUrl('authenticate', ['form' => 'LoginForm'])}" text="Login" />
-                or <IntroCardLink url="{$app->generateUrl('authenticate', ['form' => 'RegistrationForm'])}" text="Register" />
-                to access your application
-            </p>
-        </div>
-        <div class="mt-6 pt-6 text-sm text-blue-100 border-t border-gray-700">
-            <p>Built with the Symfony Framework</p>
-        </div>
-    </div>
+    <IntroCard name="{$_ENV['APP_NAME']}" />
 {/block}

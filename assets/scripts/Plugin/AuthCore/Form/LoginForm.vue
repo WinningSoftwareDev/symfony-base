@@ -12,7 +12,7 @@ const formFields = reactive<Record<string, IFormField>>({
     errors: [],
   },
   'password': {
-    value: 'Bella2016.',
+    value: '',
     errors: [],
   },
 });
