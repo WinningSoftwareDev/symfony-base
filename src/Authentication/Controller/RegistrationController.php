@@ -72,14 +72,11 @@ class RegistrationController extends AbstractApplicationController
             return $this->json([
                 'success' => true,
                 'errors' => [],
-                'redirect' => '/authenticate?form=LoginForm',
+                'redirect' => $this->generateUrl('authenticate', ['form' => 'LoginForm']),
             ]);
         }
 
-        return $this->renderTemplate('_core/pages/auth/register.latte', [
-            'data' => $data,
-            'title' => 'Register',
-        ]);
+        return $this->redirectToRoute('app_index');
     }
 
     /**

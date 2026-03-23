@@ -7,3 +7,8 @@
   --color-primary: var(--color-orange-300);
   --color-accent: var(--color-orange-700);
 }
+
+::selection {
+  color: var(--color-accent);
+  background: var(--color-primary);
+}
