@@ -47,4 +47,40 @@ class HealthCheckController extends AbstractApplicationController
             ]);
         }
     }
+
+    #[Route('/health-check/php-version', name: 'app_health_check_php_version')]
+    public function checkPHPVersion(): Response
+    {
+        $phpVersion = PHP_VERSION;
+
+        return $this->json([
+            'message' => 'PHP version is ' . $phpVersion,
+            'success' => (float) $phpVersion >= 8.4,
+        ]);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    #[Route('/health-check/symfony-version', name: 'app_health_check_symfony_version')]
+    public function checkSymfonyVersion(): Response
+    {
+        $path = sprintf('%s/composer.json', dirname(__DIR__, 3));
+        $composerContents = file_get_contents($path);
+
+        if (!$composerContents) {
+            return $this->json([
+                'message' => 'Composer.json is empty',
+                'success' => false,
+            ]);
+        }
+
+        $composerJson = json_decode($composerContents, true, 512, JSON_THROW_ON_ERROR);
+        $symfonyVersion = (float) $composerJson['require']['symfony/console'];
+
+        return $this->json([
+            'message' => 'Symfony version is ' . (string) $symfonyVersion,
+            'success' => (float) $symfonyVersion >= 7.3,
+        ]);
+    }
 }

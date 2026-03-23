@@ -16,6 +16,16 @@ const checkCallback = async (endpoint: string) => {
 const checks: Array<IHealthCheck> = [
   {
     check: async () => {
+      return checkCallback('php-version');
+    }
+  },
+  {
+    check: async () => {
+      return checkCallback('symfony-version');
+    }
+  },
+  {
+    check: async () => {
       return checkCallback('database-connection');
     }
   },
@@ -23,7 +33,7 @@ const checks: Array<IHealthCheck> = [
     check: async () => {
       return checkCallback('default-tables-exist');
     }
-  }
+  },
 ];
 
 const runChecks = async () => {
