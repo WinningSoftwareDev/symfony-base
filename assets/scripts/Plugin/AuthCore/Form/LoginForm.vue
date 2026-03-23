@@ -9,7 +9,7 @@ import IntroCardLink from '../../AppCore/IntroCardLink.vue';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
-    value: 'danielwinning@proton.me',
+    value: '',
     errors: [],
   },
   'password': {

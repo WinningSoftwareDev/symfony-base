@@ -5,6 +5,7 @@ import FormField from './FormField.vue';
 import {computed, reactive} from 'vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import IFormField from '../Interface/IFormField';
+import IntroCardLink from '../../AppCore/IntroCardLink.vue';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
@@ -114,5 +115,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
                placeholder="Confirm Your Password"
                @input="clearValidationErrors" />
     <FormSubmit :text="title" />
+    <div class="text-center">
+      Already have an account? <IntroCardLink url="/authenticate?form=LoginForm" text="Login to your account" />.
+    </div>
   </AuthForm>
 </template>
