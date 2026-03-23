@@ -16,6 +16,10 @@ class AuthenticationController extends AbstractApplicationController
     #[Route('/authenticate', name: 'authenticate')]
     public function authenticate(Request $request): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_index');
+        }
+
         $tab = $request->query->get('form') ?? 'false';
 
         if ($tab && !in_array($tab, ['LoginForm', 'RegistrationForm'])) {
