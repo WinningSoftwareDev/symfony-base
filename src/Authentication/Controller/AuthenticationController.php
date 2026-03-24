@@ -5,14 +5,25 @@ declare(strict_types=1);
 namespace App\Authentication\Controller;
 
 use App\_Core\Controller\AbstractApplicationController;
+use App\Authentication\Classes\DTO\RequestPasswordResetDTO;
+use App\Authentication\Classes\Email\PasswordResetService;
+use App\Authentication\Entity\PasswordResetToken;
 use App\Authentication\Entity\User;
-use App\Authentication\Form\RegistrationForm;
+use App\Authentication\Form\RequestPasswordResetLinkForm;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class AuthenticationController extends AbstractApplicationController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PasswordResetService $passwordResetService,
+    ) {
+    }
+
     #[Route('/authenticate', name: 'authenticate')]
     public function authenticate(Request $request): Response
     {
@@ -35,8 +46,53 @@ class AuthenticationController extends AbstractApplicationController
         );
     }
 
-    #[Route('/authenticate/password-reset', name: 'authenticate_password_reset')]
-    public function forgotPassword(): Response
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route('/authenticate/password-reset', name: 'authenticate_request_password_reset')]
+    public function requestPasswordReset(Request $request): Response
+    {
+        $data = new RequestPasswordResetDTO();
+        $form = $this->createForm(RequestPasswordResetLinkForm::class, $data);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $data->getEmail()]);
+
+            if ($user instanceof User) {
+                $existingTokens = $this->entityManager->getRepository(PasswordResetToken::class)->findBy(['user' => $user]);
+
+                if (count($existingTokens)) {
+                    foreach ($existingTokens as $token) {
+                        $this->entityManager->remove($token);
+                    }
+
+                    $this->entityManager->flush();
+                }
+
+                $this->passwordResetService->sendResetEmail($user);
+            }
+
+            $this->addFlash('success', 'If your email exists, a reset link has been sent.');
+
+            return $this->json([
+                'success' => true,
+                'errors' => [],
+                'redirect' => $this->generateUrl('authenticate', ['form' => 'LoginForm']),
+            ]);
+        }
+
+        return $this->renderTemplate(
+            'Authentication/request-password-reset',
+            [
+                'title' => 'Password Reset',
+            ]
+        );
+    }
+
+    #[Route('/authenticate/password-reset/reset', name: 'authenticate_password_reset')]
+    public function passwordReset(): Response
     {
         return $this->renderTemplate(
             'Authentication/password-reset',

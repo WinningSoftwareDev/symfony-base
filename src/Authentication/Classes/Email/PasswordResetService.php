@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 readonly class PasswordResetService
 {
     public function __construct(
-        private EntityManagerInterface $em,
+        private EntityManagerInterface $entityManager,
         private MailerInterface $mailer,
         private UrlGeneratorInterface $urlGenerator,
         private EmailBuilder $emailBuilder
@@ -29,15 +29,15 @@ readonly class PasswordResetService
     public function sendResetEmail(User $user): void
     {
         $token = new PasswordResetToken($user);
-        $this->em->persist($token);
-        $this->em->flush();
+        $this->entityManager->persist($token);
+        $this->entityManager->flush();
 
         $this->mailer->send($this->emailBuilder->getEmail(
             EmailType::PASSWORD_RESET,
             $user->getEmail(),
             [
                 'resetUrl' => $this->urlGenerator->generate(
-                    'auth_reset_password',
+                    'authenticate_password_reset',
                     ['token' => $token->getToken()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),
@@ -47,7 +47,7 @@ readonly class PasswordResetService
 
     public function validateToken(string $token): ?User
     {
-        $tokenEntity = $this->em->getRepository(PasswordResetToken::class)->findOneBy(['token' => $token]);
+        $tokenEntity = $this->entityManager->getRepository(PasswordResetToken::class)->findOneBy(['token' => $token]);
 
         if (!$tokenEntity || $tokenEntity->isExpired()) {
             return null;
@@ -58,11 +58,11 @@ readonly class PasswordResetService
 
     public function consumeToken(string $token): void
     {
-        $tokenEntity = $this->em->getRepository(PasswordResetToken::class)->findOneBy(['token' => $token]);
+        $tokenEntity = $this->entityManager->getRepository(PasswordResetToken::class)->findOneBy(['token' => $token]);
 
         if ($tokenEntity) {
-            $this->em->remove($tokenEntity);
-            $this->em->flush();
+            $this->entityManager->remove($tokenEntity);
+            $this->entityManager->flush();
         }
     }
 }

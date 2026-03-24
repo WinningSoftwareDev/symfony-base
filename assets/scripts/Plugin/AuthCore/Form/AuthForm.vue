@@ -46,6 +46,7 @@ const handleSubmission = async (e: Event) => {
       isSubmitting.value = false;
 
       if (json.redirect) {
+        console.log(json.redirect);
         window.location.href = json.redirect;
       }
     });
