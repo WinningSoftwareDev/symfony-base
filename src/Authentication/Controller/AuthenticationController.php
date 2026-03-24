@@ -141,7 +141,19 @@ class AuthenticationController extends AbstractApplicationController
         );
     }
 
-    #[Route('/authenticate/current-user', name: 'get_logged_in_user')]
+    #[Route('/authenticate/login', name: 'authenticate_login')]
+    public function login(): Response
+    {
+        return $this->redirectToRoute('authenticate', ['form' => 'LoginForm']);
+    }
+
+    #[Route('/authenticate/logout', name: 'authenticate_logout')]
+    public function logout(): void
+    {
+        throw new \LogicException('Logout is handled by the firewall.');
+    }
+
+    #[Route('/authenticate/current-user', name: 'authenticate_get_logged_in_user')]
     public function getLoggedInUser(): Response
     {
         $user = $this->getUser();

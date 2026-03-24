@@ -55,7 +55,7 @@ onMounted(() => {
         </div>
         <div>
           <p class="my-3">
-            <IntroCardLink url="/auth/logout" text="Logout" />
+            <IntroCardLink url="/authenticate/logout" text="Logout" />
           </p>
         </div>
       </div>

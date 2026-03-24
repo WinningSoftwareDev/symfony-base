@@ -9,11 +9,11 @@ import IntroCardLink from '../../AppCore/IntroCardLink.vue';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
-    value: '',
+    value: 'danielwinning@proton.me',
     errors: [],
   },
   'password': {
-    value: '',
+    value: 'noodlepot',
     errors: [],
   },
 });
@@ -63,7 +63,7 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {});
 <template>
   <AuthForm :title="title"
             text="Welcome back. Sign in to your account to access your information and members-only features."
-            endpoint="/auth/login"
+            endpoint="/authenticate/login"
             :handler="handleSubmit"
             @submission:failed="handleFailedSubmit"
             :name="name"
