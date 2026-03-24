@@ -27,6 +27,7 @@ composer create-project cloudbase/symfony-base my-project
 - TailwindCSS
 - TypeScript
 - SCSS
+- Email Builder
 
 ## Basic Usage
 
@@ -42,11 +43,13 @@ This is just a base project with some helpful features baked in. Modify anything
 Your app homepage route is defined in `src/Application/IndexController.php` and the template is located 
 at `templates/application/index.latte` - remove the default content and replace it with your own.
 
-All the auth code has been included and can be found in the `src/Auth` directory. Out of the box this includes:
+All the authentication code has been included and can be found in the `src/Authentication` directory. Out of the box 
+this includes:
 
 - Login
 - Registration
 - Password Reset
 - Email Verification
+- Entities for: User, Verification Token and Password Reset Token 
 
 Again, feel free to modify any part of this to suit your needs.
