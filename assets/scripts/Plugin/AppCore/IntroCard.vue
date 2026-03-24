@@ -37,9 +37,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-center px-6 py-8 w-[46vw] mx-auto mt-12">
+  <div class="text-center px-6 py-8 w-full mx-auto mt-12 md:w-[90vw] lg:w-[76vw]">
     <IntroCardHeader :name="name" />
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <AppHealthCheck />
       <div v-if="user">
         <div>
