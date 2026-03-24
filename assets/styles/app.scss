@@ -7,8 +7,8 @@
   --color-primary: var(--color-orange-300);
   --color-accent: var(--color-orange-700);
 
-  --color-message-success: #71a15f;
-  --color-message-error: #da6060;
+  --color-message-success: var(--color-green-600);
+  --color-message-error: var(--color-red-400);
   --color-message-info: var(--color-blue-500);
   --color-message-warning: var(--color-yellow-600);
 }
