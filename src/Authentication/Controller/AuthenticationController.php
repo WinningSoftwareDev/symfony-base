@@ -35,6 +35,17 @@ class AuthenticationController extends AbstractApplicationController
         );
     }
 
+    #[Route('/authenticate/password-reset', name: 'authenticate_password_reset')]
+    public function forgotPassword(): Response
+    {
+        return $this->renderTemplate(
+            'Authentication/password-reset',
+            [
+                'title' => 'Password Reset',
+            ]
+        );
+    }
+
     #[Route('/authenticate/current-user', name: 'get_logged_in_user')]
     public function getLoggedInUser(): Response
     {
