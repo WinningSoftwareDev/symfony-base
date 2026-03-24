@@ -3,16 +3,27 @@ import AuthForm from './AuthForm.vue';
 import {computed, reactive} from 'vue';
 import IFormField from '../Interface/IFormField';
 import FormField from './FormField.vue';
-import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import FormSubmit from './FormSubmit.vue';
 
+interface IProps
+{
+  name: string;
+  title: string;
+  token: string;
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+  name: 'password_reset_form',
+  title: 'Reset Your Password',
+  token: '',
+});
 const formFields = reactive<Record<string, IFormField>>({
   'password': {
-    value: '',
+    value: 'noodlepot',
     errors: [],
   },
   'confirm_password': {
-    value: '',
+    value: 'noodlepot',
     errors: [],
   }
 });
@@ -29,12 +40,13 @@ const confirmPassword = computed({
   }
 });
 
+const url = `/authenticate/password-reset/reset?token=${props.token}`;
+
 const getFormData = (): Record<string, IFormField> => {
   return formFields;
 }
 
 const clearValidationErrors = () => {
-  formFields.email.errors = [];
   formFields.password.errors = [];
   formFields.confirm_password.errors = [];
 }
@@ -56,24 +68,14 @@ const handleSubmit = async (): Promise<boolean> => {
 
   return validate();
 }
-const handleFailedSubmit = (errors: Record<string, string[]>) => {
-  if (errors.email !== undefined) {
-    formFields.email.errors.push(...errors.email);
-  }
-}
-
-withDefaults(defineProps<IAuthFormInternalProps>(), {
-  name: 'registration_form',
-  title: 'Reset Your Password',
-});
 </script>
 
 <template>
   <AuthForm :title="title"
-            text="If you've forgotten your password, no problem. Enter your email address, and we'll email you a link that will allow you to choose a new one."
-            endpoint="/auth/reset-password"
+            text="Choose a new password"
+            :endpoint="url"
             :handler="handleSubmit"
-            @submission:failed="handleFailedSubmit"
+            @submission:failed="() => {}"
             :name="name"
             :data="getFormData()">
     <FormField type="password"

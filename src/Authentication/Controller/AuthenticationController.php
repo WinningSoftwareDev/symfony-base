@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace App\Authentication\Controller;
 
 use App\_Core\Controller\AbstractApplicationController;
+use App\Authentication\Classes\DTO\PasswordResetDTO;
 use App\Authentication\Classes\DTO\RequestPasswordResetDTO;
 use App\Authentication\Classes\Email\PasswordResetService;
 use App\Authentication\Entity\PasswordResetToken;
 use App\Authentication\Entity\User;
+use App\Authentication\Form\PasswordResetForm;
 use App\Authentication\Form\RequestPasswordResetLinkForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class AuthenticationController extends AbstractApplicationController
@@ -21,6 +24,7 @@ class AuthenticationController extends AbstractApplicationController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly PasswordResetService $passwordResetService,
+        private readonly UserPasswordHasherInterface $passwordHasher,
     ) {
     }
 
@@ -92,12 +96,47 @@ class AuthenticationController extends AbstractApplicationController
     }
 
     #[Route('/authenticate/password-reset/reset', name: 'authenticate_password_reset')]
-    public function passwordReset(): Response
+    public function passwordReset(Request $request): Response
     {
+        $token = (string) $request->query->get('token');
+        $user = $this->passwordResetService->validateToken($token);
+
+        if (!$user instanceof User) {
+            $this->addFlash('error', 'Reset link is invalid or has expired.');
+
+            return $this->redirectToRoute('app_index');
+        }
+
+        $data = new PasswordResetDTO();
+        $form = $this->createForm(PasswordResetForm::class, $data);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid() && $data->validate()) {
+                $user->setPassword($this->passwordHasher->hashPassword($user, $data->getPassword()));
+                $this->entityManager->flush();
+                $this->passwordResetService->consumeToken($token);
+                $this->addFlash('success', 'Password successfully reset. You can now log in.');
+
+                return $this->json([
+                    'success' => true,
+                    'errors' => [],
+                    'redirect' => $this->generateUrl('authenticate', ['form' => 'LoginForm']),
+                ]);
+            }
+
+            return $this->json([
+                'success' => false,
+                'errors' => [],
+            ]);
+        }
+
         return $this->renderTemplate(
             'Authentication/password-reset',
             [
                 'title' => 'Password Reset',
+                'token' => $token,
             ]
         );
     }
