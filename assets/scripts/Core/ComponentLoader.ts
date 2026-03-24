@@ -1,5 +1,5 @@
 import { components } from '../_components';
-import {createApp, h} from 'vue';
+import {createApp} from 'vue';
 
 export default class ComponentLoader
 {
