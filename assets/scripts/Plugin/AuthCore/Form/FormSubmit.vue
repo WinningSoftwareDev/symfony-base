@@ -15,7 +15,3 @@ withDefaults(defineProps<IProps>(), {
     {{ text }}
   </button>
 </template>
-
-<style scoped>
-
-</style>

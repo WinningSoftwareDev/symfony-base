@@ -60,7 +60,3 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
     <FormSubmit :text="title" />
   </AuthForm>
 </template>
-
-<style scoped>
-
-</style>

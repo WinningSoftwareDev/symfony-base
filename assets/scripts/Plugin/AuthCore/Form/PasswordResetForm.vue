@@ -99,7 +99,3 @@ const handleSubmit = async (): Promise<boolean> => {
     <FormSubmit :text="title" />
   </AuthForm>
 </template>
-
-<style scoped>
-
-</style>

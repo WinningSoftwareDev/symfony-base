@@ -16,7 +16,3 @@ withDefaults(defineProps<IHealthCheckItemProps>(), {});
     <span>{{ result.message }}</span>
   </div>
 </template>
-
-<style scoped>
-
-</style>

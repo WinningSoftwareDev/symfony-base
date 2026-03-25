@@ -10,6 +10,3 @@ import RequestPasswordResetForm from '../Form/RequestPasswordResetForm.vue';
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>
