@@ -50,6 +50,4 @@ this includes:
 - Registration
 - Password Reset
 - Email Verification
-- Entities for: User, Verification Token and Password Reset Token 
-
-Again, feel free to modify any part of this to suit your needs.
+- Entities for: User, Verification Token and Password Reset Token

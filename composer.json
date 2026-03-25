@@ -39,10 +39,9 @@
     "stan": "./vendor/bin/phpstan analyse -c phpstan.neon",
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes",
-    "serve": "php -S localhost:8000 -t ./public",
     "post-create-project-cmd": [
       "@php -r \"copy('.env.template', '.env');\"",
-      "@php bin/setup",
+      "@php bin/console app:install",
       "mkdir -p var/cache var/log && chmod -R 777 var/"
     ]
   },
