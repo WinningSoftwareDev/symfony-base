@@ -27,8 +27,7 @@
     "allow-plugins": {
       "symfony/runtime": true
     },
-    "sort-packages": true,
-    "process-timeout": 0
+    "sort-packages": true
   },
   "autoload": {
     "psr-4": {
