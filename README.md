@@ -7,7 +7,7 @@
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 </p>
 
-A _highly opinionated_, ready-to-use Symfony 7.3 project template with the Latte templating engine and Vue.
+A _highly opinionated_, ready-to-use Symfony 7 app starter template.
 
 ## Installation
 
