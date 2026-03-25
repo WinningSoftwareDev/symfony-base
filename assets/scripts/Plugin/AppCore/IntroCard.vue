@@ -54,7 +54,7 @@ onMounted(() => {
           </p>
         </div>
       </div>
-      <div v-if="!user">
+      <div v-if="!isLoading && !user">
         <p class="bg-green-200/10 px-2 py-1.5 mb-3 rounded-md text-sm">
           You are not logged in
         </p>
