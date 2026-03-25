@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PasswordResetForm from '../Form/PasswordResetForm.vue';
 import RequestPasswordResetForm from '../Form/RequestPasswordResetForm.vue';
 </script>
 

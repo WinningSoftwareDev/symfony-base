@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthForm from './AuthForm.vue';
-import {computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 import IFormField from '../Interface/IFormField';
 import FormField from './FormField.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
@@ -8,7 +8,7 @@ import FormSubmit from './FormSubmit.vue';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
-    value: 'danielwinning@proton.me',
+    value: 'testuser@example.com',
     errors: [],
   },
 });

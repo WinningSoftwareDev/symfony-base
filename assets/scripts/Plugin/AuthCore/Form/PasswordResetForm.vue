@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthForm from './AuthForm.vue';
-import {computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 import IFormField from '../Interface/IFormField';
 import FormField from './FormField.vue';
 import FormSubmit from './FormSubmit.vue';

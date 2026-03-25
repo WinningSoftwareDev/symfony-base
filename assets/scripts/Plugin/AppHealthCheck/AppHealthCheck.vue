@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Ref, ref} from 'vue';
+import { Ref, ref } from 'vue';
 import IHealthCheck from './Interface/IHealthCheck';
 import ICheckResult from './Interface/ICheckResult';
 import HealthCheckItem from './HealthCheckItem.vue';

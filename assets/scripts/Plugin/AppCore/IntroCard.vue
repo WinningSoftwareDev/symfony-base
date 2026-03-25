@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IntroCardHeader from './IntroCardHeader.vue';
 import AppHealthCheck from '../AppHealthCheck/AppHealthCheck.vue';
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 import IntroCardLink from './IntroCardLink.vue';
 import WelcomeBlock from './WelcomeBlock.vue';
 

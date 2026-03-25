@@ -3,13 +3,13 @@ import AuthForm from './AuthForm.vue';
 import FormSubmit from './FormSubmit.vue';
 import FormField from './FormField.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
-import {computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 import IFormField from '../Interface/IFormField';
 import IntroCardLink from '../../AppCore/IntroCardLink.vue';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
-    value: 'danielwinning@proton.me',
+    value: 'testuser@example.com',
     errors: [],
   },
   'password': {
