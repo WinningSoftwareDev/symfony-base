@@ -30,7 +30,7 @@ class SetupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        
+
         $io->writeln('');
         $io->writeln('<fg=blue;options=bold>╔════════════════════════════════════════╗</>');
         $io->writeln('<fg=blue;options=bold>║       Symfony Base Project Setup       ║</>');

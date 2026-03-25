@@ -24,8 +24,7 @@ class RegistrationController extends AbstractApplicationController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly ValidatorInterface $validator,
-    )
-    {
+    ) {
     }
 
     /**
@@ -80,10 +79,7 @@ class RegistrationController extends AbstractApplicationController
     }
 
     /**
-     * @param RegistrationDTO $data
-     * @param ConstraintViolationListInterface $errors
-     *
-     * @return array<string, Array<int, string|\Stringable>>
+     * @return array<string, array<int, string|\Stringable>>
      */
     private function getValidationErrors(RegistrationDTO $data, ConstraintViolationListInterface $errors): array
     {

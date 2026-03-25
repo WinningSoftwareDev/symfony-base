@@ -54,7 +54,7 @@ class HealthCheckController extends AbstractApplicationController
         $phpVersion = PHP_VERSION;
 
         return $this->json([
-            'message' => 'PHP version is ' . $phpVersion,
+            'message' => sprintf('PHP version is %s', $phpVersion),
             'success' => (float) $phpVersion >= 8.4,
         ]);
     }
@@ -76,10 +76,26 @@ class HealthCheckController extends AbstractApplicationController
         }
 
         $composerJson = json_decode($composerContents, true, 512, JSON_THROW_ON_ERROR);
-        $symfonyVersion = (float) $composerJson['require']['symfony/console'];
+
+        if (!is_array($composerJson)) {
+            return $this->json([
+                'message' => 'Composer.json is empty',
+                'success' => false,
+            ]);
+        }
+
+        $symfonyVersion = null;
+
+        if (isset($composerJson['require']) && is_array($composerJson['require'])) {
+            $symfonyVersion = isset($composerJson['require']['symfony/console']) && is_string($composerJson['require']['symfony/console'])
+                ? (float) $composerJson['require']['symfony/console']
+                : null;
+        }
+
+        $symfonyVersion = is_float($symfonyVersion) ? $symfonyVersion : 'Unknown';
 
         return $this->json([
-            'message' => 'Symfony version is ' . (string) $symfonyVersion,
+            'message' => 'Symfony version is ' . $symfonyVersion,
             'success' => (float) $symfonyVersion >= 7.3,
         ]);
     }

@@ -35,7 +35,7 @@
     }
   },
   "scripts": {
-    "stan": "./vendor/bin/phpstan analyse -c phpstan.neon",
+    "stan": "php -d memory_limit=2G ./vendor/bin/phpstan analyse -c phpstan.neon",
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes",
     "post-create-project-cmd": [

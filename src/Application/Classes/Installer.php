@@ -22,10 +22,11 @@ final readonly class Installer
             if (!preg_match('/^[a-z0-9\-]+\/[a-z0-9\-]+$/', $answer)) {
                 $answer = 'myvendor/myproject';
             }
+
             return $answer;
         });
 
-        if (!is_string($projectName) ||!is_string($packageName)) {
+        if (!is_string($projectName) || !is_string($packageName)) {
             $this->io->error('Project name was not in the expected format.');
             exit(1);
         }
@@ -76,7 +77,8 @@ final readonly class Installer
      */
     private function updateComposerJson(string $projectName, string $packageName): void
     {
-        $composerFile = __DIR__ . '/../../../composer.json';
+        $composerFile = sprintf('%s/composer.json', dirname(__FILE__, 3));
+
         if (!file_exists($composerFile)) {
             $this->io->error('Error: composer.json file not found!');
             exit(1);
@@ -121,10 +123,10 @@ final readonly class Installer
 
     private function cleanupSetupFiles(): void
     {
-        $setupScript = __DIR__ . '/../../../bin/setup';
-        $envTemplate = __DIR__ . '/../../../.env.template';
-        $readme = __DIR__ . '/../../../README.md';
-        $changelog = __DIR__ . '/../../../CHANGELOG.md';
+        $setupScript = sprintf('%s/bin/setup', dirname(__FILE__, 3));
+        $envTemplate = sprintf('%s/.env.template', dirname(__FILE__, 3));
+        $readme = sprintf('%s/README.md', dirname(__FILE__, 3));
+        $changelog = sprintf('%s/CHANGELOG.md', dirname(__FILE__, 3));
 
         if (file_exists($readme)) {
             unlink($readme);
