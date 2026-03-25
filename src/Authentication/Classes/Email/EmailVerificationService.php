@@ -38,7 +38,7 @@ readonly class EmailVerificationService
             $user->getEmail(),
             [
                 'verificationUrl' => $this->urlGenerator->generate(
-                    'auth_verify_email',
+                    'authenticate_verify_email',
                     ['token' => $token->getToken()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),

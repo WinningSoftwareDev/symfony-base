@@ -11,8 +11,8 @@ use App\Authentication\Entity\User;
 use App\Authentication\Form\RegistrationForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -30,14 +30,20 @@ class RegistrationController extends AbstractApplicationController
     /**
      * @throws TransportExceptionInterface|RandomException
      */
-    #[Route('/auth/register', name: 'auth_register')]
+    #[Route(path: '/authenticate/register', name: 'authenticate_register', methods: [Request::METHOD_POST])]
     public function register(
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         EmailVerificationService $verificationService
-    ): Response {
+    ): JsonResponse {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_index');
+            $this->addFlash('info', 'You are already logged in.');
+
+            return $this->json([
+                'success' => false,
+                'errors' => [],
+                'redirect' => $this->generateUrl('app_index'),
+            ]);
         }
 
         $data = new RegistrationDTO();
@@ -75,7 +81,13 @@ class RegistrationController extends AbstractApplicationController
             ]);
         }
 
-        return $this->redirectToRoute('app_index');
+        $errors = $this->validator->validate($data);
+
+        return $this->json([
+            'success' => false,
+            'errors' => $this->getValidationErrors($data, $errors),
+            'redirect' => $this->generateUrl('app_index'),
+        ]);
     }
 
     /**

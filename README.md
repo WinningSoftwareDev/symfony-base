@@ -38,7 +38,7 @@ Update your projects `.env` file with your database credentials and run the SQL 
 
 ## Customising
 
-This is just a base project with some helpful features baked in. Modify anything and everything to suit your needs.
+This is just a template project with some helpful features baked in. Modify anything and everything to suit your needs.
 
 Your app homepage route is defined in `src/Application/IndexController.php` and the template is located 
 at `templates/application/index.latte` - remove the default content and replace it with your own.
@@ -51,3 +51,23 @@ this includes:
 - Password Reset
 - Email Verification
 - Entities for: User, Verification Token and Password Reset Token
+
+## Available Routes
+
+Out of the box, this project includes the following routes:
+
+| Name                                    | Method       | Path                                 |
+|-----------------------------------------|--------------|--------------------------------------|
+| `app_health_check_database_connection`  | `GET`        | `/health-check/database-connection`  |
+| `app_health_check_default_tables_exist` | `GET`        | `/health-check/default-tables-exist` |
+| `app_health_check_php_version`          | `GET`        | `/health-check/php-version`          |
+| `app_health_check_symfony_version`      | `GET`        | `/health-check/symfony-version`      |
+| `app_index`                             | `GET`        | `/`                                  |
+| `authenticate`                          | `GET`        | `/authenticate`                      |
+| `authenticate_request_password_reset`   | `GET`,`POST` | `/authenticate/password-reset`       |
+| `authenticate_password_reset`           | `GET`,`POST` | `/authenticate/password-reset/reset` |
+| `authenticate_login`                    | `GET`,`POST` | `/authenticate/login`                |
+| `authenticate_logout`                   | `GET`        | `/authenticate/logout`               |
+| `authenticate_get_logged_in_user`       | `GET`        | `/authenticate/current-user`         |
+| `authenticate_register`                 | `POST`       | `/authenticate/register`             |
+| `authenticate_verify_email`             | `GET`        | `/authenticate/verify`               |
