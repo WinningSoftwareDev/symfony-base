@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import AuthForm from './AuthForm.vue';
 import { computed, reactive } from 'vue';
-import IFormField from '../Interface/IFormField';
+import AuthForm from './AuthForm.vue';
 import FormField from './FormField.vue';
-import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import FormSubmit from './FormSubmit.vue';
+import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
+import IFormField from '../Interface/IFormField';
 
 const formFields = reactive<Record<string, IFormField>>({
   'email': {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import IHealthCheck from './Interface/IHealthCheck';
-import ICheckResult from './Interface/ICheckResult';
 import HealthCheckItem from './HealthCheckItem.vue';
+import ICheckResult from './Interface/ICheckResult';
+import IHealthCheck from './Interface/IHealthCheck';
+
 
 const isLoading = ref(true);
 const checkResults: Ref<ICheckResult[]> = ref([]);

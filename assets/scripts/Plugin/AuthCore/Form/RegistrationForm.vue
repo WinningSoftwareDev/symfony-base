@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import AuthForm from './AuthForm.vue';
-import FormSubmit from './FormSubmit.vue';
-import FormField from './FormField.vue';
 import { computed, reactive } from 'vue';
+import AuthForm from './AuthForm.vue';
+import FormField from './FormField.vue';
+import FormSubmit from './FormSubmit.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import IFormField from '../Interface/IFormField';
 import IntroCardLink from '../../AppCore/IntroCardLink.vue';

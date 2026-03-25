@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import IntroCardHeader from './IntroCardHeader.vue';
-import AppHealthCheck from '../AppHealthCheck/AppHealthCheck.vue';
 import { onMounted, ref } from 'vue';
+import AppHealthCheck from '../AppHealthCheck/AppHealthCheck.vue';
+import IntroCardHeader from './IntroCardHeader.vue';
 import IntroCardLink from './IntroCardLink.vue';
+import IUser from '../AuthCore/Interface/IUser';
 import WelcomeBlock from './WelcomeBlock.vue';
-
-interface IUser
-{
-  email: string;
-  verified: boolean;
-}
 
 interface IProps
 {

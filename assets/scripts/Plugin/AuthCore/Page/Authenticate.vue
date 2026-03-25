@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ComponentInstance, Ref, ref, ShallowRef, shallowRef } from 'vue';
+import FormToggle from '../Component/FormToggle.vue';
+import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import LoginForm from '../Form/LoginForm.vue';
 import RegistrationForm from '../Form/RegistrationForm.vue';
-import FormToggle from '../Component/FormToggle.vue';
-import { ComponentInstance, Ref, ref, ShallowRef, shallowRef } from 'vue';
-import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 
 interface IProps
 {
