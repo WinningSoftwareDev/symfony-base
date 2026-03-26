@@ -28,7 +28,7 @@ class AuthenticationController extends AbstractApplicationController
     ) {
     }
 
-    #[Route('/authenticate', name: 'authenticate')]
+    #[Route(path: '/authenticate', name: 'authenticate', methods: [Request::METHOD_GET])]
     public function authenticate(Request $request): Response
     {
         if ($this->getUser()) {
@@ -53,7 +53,7 @@ class AuthenticationController extends AbstractApplicationController
     /**
      * @throws TransportExceptionInterface
      */
-    #[Route('/authenticate/password-reset', name: 'authenticate_request_password_reset')]
+    #[Route(path: '/authenticate/password-reset', name: 'authenticate_request_password_reset', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function requestPasswordReset(Request $request): Response
     {
         $data = new RequestPasswordResetDTO();
@@ -95,7 +95,7 @@ class AuthenticationController extends AbstractApplicationController
         );
     }
 
-    #[Route('/authenticate/password-reset/reset', name: 'authenticate_password_reset')]
+    #[Route(path: '/authenticate/password-reset/reset', name: 'authenticate_password_reset', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function passwordReset(Request $request): Response
     {
         $token = (string) $request->query->get('token');
@@ -141,19 +141,19 @@ class AuthenticationController extends AbstractApplicationController
         );
     }
 
-    #[Route('/authenticate/login', name: 'authenticate_login')]
+    #[Route(path: '/authenticate/login', name: 'authenticate_login', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function login(): Response
     {
         return $this->redirectToRoute('authenticate', ['form' => 'LoginForm']);
     }
 
-    #[Route('/authenticate/logout', name: 'authenticate_logout')]
+    #[Route(path: '/authenticate/logout', name: 'authenticate_logout', methods: [Request::METHOD_GET])]
     public function logout(): void
     {
         throw new \LogicException('Logout is handled by the firewall.');
     }
 
-    #[Route('/authenticate/current-user', name: 'authenticate_get_logged_in_user')]
+    #[Route(path: '/authenticate/current-user', name: 'authenticate_get_logged_in_user', methods: [Request::METHOD_GET])]
     public function getLoggedInUser(): Response
     {
         $user = $this->getUser();

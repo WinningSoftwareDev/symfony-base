@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'tblPasswordResetToken', schema: 'Auth')]
+#[ORM\Table(name: 'tblPasswordResetToken', schema: 'Authentication')]
 #[ORM\Index(name: 'I_tblPasswordResetToken_intUserId', columns: ['intUserId'])]
 class PasswordResetToken extends AbstractBaseEntity
 {

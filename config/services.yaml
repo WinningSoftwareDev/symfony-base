@@ -11,6 +11,14 @@ services:
   App\:
     resource: '../src/'
 
+  App\Application\Command\DatabaseSetupCommand:
+    arguments:
+      $dbHost: '%env(DB_HOST)%'
+      $dbPort: '%env(DB_PORT)%'
+      $dbUser: '%env(DB_USER)%'
+      $dbPassword: '%env(DB_PASSWORD)%'
+    tags: [ 'console.command' ]
+
   App\_Core\Controller\:
     resource: '../src/_Core/Controller'
     tags: [ 'controller.service_arguments' ]

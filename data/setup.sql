@@ -1,12 +1,10 @@
-DROP SCHEMA IF EXISTS Auth;
+DROP SCHEMA IF EXISTS Authentication;
 DROP SCHEMA IF EXISTS Core;
 
-CREATE SCHEMA Auth;
+CREATE SCHEMA Authentication;
 CREATE SCHEMA Core;
 
-USE Auth;
-
-CREATE TABLE tblUser (
+CREATE TABLE Authentication.tblUser (
     intUserId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     strEmail VARCHAR(180) NOT NULL,
     strPassword VARCHAR(255) NOT NULL COMMENT 'Hashed password',
@@ -21,7 +19,7 @@ CREATE TABLE tblUser (
     INDEX I_tblUser_dtmCreated (dtmCreated)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE tblVerificationToken (
+CREATE TABLE Authentication.tblVerificationToken (
     intVerificationTokenId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     intUserId INT UNSIGNED NOT NULL,
     strToken VARCHAR(100) NOT NULL,
@@ -29,11 +27,13 @@ CREATE TABLE tblVerificationToken (
     dtmCreated DATETIME NOT NULL DEFAULT NOW(),
     dtmUpdated DATETIME ON UPDATE NOW(),
     PRIMARY KEY (intVerificationTokenId),
+    FOREIGN KEY FK_tblVerificationToken_intUserId (intUserId)
+        REFERENCES Authentication.tblUser(intUserId),
     UNIQUE KEY UK_tblVerificationToken_strToken (strToken),
     INDEX I_tblVerificationToken_intUserId (intUserId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE tblPasswordResetToken (
+CREATE TABLE Authentication.tblPasswordResetToken (
     intPasswordResetTokenId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     intUserId INT UNSIGNED NOT NULL,
     strToken VARCHAR(100) NOT NULL,
@@ -41,13 +41,13 @@ CREATE TABLE tblPasswordResetToken (
     dtmCreated DATETIME NOT NULL DEFAULT NOW(),
     dtmUpdated DATETIME ON UPDATE NOW(),
     PRIMARY KEY (intPasswordResetTokenId),
+    FOREIGN KEY FK_tblPasswordResetToken_intUserId (intUserId)
+        REFERENCES Authentication.tblUser(intUserId),
     UNIQUE KEY UK_tblPasswordResetToken_strToken (strToken),
     INDEX I_tblPasswordResetToken_intUserId (intUserId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-USE Core;
-
-CREATE TABLE ublEmailType (
+CREATE TABLE Core.ublEmailType (
     intEmailTypeId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     strEmailTypeSubject VARCHAR(255) NOT NULL,
     strEmailTypeHandle VARCHAR(100) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE ublEmailType (
     UNIQUE KEY UK_ublEmailType_strEmailType (strEmailTypeHandle)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO ublEmailType
+INSERT INTO Core.ublEmailType
     (strEmailTypeSubject, strEmailTypeHandle, strTemplate)
 VALUES
     ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', '_core/emails/verify-email.latte'),

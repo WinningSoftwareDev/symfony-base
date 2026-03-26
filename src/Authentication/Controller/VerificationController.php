@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class VerificationController extends AbstractApplicationController
 {
-    #[Route('/auth/verify', name: 'auth_verify_email')]
+    #[Route(path: '/authenticate/verify', name: 'authenticate_verify_email', methods: [Request::METHOD_GET])]
     public function verify(Request $request, EmailVerificationService $emailVerificationService): Response
     {
         $token = $request->query->get('token');

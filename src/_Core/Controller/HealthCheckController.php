@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HealthCheckController extends AbstractApplicationController
 {
-    #[Route('/health-check/database-connection', name: 'app_health_check_database_connection')]
+    #[Route(path: '/health-check/database-connection', name: 'app_health_check_database_connection', methods: [Request::METHOD_GET])]
     public function checkDatabaseConnection(Request $request, EntityManagerInterface $entityManager): Response
     {
         try {
@@ -30,7 +30,7 @@ class HealthCheckController extends AbstractApplicationController
         }
     }
 
-    #[Route('/health-check/default-tables-exist', name: 'app_health_check_default_tables_exist')]
+    #[Route(path: '/health-check/default-tables-exist', name: 'app_health_check_default_tables_exist', methods: [Request::METHOD_GET])]
     public function checkDefaultTablesExist(Request $request, EntityManagerInterface $entityManager): Response
     {
         try {
@@ -48,7 +48,7 @@ class HealthCheckController extends AbstractApplicationController
         }
     }
 
-    #[Route('/health-check/php-version', name: 'app_health_check_php_version')]
+    #[Route(path: '/health-check/php-version', name: 'app_health_check_php_version', methods: [Request::METHOD_GET])]
     public function checkPHPVersion(): Response
     {
         $phpVersion = PHP_VERSION;
@@ -62,7 +62,7 @@ class HealthCheckController extends AbstractApplicationController
     /**
      * @throws \JsonException
      */
-    #[Route('/health-check/symfony-version', name: 'app_health_check_symfony_version')]
+    #[Route(path: '/health-check/symfony-version', name: 'app_health_check_symfony_version', methods: [Request::METHOD_GET])]
     public function checkSymfonyVersion(): Response
     {
         $path = sprintf('%s/composer.json', dirname(__DIR__, 3));

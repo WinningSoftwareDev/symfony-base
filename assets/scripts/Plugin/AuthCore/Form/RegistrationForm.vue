@@ -82,7 +82,7 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
 <template>
   <AuthForm title="Register"
             text="Register to create your own account and access members-only features."
-            endpoint="/auth/register"
+            endpoint="/authenticate/register"
             :handler="handleSubmit"
             @submission:failed="handleFailedSubmit"
             :name="name"

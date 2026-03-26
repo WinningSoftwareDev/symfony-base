@@ -20,15 +20,15 @@ withDefaults(defineProps<IProps>(), {
 
 <template>
   <div>
-    <label class="font-semibold">{{ label }}</label>
+    <label class="font-semibold">{{ label }} <span v-if="required" class="text-accent">*</span></label>
     <input :type="type"
-           class="mt-1 p-2 block w-full rounded-md border font-bold placeholder-gray-500 focus:outline-none focus:ring-primary focus:ring focus:border-primary/40"
+           class="mt-1 p-2 block w-full rounded-md border caret-accent font-bold placeholder-gray-500 focus:outline-none focus:ring-primary focus:ring focus:border-primary/40"
            :class="{'bg-red-200/10': errors?.length}"
            :name="name"
            :id="id"
            :placeholder="placeholder"
            v-model="model"
-           v-bind="{ required }" />
+           v-bind="{required}" />
     <div v-if="errors?.length" class="text-red-300">
       <p v-for="err in errors" class="text-sm mt-1 first:mt-2">
         {{ err }}

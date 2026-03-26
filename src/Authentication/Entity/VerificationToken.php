@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'tblVerificationToken', schema: 'Auth')]
+#[ORM\Table(name: 'tblVerificationToken', schema: 'Authentication')]
 class VerificationToken extends AbstractBaseEntity
 {
     #[ORM\Id]

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'tblUser', schema: 'Auth')]
+#[ORM\Table(name: 'tblUser', schema: 'Authentication')]
 class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
