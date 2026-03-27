@@ -6,6 +6,7 @@ pipelines:
       - step:
           name: "Verify GPG Signature"
           script:
+            - apt-get update && apt-get install -y gnupg
             - echo "$GPG_PUBLIC_KEY" | gpg --import
             - echo "$GPG_PUBLIC_KEY" | gpg --import-ownertrust
             - apt-get update && apt-get install -y git gnupg
