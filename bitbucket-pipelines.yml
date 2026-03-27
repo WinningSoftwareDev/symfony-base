@@ -9,9 +9,10 @@ pipelines:
             - apt-get update && apt-get install -y git gnupg
             - |
               echo "Verifying commit: $BITBUCKET_COMMIT"
-              SIGNED_STATUS=(git log -1 --pretty=format:%G? $BITBUCKET_COMMIT)
+              SIGNED_STATUS=(git log -1 --pretty=format:%G?)
+              echo "Signed status: $SIGNED_STATUS"
 
-              if $SIGNED_STATUS | grep -q "[GU]"; then
+              if $SIGNED_STATUS === 'G' || $SIGNED_STATUS === 'U'; then
                 echo "Commit is GPG-signed ✅"
               else
                 echo "Commit is NOT GPG-signed ❌"
