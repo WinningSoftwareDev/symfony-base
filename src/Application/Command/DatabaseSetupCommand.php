@@ -107,15 +107,13 @@ class DatabaseSetupCommand extends Command
             'host' => $this->dbHost,
             'port' => (int) $this->dbPort,
             'driver' => 'pdo_mysql',
-            'charset' => 'utf8mb4'
+            'charset' => 'utf8mb4',
         ];
 
         return DriverManager::getConnection($connectionParams);
     }
 
     /**
-     * @param string $sqlContent
-     *
      * @return string[]
      */
     private function splitSqlStatements(string $sqlContent): array
