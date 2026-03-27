@@ -86,18 +86,18 @@ class DatabaseSetupCommand extends Command
                     $io->writeln(sprintf('<fg=red>  Error: %s</>', $e->getMessage()));
                 }
             }
-            
+
             $io->writeln('');
             $io->writeln(sprintf('<fg=green;options=bold>✓ Database setup completed: %d/%d statements executed</>', $successCount, $statementCount));
-            
+
             return Command::SUCCESS;
-            
         } catch (\Exception $e) {
             $io->error("Database setup failed: " . $e->getMessage());
+
             return Command::FAILURE;
         }
     }
-    
+
     private function createDatabaseConnection(): Connection
     {
         $connectionParams = [
@@ -109,7 +109,7 @@ class DatabaseSetupCommand extends Command
             'driver' => 'pdo_mysql',
             'charset' => 'utf8mb4'
         ];
-        
+
         return DriverManager::getConnection($connectionParams);
     }
 
