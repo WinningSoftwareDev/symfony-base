@@ -4,7 +4,7 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: "PHP 8.4: Code Standards & Linting"
+          name: "PHP 8.4: Code Standards"
           caches:
             - composer
           script:
@@ -13,3 +13,13 @@ pipelines:
             - composer install
             - composer run-script cs
             - composer run-script stan
+      - step:
+          name: "TypeScript Linting"
+          caches:
+            - node
+          script:
+            - apt-get update && apt-get install -y curl
+            - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+            - apt-get install -y nodejs
+            - npm install
+            - npm run lint

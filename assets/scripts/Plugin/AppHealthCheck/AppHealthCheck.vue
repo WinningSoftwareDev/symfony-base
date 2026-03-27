@@ -66,7 +66,9 @@ runChecks().then(() => {
   <div class="px-4 py-3 rounded-lg bg-primary/10">
     <h2 class="font-bold mt-1">Application Health Check</h2>
     <div>
-      <HealthCheckItem v-for="item in checkResults" :result="item" />
+      <HealthCheckItem v-for="(item, index) in checkResults"
+                       :key="index"
+                       :result="item" />
       <i v-if="isLoading" class="fa-duotone fa-light fa-fan fa-spin fa-3x mt-2"></i>
     </div>
   </div>

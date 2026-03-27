@@ -28,9 +28,11 @@ withDefaults(defineProps<IProps>(), {
            :id="id"
            :placeholder="placeholder"
            v-model="model"
-           v-bind="{required}" />
+           :required="required" />
     <div v-if="errors?.length" class="text-red-300">
-      <p v-for="err in errors" class="text-sm mt-1 first:mt-2">
+      <p v-for="(err, key) in errors"
+         :key="key"
+         class="text-sm mt-1 first:mt-2">
         {{ err }}
       </p>
     </div>

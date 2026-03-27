@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ComponentInstance, Ref, ref, ShallowRef, shallowRef } from 'vue';
+import { Ref, ref, ShallowRef, shallowRef } from 'vue';
 import FormToggle from '../Component/FormToggle.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import LoginForm from '../Form/LoginForm.vue';
@@ -10,8 +10,12 @@ interface IProps
   form: string|null;
 }
 
+type AuthenticationFormComponent = typeof LoginForm | typeof RegistrationForm;
+
 const props = withDefaults(defineProps<IProps>(), {});
-const activeComponent: ShallowRef<ComponentInstance<any>> = shallowRef(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
+const activeComponent: ShallowRef<AuthenticationFormComponent> = shallowRef(
+    props.form === 'LoginForm' ? LoginForm : RegistrationForm
+);
 const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
     name: 'registration_form',
@@ -24,7 +28,7 @@ const componentProps: Record<string, IAuthFormInternalProps> = {
 }
 const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(props.form === 'LoginForm' ? componentProps.LoginForm : componentProps.RegistrationForm);
 
-const setActiveComponent = (component: ComponentInstance<any>): void => {
+const setActiveComponent = (component: AuthenticationFormComponent): void => {
   activeComponent.value = component;
 
   Object.entries(componentProps).forEach((c: [string, IAuthFormInternalProps]) => {

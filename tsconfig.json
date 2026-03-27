@@ -12,6 +12,7 @@
   },
   "include": [
     "assets/scripts/**",
-    "vite.config.ts"
+    "vite.config.ts",
+    "eslint.config.mts"
   ]
 }
