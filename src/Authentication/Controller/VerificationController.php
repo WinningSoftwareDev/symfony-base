@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Authentication\Controller;
 
 use App\Authentication\Classes\Email\EmailVerificationService;
+use App\Authentication\Entity\User;
 use App\Core\Controller\AbstractApplicationController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class VerificationController extends AbstractApplicationController
 
         $user = $emailVerificationService->verifyToken($token);
 
-        if (!$user) {
+        if (!$user instanceof User) {
             $this->addFlash('error', 'Verification link is invalid or expired.');
 
             return $this->redirectToRoute('authenticate_login');
