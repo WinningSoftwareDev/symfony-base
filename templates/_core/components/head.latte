@@ -1,10 +1,18 @@
+{varType string $title}
+{varType string[] $_ENV}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{$title} | {$_ENV['APP_NAME']}</title>
 
-    {asset 'styles/styles.css'}
+    {if $_ENV['USE_HMR'] === 'true'}
+        <script type="module" src="{$_ENV['DEFAULT_URI']}:3000/@vite/client"></script>
+        <script type="module" src="{$_ENV['DEFAULT_URI']}:3000/assets/scripts/app.ts"></script>
+    {else}
+        {asset 'app.css'}
+    {/if}
     <script src="{$_ENV['FONTAWESOME_SCRIPT_URL']}" crossorigin="anonymous"></script>
-    <link rel="icon" type="image/x-icon" href="/favicon.png">
+    <link rel="icon" type="image/x-icon" href="{$_ENV['DEFAULT_URI']}/favicon.png">
 </head>

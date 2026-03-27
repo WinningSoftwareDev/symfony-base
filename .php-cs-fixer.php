@@ -4,6 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('var')
     ->exclude('vendor')
+    ->exclude('node_modules')
     ->exclude('public/bundles');
 
 return (new PhpCsFixer\Config())
@@ -24,5 +25,7 @@ return (new PhpCsFixer\Config())
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
+        'concat_space' => ['spacing' => 'one'],
+        'yoda_style' => false,
     ])
     ->setFinder($finder);

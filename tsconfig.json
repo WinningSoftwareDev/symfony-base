@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "./public/assets/js",
+    "outDir": "./public/assets/",
     "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es6",
-    "allowJs": true,
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": []
+    "lib": ["DOM", "ESNext"]
   },
   "include": [
-    "assets/scripts/app.ts"
+    "assets/scripts/**",
+    "vite.config.ts",
+    "eslint.config.mts"
   ]
 }

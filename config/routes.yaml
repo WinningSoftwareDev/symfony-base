@@ -8,8 +8,8 @@ Application:
     path: ../src/Application/Controller/
     namespace: App\Application\Controller
   type: attribute
-Auth:
+Authentication:
   resource:
-    path: ../src/Auth/Controller/
-    namespace: App\Auth\Controller
+    path: ../src/Authentication/Controller/
+    namespace: App\Authentication\Controller
   type: attribute

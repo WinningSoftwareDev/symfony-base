@@ -28,9 +28,9 @@ doctrine:
       Auth:
         type: attribute
         is_bundle: false
-        dir: '%kernel.project_dir%/src/Auth/Entity'
-        prefix: 'App\Auth\Entity'
-        alias: Auth
+        dir: '%kernel.project_dir%/src/Authentication/Entity'
+        prefix: 'App\Authentication\Entity'
+        alias: Authentication
 
 when@test:
   doctrine:

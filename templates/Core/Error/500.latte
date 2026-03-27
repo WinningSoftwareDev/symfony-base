@@ -1,0 +1,7 @@
+{extends '../../_core/layouts/@core.layout.latte'}
+
+{block content}
+    {include 'error.latte',
+        heading: 'Error 500: Internal Server Error',
+        text: 'It looks like something has gone wrong.'}
+{/block}

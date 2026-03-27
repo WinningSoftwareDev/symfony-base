@@ -8,3 +8,4 @@
 /composer.lock
 /.php-cs-fixer.cache
 /public/assets/
+/vite.config.ts
