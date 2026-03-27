@@ -161,24 +161,36 @@ final readonly class Installer
 
         if (!file_exists($templateFile)) {
             $this->io->error('Error: vite.config.template.ts file not found!');
-            exit(1);
+
+            return;
         }
 
-        // Copy template to vite.config.ts
         if (!copy($templateFile, $configFile)) {
             $this->io->error('Error: Failed to copy vite.config.template.ts to vite.config.ts!');
-            exit(1);
+
+            return;
         }
 
-        // Replace {APP_NAME} placeholders
         $configContent = file_get_contents($configFile);
 
         if (!is_string($configContent)) {
             $this->io->error('Error: vite.config.ts content was not readable!');
-            exit(1);
+
+            return;
         }
 
         $configContent = str_replace('{APP_NAME}', $projectName, $configContent);
         file_put_contents($configFile, $configContent);
+
+        $gitignoreFilePath = sprintf('%s/.gitignore', dirname(__FILE__, 3));
+
+        if (file_exists($gitignoreFilePath)) {
+            $gitignoreContent = file_get_contents($gitignoreFilePath);
+
+            if (is_string($gitignoreContent)) {
+                $gitignoreContent = str_replace('/vite.config.ts', '', $gitignoreContent);
+                file_put_contents($gitignoreFilePath, $gitignoreContent);
+            }
+        }
     }
 }
