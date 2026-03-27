@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Authentication\Entity;
 
-use App\_Core\Entity\AbstractBaseEntity;
+use App\Core\Entity\AbstractBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 

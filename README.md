@@ -59,7 +59,7 @@ composer create-project winningsoftware/symfony-base my-project
 
 ```
 src/
-├── _Core/              # Core framework components
+├── Core/              # Core framework components
 │   ├── Controller/     # Base controllers and utilities
 │   ├── Entity/         # Base entity classes
 │   └── ...

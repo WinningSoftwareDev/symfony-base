@@ -1,8 +1,0 @@
-{extends '../../layouts/@core.layout.latte'}
-
-{varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
-{varType array $_ENV}
-
-{block content}
-    <IntroCard name="{$_ENV['APP_NAME']}" />
-{/block}

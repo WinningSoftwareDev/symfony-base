@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\_Core\Controller;
+namespace App\Core\Controller;
 
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Response;

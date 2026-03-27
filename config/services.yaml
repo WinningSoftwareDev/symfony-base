@@ -19,8 +19,8 @@ services:
       $dbPassword: '%env(DB_PASSWORD)%'
     tags: [ 'console.command' ]
 
-  App\_Core\Controller\:
-    resource: '../src/_Core/Controller'
+  App\Core\Controller\:
+    resource: '../src/Core/Controller'
     tags: [ 'controller.service_arguments' ]
     calls:
       - setLatteFactory: ['@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory']
