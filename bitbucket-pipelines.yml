@@ -6,6 +6,7 @@ pipelines:
       - step:
           name: "Verify GPG Signature"
           script:
+            - date
             - apt-get update && apt-get install -y git gnupg
             - |
               echo "Verifying commit #$BITBUCKET_COMMIT"
