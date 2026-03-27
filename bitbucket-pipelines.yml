@@ -14,7 +14,7 @@ pipelines:
             - composer run-script cs
             - composer run-script stan
       - step:
-          name: "TypeScript Linting"
+          name: "TypeScript: Linting"
           caches:
             - node
           script:

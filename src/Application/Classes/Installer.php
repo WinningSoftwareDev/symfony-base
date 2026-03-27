@@ -33,6 +33,7 @@ final readonly class Installer
 
         $this->updateEnvFile($projectName);
         $this->updateComposerJson($projectName, $packageName);
+        $this->setupViteConfig($projectName);
         $this->showSuccessMessage($projectName, $packageName);
         $this->cleanupSetupFiles();
     }
@@ -81,21 +82,24 @@ final readonly class Installer
 
         if (!file_exists($composerFile)) {
             $this->io->error('Error: composer.json file not found!');
-            exit(1);
+
+            return;
         }
 
         $composerContent = file_get_contents($composerFile);
 
         if (!is_string($composerContent)) {
             $this->io->error('Error: composer.json file is not a string!');
-            exit(1);
+
+            return;
         }
 
         $composerData = json_decode($composerContent, true, 512, JSON_THROW_ON_ERROR);
 
         if (!is_array($composerData)) {
             $this->io->error('Error: composer.json content is not an array!');
-            exit(1);
+
+            return;
         }
 
         $composerData['name'] = $packageName;
@@ -127,13 +131,14 @@ final readonly class Installer
         $envTemplate = sprintf('%s/.env.template', dirname(__FILE__, 3));
         $readme = sprintf('%s/README.md', dirname(__FILE__, 3));
         $changelog = sprintf('%s/CHANGELOG.md', dirname(__FILE__, 3));
+        $changelogTemplate = sprintf('%s/CHANGELOG.template.md', dirname(__FILE__, 3));
 
         if (file_exists($readme)) {
             unlink($readme);
         }
 
         if (file_exists($changelog)) {
-            unlink($readme);
+            unlink($changelog);
         }
 
         if (file_exists($envTemplate)) {
@@ -143,5 +148,37 @@ final readonly class Installer
         if (file_exists($setupScript)) {
             unlink($setupScript);
         }
+
+        if (file_exists($changelogTemplate)) {
+            rename($changelogTemplate, $changelog);
+        }
+    }
+
+    private function setupViteConfig(string $projectName): void
+    {
+        $templateFile = sprintf('%s/vite.config.template.ts', dirname(__FILE__, 3));
+        $configFile = sprintf('%s/vite.config.ts', dirname(__FILE__, 3));
+
+        if (!file_exists($templateFile)) {
+            $this->io->error('Error: vite.config.template.ts file not found!');
+            exit(1);
+        }
+
+        // Copy template to vite.config.ts
+        if (!copy($templateFile, $configFile)) {
+            $this->io->error('Error: Failed to copy vite.config.template.ts to vite.config.ts!');
+            exit(1);
+        }
+
+        // Replace {APP_NAME} placeholders
+        $configContent = file_get_contents($configFile);
+
+        if (!is_string($configContent)) {
+            $this->io->error('Error: vite.config.ts content was not readable!');
+            exit(1);
+        }
+
+        $configContent = str_replace('{APP_NAME}', $projectName, $configContent);
+        file_put_contents($configFile, $configContent);
     }
 }

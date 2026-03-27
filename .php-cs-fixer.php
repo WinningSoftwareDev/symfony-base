@@ -4,6 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('var')
     ->exclude('vendor')
+    ->exclude('node_modules')
     ->exclude('public/bundles');
 
 return (new PhpCsFixer\Config())
