@@ -179,7 +179,7 @@ final readonly class Installer
             return;
         }
 
-        $configContent = str_replace('{APP_NAME}', $projectName, $configContent);
+        $configContent = str_replace('{APP_NAME}', strtolower(str_replace(' ', '-', $projectName)), $configContent);
         file_put_contents($configFile, $configContent);
 
         $gitignoreFilePath = sprintf('%s/.gitignore', dirname(__FILE__, 3));
