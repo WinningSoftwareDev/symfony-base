@@ -7,11 +7,8 @@ pipelines:
         caches:
           - composer
         script:
+          - apt-get update && apt-get install -y git zip unzip
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install
           - composer run-script cs
           - composer run-script stan
-        services:
-          - docker
-        php:
-          - 8.4
