@@ -105,7 +105,7 @@ class DatabaseSetupCommand extends Command
             'user' => $this->dbUser,
             'password' => $this->dbPassword,
             'host' => $this->dbHost,
-            'port' => (int)$this->dbPort,
+            'port' => (int) $this->dbPort,
             'driver' => 'pdo_mysql',
             'charset' => 'utf8mb4'
         ];
