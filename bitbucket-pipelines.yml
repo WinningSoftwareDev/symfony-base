@@ -7,7 +7,13 @@ pipelines:
           name: "Verify GPG Signature"
           script:
             - apt-get update && apt-get install -y git gnupg
-            - git log -1 --pretty=format:%G? | grep -q "[BG]" && echo "Commit is GPG-signed" || (echo "Commit is NOT GPG-signed" && exit 1)
+            - |
+              if git log -1 --pretty=format:%G? | grep -q "[GU]"; then
+                echo "Commit is GPG-signed"
+              else
+                echo "Commit is NOT GPG-signed"
+                exit 1
+              fi
       - step:
           name: "PHP 8.4: Code Standards"
           caches:
