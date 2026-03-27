@@ -25,5 +25,6 @@ return (new PhpCsFixer\Config())
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
         'concat_space' => ['spacing' => 'one'],
+        'yoda_style' => false,
     ])
     ->setFinder($finder);

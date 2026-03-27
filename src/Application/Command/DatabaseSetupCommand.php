@@ -55,7 +55,7 @@ class DatabaseSetupCommand extends Command
 
                 return Command::FAILURE;
             }
-            
+
             $sqlContent = file_get_contents($sqlFile);
 
             if ($sqlContent === false) {
