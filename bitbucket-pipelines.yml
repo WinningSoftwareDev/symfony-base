@@ -8,7 +8,7 @@ pipelines:
           script:
             - apt-get update && apt-get install -y git gnupg
             - |
-              echo "Verifying commit: $BITBUCKET_COMMIT"
+              echo "Verifying commit #$BITBUCKET_COMMIT"
               SIGNED_STATUS=(`git log -1 --pretty=format:%G?`)
               echo "Signed status: $SIGNED_STATUS"
               if [ "$SIGNED_STATUS" = "G" ] || [ "$SIGNED_STATUS" = "U" ]; then
