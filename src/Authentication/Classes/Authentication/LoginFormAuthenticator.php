@@ -68,15 +68,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        $flashBag = $request->getSession()->getBag('flashes');
-
-        if ($flashBag instanceof FlashBag) {
-            $flashBag->add('error', 'Invalid credentials');
-        }
-
         return new JsonResponse([
             'success' => false,
-            'errors' => [],
+            'errors' => [
+                'email' => ['Invalid credentials'],
+            ],
         ]);
     }
 }
