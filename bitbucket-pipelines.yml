@@ -3,7 +3,7 @@ image: atlassian/default-image:4
 pipelines:
   default:
     - step:
-        name: "PHP 8.4: Linting & Static Analysis"
+        name: "PHP 8.4: Code Standards & Linting"
         caches:
           - composer
         script:
