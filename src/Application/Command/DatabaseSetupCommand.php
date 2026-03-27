@@ -29,8 +29,7 @@ class DatabaseSetupCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('app:database:setup')
+        $this->setName('app:database:setup')
             ->setDescription('Executes the database setup SQL file')
             ->setHelp('This command executes the setup.sql file to create database schemas and tables.');
     }
@@ -38,46 +37,49 @@ class DatabaseSetupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        
+
         $io->writeln('');
         $io->writeln('<fg=blue;options=bold>╔════════════════════════════════════════╗</>');
         $io->writeln('<fg=blue;options=bold>║        Database Setup Execution        ║</>');
         $io->writeln('<fg=blue;options=bold>╚════════════════════════════════════════╝</>');
         $io->writeln('');
-        
+
         try {
-            // Create database connection
             $connection = $this->createDatabaseConnection();
             $io->writeln(sprintf('<fg=green>✓ Connected to database: %s@%s:%s</>', $this->dbUser, $this->dbHost, $this->dbPort));
-            
-            // Read and execute SQL file
+
             $sqlFile = __DIR__ . '/../../../data/setup.sql';
+
             if (!file_exists($sqlFile)) {
                 $io->error("SQL file not found: $sqlFile");
+
                 return Command::FAILURE;
             }
             
             $sqlContent = file_get_contents($sqlFile);
+
             if ($sqlContent === false) {
                 $io->error('Failed to read SQL file');
+
                 return Command::FAILURE;
             }
-            
+
             $io->writeln('<fg=green>✓ SQL file loaded</>');
-            
+
             $statements = $this->splitSqlStatements($sqlContent);
             $statementCount = count($statements);
             $successCount = 0;
-            
+
             foreach ($statements as $i => $statement) {
                 $statement = trim($statement);
+
                 if (empty($statement)) {
                     continue;
                 }
-                
+
                 try {
                     $connection->executeStatement($statement);
-                    $successCount++;
+                    ++$successCount;
                     $io->writeln(sprintf('<fg=green>✓ Executed statement %d/%d: %s...</>', $i + 1, $statementCount, substr($statement, 0, 60)));
                 } catch (\Exception|Exception $e) {
                     $io->writeln(sprintf('<fg=red>✗ Failed statement %d/%d: %s...</>', $i + 1, $statementCount, substr($statement, 0, 60)));
