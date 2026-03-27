@@ -51,7 +51,7 @@ class DatabaseSetupCommand extends Command
             $sqlFile = __DIR__ . '/../../../data/setup.sql';
 
             if (!file_exists($sqlFile)) {
-                $io->error("SQL file not found: $sqlFile");
+                $io->error('SQL file not found: $sqlFile');
 
                 return Command::FAILURE;
             }
@@ -92,7 +92,7 @@ class DatabaseSetupCommand extends Command
 
             return Command::SUCCESS;
         } catch (\Exception $e) {
-            $io->error("Database setup failed: " . $e->getMessage());
+            $io->error(sprintf('Database setup failed: %s', $e->getMessage()));
 
             return Command::FAILURE;
         }
