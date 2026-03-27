@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Swapped Webpack to Vite for asset builds (+ HMR)
 - Refactored database setup SQL to allow processing with PHP
 - Renamed `Auth` schema to `Authentication`
+- Renamed '_Core' schema to 'Core'
 - Refactored Authentication system to use Vue
 - Improved default styling
 
