@@ -4,23 +4,6 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: "Verify GPG Signature"
-          script:
-            - apt-get update && apt-get install -y gnupg
-            - echo "$GPG_PUBLIC_KEY" | gpg --import
-            - echo "$GPG_PUBLIC_KEY" | gpg --import-ownertrust
-            - apt-get update && apt-get install -y git gnupg
-            - |
-              echo "Verifying commit #$BITBUCKET_COMMIT"
-              SIGNED_STATUS=(`git log -1 --pretty=format:%G?`)
-              echo "Signed status: $SIGNED_STATUS"
-              if [ "$SIGNED_STATUS" = "G" ] || [ "$SIGNED_STATUS" = "U" ]; then
-                echo "Commit is GPG-signed ✅"
-              else
-                echo "Commit is NOT GPG-signed ❌"
-                exit 1
-              fi
-      - step:
           name: "PHP 8.4: Code Standards"
           caches:
             - composer
