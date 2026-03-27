@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\_Core\Controller;
+namespace App\Core\Controller;
 
 use CloudBase\LatteHelper\Controller\AbstractLatteController;
 

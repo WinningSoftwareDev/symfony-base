@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Authentication\Controller;
 
-use App\_Core\Controller\AbstractApplicationController;
 use App\Authentication\Classes\DTO\PasswordResetDTO;
 use App\Authentication\Classes\DTO\RequestPasswordResetDTO;
 use App\Authentication\Classes\Email\PasswordResetService;
@@ -12,6 +11,7 @@ use App\Authentication\Entity\PasswordResetToken;
 use App\Authentication\Entity\User;
 use App\Authentication\Form\PasswordResetForm;
 use App\Authentication\Form\RequestPasswordResetLinkForm;
+use App\Core\Controller\AbstractApplicationController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

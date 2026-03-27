@@ -1,7 +1,7 @@
 framework:
   secret: '%env(APP_SECRET)%'
   session: true
-  error_controller: App\_Core\Controller\ErrorController::showErrorPage
+  error_controller: App\Core\Controller\ErrorController::showErrorPage
 
 when@test:
   framework:

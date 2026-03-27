@@ -1,0 +1,7 @@
+{extends 'Layout/@core.layout.latte'}
+
+{varType array $_ENV}
+
+{block content}
+    <IntroCard name="{$_ENV['APP_NAME']}" />
+{/block}

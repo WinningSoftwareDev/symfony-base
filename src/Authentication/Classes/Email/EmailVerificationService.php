@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Authentication\Classes\Email;
 
-use App\_Core\Controller\EmailBuilder;
-use App\_Core\Entity\EmailType;
 use App\Authentication\Entity\User;
 use App\Authentication\Entity\VerificationToken;
+use App\Core\Controller\EmailBuilder;
+use App\Core\Entity\EmailType;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;

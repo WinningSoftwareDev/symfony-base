@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\_Core\Controller;
+namespace App\Core\Controller;
 
-use App\_Core\Entity\EmailType;
+use App\Core\Entity\EmailType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;

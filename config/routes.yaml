@@ -1,7 +1,7 @@
-_Core:
+Core:
   resource:
-    path: ../src/_Core/Controller/
-    namespace: App\_Core\Controller
+    path: ../src/Core/Controller/
+    namespace: App\Core\Controller
   type: attribute
 Application:
   resource:

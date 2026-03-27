@@ -59,5 +59,5 @@ CREATE TABLE Core.ublEmailType (
 INSERT INTO Core.ublEmailType
     (strEmailTypeSubject, strEmailTypeHandle, strTemplate)
 VALUES
-    ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', '_core/emails/verify-email.latte'),
-    ('Reset your password', 'PASSWORD_RESET', '_core/emails/reset-password.latte');
+    ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', 'Core/Email/verify-email.latte'),
+    ('Reset your password', 'PASSWORD_RESET', 'Core/Email/reset-password.latte');

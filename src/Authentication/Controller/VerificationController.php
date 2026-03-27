@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Authentication\Controller;
 
-use App\_Core\Controller\AbstractApplicationController;
 use App\Authentication\Classes\Email\EmailVerificationService;
+use App\Core\Controller\AbstractApplicationController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
