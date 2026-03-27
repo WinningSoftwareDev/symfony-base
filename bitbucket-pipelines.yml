@@ -6,7 +6,8 @@ pipelines:
       - step:
           name: "Verify GPG Signature"
           script:
-            - echo $(date)
+            - echo "$GPG_PUBLIC_KEY" | gpg --import
+            - echo "$GPG_PUBLIC_KEY" | gpg --import-ownertrust
             - apt-get update && apt-get install -y git gnupg
             - |
               echo "Verifying commit #$BITBUCKET_COMMIT"
