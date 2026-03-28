@@ -10,7 +10,17 @@ withDefaults(defineProps<IProps>(), {
 </script>
 
 <template>
-  <button class="w-full cursor-pointer flex items-center justify-center gap-2 bg-primary hover:bg-accent text-dark-text hover:text-light-text px-8 py-3 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-primary/20 mt-6">
+  <button>
     {{ text }}
   </button>
 </template>
+
+<style scoped>
+@reference 'tailwindcss/theme';
+
+button {
+  @apply w-full cursor-pointer flex items-center justify-center gap-2 bg-[var(--color-primary)] font-bold px-8 py-3 mt-6
+    hover:bg-[var(--color-accent)] text-[var(--color-dark-text)] hover:text-[var(--color-light-text)] rounded-xl transform
+    hover:-translate-y-0.5 shadow-lg transition-all shadow-[color-mix(in_srgb,var(--color-primary)_20%,transparent)];
+}
+</style>
