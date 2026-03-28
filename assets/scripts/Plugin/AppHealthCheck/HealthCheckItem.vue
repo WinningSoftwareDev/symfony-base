@@ -34,9 +34,6 @@ withDefaults(defineProps<IHealthCheckItemProps>(), {});
          :class="result.success ? 'text-gray-300' : 'text-red-400'">
         {{ result.message }}
       </p>
-<!--      <span v-if="!result.success" class="text-[10px] text-red-500/80 mt-1 leading-relaxed">-->
-<!--        Configuration required-->
-<!--      </span>-->
     </div>
   </div>
 </template>
