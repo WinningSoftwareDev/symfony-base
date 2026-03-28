@@ -192,5 +192,9 @@ final readonly class Installer
                 file_put_contents($gitignoreFilePath, $gitignoreContent);
             }
         }
+
+        if (file_exists($templateFile)) {
+            unlink($templateFile);
+        }
     }
 }

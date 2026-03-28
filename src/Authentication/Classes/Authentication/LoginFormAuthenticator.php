@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Authentication\Classes\Authentication;
 
 use App\Authentication\Classes\DTO\LoginDTO;
+use App\Authentication\Entity\User;
 use App\Authentication\Form\LoginForm;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,19 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     public function __construct(
         private readonly RouterInterface $router,
-        private readonly FormFactoryInterface $formFactory
+        private readonly FormFactoryInterface $formFactory,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
     public function authenticate(Request $request): Passport
     {
+        try {
+            $this->entityManager->getRepository(User::class)->find(1);
+        } catch (\Exception $e) {
+            throw new CustomUserMessageAuthenticationException('It looks like your database isn\'t set up yet.');
+        }
+
         $data = new LoginDTO();
         $loginForm = $this->formFactory->create(LoginForm::class, $data);
 
@@ -71,7 +80,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         return new JsonResponse([
             'success' => false,
             'errors' => [
-                'email' => ['Invalid credentials'],
+                'email' => [$exception->getMessage()],
             ],
         ]);
     }

@@ -11,6 +11,6 @@ withDefaults(defineProps<IProps>(), {
 
 <template>
   <div class="mb-6">
-    <h1 class="text-5xl font-bold">🎯 {{ name }}</h1>
+    <h1 class="text-5xl font-bold">🚀 {{ name }}</h1>
   </div>
 </template>

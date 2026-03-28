@@ -49,39 +49,52 @@ class RegistrationController extends AbstractApplicationController
         $data = new RegistrationDTO();
         $form = $this->createForm(RegistrationForm::class, $data);
         $form->handleRequest($request);
+        $errors = [];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $existingUser = $this->entityManager
-                ->getRepository(User::class)
-                ->findOneBy(['email' => $data->getEmail()]);
-            $data->setUserExists($existingUser instanceof User);
-
+        if ($form->isSubmitted()) {
             $errors = $this->validator->validate($data);
 
-            if (!$data->validate() || count($errors)) {
+            try {
+                $this->entityManager->getRepository(User::class)->find(1);
+            } catch (\Exception $e) {
                 return $this->json([
+                    'message' => '',
                     'success' => false,
-                    'errors' => $this->getValidationErrors($data, $errors),
+                    'errors' => ['email' => ['It looks like your database isn\'t set up yet.']],
                 ]);
             }
 
-            $user = User::create($data, $passwordHasher);
+            if ($form->isValid()) {
+                $existingUser = $this->entityManager
+                    ->getRepository(User::class)
+                    ->findOneBy(['email' => $data->getEmail()]);
+                $data->setUserExists($existingUser instanceof User);
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
+                $errors = $this->validator->validate($data);
 
-            $verificationService->sendVerificationEmail($user);
+                if (!$data->validate() || count($errors)) {
+                    return $this->json([
+                        'success' => false,
+                        'errors' => $this->getValidationErrors($data, $errors),
+                    ]);
+                }
 
-            $this->addFlash('success', 'Account created. You can now log in.');
+                $user = User::create($data, $passwordHasher);
 
-            return $this->json([
-                'success' => true,
-                'errors' => [],
-                'redirect' => $this->generateUrl('authenticate', ['form' => 'LoginForm']),
-            ]);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+
+                $verificationService->sendVerificationEmail($user);
+
+                $this->addFlash('success', 'Account created. You can now log in.');
+
+                return $this->json([
+                    'success' => true,
+                    'errors' => [],
+                    'redirect' => $this->generateUrl('authenticate', ['form' => 'LoginForm']),
+                ]);
+            }
         }
-
-        $errors = $this->validator->validate($data);
 
         return $this->json([
             'success' => false,

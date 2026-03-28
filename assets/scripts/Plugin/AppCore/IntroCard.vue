@@ -89,7 +89,7 @@ onMounted(() => {
     <div class="mt-12 pt-6 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest text-gray-500">
       <div class="flex items-center gap-4">
         <span class="flex items-center gap-1.5"><i class="fa-solid fa-server text-indigo-400"></i> Symfony 7.x</span>
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer text-indigo-400"></i> Symfony Base 2.0.1</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer text-indigo-400"></i> Symfony Base 2.0.2</span>
       </div>
       <p class="font-bold text-gray-400">{{ name }} &copy; {{ new Date().getFullYear() }}</p>
     </div>

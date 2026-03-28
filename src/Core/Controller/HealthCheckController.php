@@ -34,7 +34,7 @@ class HealthCheckController extends AbstractApplicationController
     public function checkDefaultTablesExist(Request $request, EntityManagerInterface $entityManager): Response
     {
         try {
-            $entityManager->getRepository(User::class)->findAll();
+            $entityManager->getRepository(User::class)->find(1);
 
             return $this->json([
                 'message' => 'Default database tables exist',

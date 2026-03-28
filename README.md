@@ -1,15 +1,13 @@
 # Symfony Base Template
 
 <p>
-<img src="https://img.shields.io/badge/Version-2.0.1-blue" alt="Version 2.0.1">
+<img src="https://img.shields.io/badge/Version-2.0.2-blue" alt="Version 2.0.2">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <img src="https://img.shields.io/badge/Symfony-7.3-black?logo=symfony" alt="Symfony 7.3">
 </p>
 
 A **highly opinionated**, production-ready Symfony 7.3 starter template designed for rapid application development with 
 a modern frontend stack.
-
----
 
 ## 🚀 Features
 
@@ -19,37 +17,30 @@ a modern frontend stack.
 * **Auth System:** Full "out-of-the-box" flow (Login, Registration, Password Reset, Email Verification).
 * **Email Builder:** A database-driven utility for generating templated HTML emails.
 * **Quality Gates:** Pre-configured PHPStan (Max Level), PHP-CS-Fixer, and ESLint.
-* **Health Checks:** Built-in endpoints for DB connectivity and environment requirements.
-
----
 
 ## 🛠 Installation
+### Create your project
+```bash
+composer create-project winningsoftware/symfony-base my-project
+```
 
-1.  **Create the project:**
-    ```bash
-    composer create-project winningsoftware/symfony-base my-project
-    ```
+This will run the installer as part of the post create project command. The installer creates the required directories
+and copies the relevant config files as well as running `composer install`, so you don't need to run this manually.
+    
+### Configure your environment
+Update your `.env` file to suit your application/development environment. See the "Environment Configuration" section
+below.
 
-2.  **Environment Setup:**
-    ```bash
-    cd my-project
-    cp .env.template .env
-    # See the "Environment Configuration" section below for details
-    ```
+### Install JavaScript dependencies
+```bash
+npm install
+```
 
-3.  **Install Dependencies:**
-    ```bash
-    composer install
-    npm install
-    ```
-
-4.  **Database Initialization:**
-    ```bash
-    php bin/console app:database:setup
-    # Or manually import data/setup.sql
-    ```
-
----
+### Database initialisation
+```bash
+php bin/console app:database:setup
+# Or manually import data/setup.sql
+```
 
 ## ⚙️ Environment Configuration
 
@@ -64,10 +55,7 @@ Before running the app, update your `.env` file with the following key variables
 | `USE_HMR`            | `false`                   | Set to `true` to enable Vite Hot Module Replacement |
 | `FONTAWESOME_KIT_ID` | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                    |
 
----
-
 ## 💻 Development Workflow
-
 This template supports both local and containerized development. Choose the method that fits your environment.
 
 ### 1. Running the Project (Local)
@@ -93,7 +81,7 @@ HMR is configured for both Vue/SCSS assets and Latte templates.
 * **Containerized Dev:** If running over plain HTTP in Docker, ensure `server.https` is `false` and `server.hmr.protocol` 
 is set to `ws`.
 
-### 3. Quality Control
+### 4. Quality Control
 Run these commands before committing to maintain high standards:
 
 | Tool             | Command         | Description                   |
@@ -101,10 +89,8 @@ Run these commands before committing to maintain high standards:
 | **PHPStan**      | `composer stan` | Static analysis (Level: Max)  |
 | **PHP-CS-Fixer** | `composer cs`   | Auto-fix coding standards     |
 | **ESLint**       | `npm run lint`  | Lint Vue and TypeScript files |
----
 
 ## 📂 Project Structure
-
 This template uses a modular, domain-oriented structure. The `src/` directory handles PHP logic, while `assets/scripts/` 
 organizes Vue components and frontend utilities into feature-based plugins.
 
@@ -147,17 +133,12 @@ The built-in `EmailBuilder` utility allows you to generate emails by referencing
 **Example Usage:**
 ```php
 $email = $this->emailBuilder->getEmail(
-    EmailType::VERIFY_EMAIL_ADDRESS,
-    'user@example.com',
+    EmailType::GREET_USER,
+    $user->getEmail(),
     [
-        'verificationUrl' => $this->urlGenerator->generate(
-            'authenticate_verify_email',
-            ['token' => $token->getToken()],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        ),
+        'user' => $user,
     ]
 );
-
 $this->mailer->send($email);
 ```
 
@@ -181,8 +162,6 @@ $this->mailer->send($email);
 
 > Run `php bin/console debug:router` for the full list of included endpoints.
 
----
-
 ## 🔧 Customizing
 
 * **Homepage:** The main entry point is defined in `src/Application/IndexController.php` with the template at 
@@ -193,8 +172,6 @@ Reset, and Email Verification.
 * **Auth UI:** For the frontend side of the built-in system, this project uses Vue components found in the 
 `assets/scripts/Plugin/AuthCore` directory.
 * **Styles:** Global styles, Tailwind directives, and SCSS variables are managed in `assets/styles/app.scss`.
-
----
 
 ## 🐳 Docker & Advanced Setup
 
