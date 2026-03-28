@@ -42,7 +42,7 @@ class HealthCheckController extends AbstractApplicationController
             ]);
         } catch (\Exception $e) {
             return $this->json([
-                'message' => 'Default tables do not exist. Please run the database setup script at data/setup.sql',
+                'message' => 'Default tables do not exist. Run: bin/console app:database:setup',
                 'success' => false,
             ]);
         }
@@ -65,23 +65,37 @@ class HealthCheckController extends AbstractApplicationController
     #[Route(path: '/health-check/symfony-version', name: 'app_health_check_symfony_version', methods: [Request::METHOD_GET])]
     public function checkSymfonyVersion(): Response
     {
+        $symfonyVersion = $this->getSymfonyVersion();
+
+        if (!$symfonyVersion) {
+            return $this->json([
+                'message' => 'Symfony version is empty',
+                'success' => false,
+            ]);
+        }
+
+        return $this->json([
+            'message' => 'Symfony version is ' . $symfonyVersion,
+            'success' => (float) $symfonyVersion >= 7.3,
+        ]);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    private function getSymfonyVersion(): ?string
+    {
         $path = sprintf('%s/composer.json', dirname(__DIR__, 3));
         $composerContents = file_get_contents($path);
 
         if (!$composerContents) {
-            return $this->json([
-                'message' => 'Composer.json is empty',
-                'success' => false,
-            ]);
+            return null;
         }
 
         $composerJson = json_decode($composerContents, true, 512, JSON_THROW_ON_ERROR);
 
         if (!is_array($composerJson)) {
-            return $this->json([
-                'message' => 'Composer.json is empty',
-                'success' => false,
-            ]);
+            return null;
         }
 
         $symfonyVersion = null;
@@ -92,11 +106,6 @@ class HealthCheckController extends AbstractApplicationController
                 : null;
         }
 
-        $symfonyVersion = is_float($symfonyVersion) ? $symfonyVersion : 'Unknown';
-
-        return $this->json([
-            'message' => 'Symfony version is ' . $symfonyVersion,
-            'success' => (float) $symfonyVersion >= 7.3,
-        ]);
+        return is_float($symfonyVersion) ? (string) $symfonyVersion : null;
     }
 }
