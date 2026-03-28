@@ -90,7 +90,8 @@ For a production-like environment, we recommend using **Docker**. A standard set
 ### 3. Hot Module Replacement (HMR)
 HMR is configured for both Vue/SCSS assets and Latte templates.
 * **Local Dev:** The default `server` block in `vite.config.ts` works out of the box.
-* **Containerized Dev:** If running over plain HTTP in Docker, ensure `server.https` is `false` and `server.hmr.protocol` is set to `ws`.
+* **Containerized Dev:** If running over plain HTTP in Docker, ensure `server.https` is `false` and `server.hmr.protocol` 
+is set to `ws`.
 
 ### 3. Quality Control
 Run these commands before committing to maintain high standards:
@@ -128,7 +129,7 @@ assets/
 ## 🗄 Database Schema
 
 This project uses a **multi-schema approach** to maintain strict separation between the Authentication system and other 
-areas of the application.
+areas of your application.
 
 The `php bin/console app:database:setup` command executes `data/setup.sql`, which creates the following:
 
@@ -137,7 +138,7 @@ The `php bin/console app:database:setup` command executes `data/setup.sql`, whic
 
 > **IMPORTANT**: Before running the setup command, review `data/setup.sql`. If your database user does not have `CREATE SCHEMA` 
 > permissions, or if you prefer a different database setup, you will need to modify this script and the corresponding 
-> Doctrine Entity mappings.
+> Doctrine Entity mappings. You'll need to expose the relevant port (3000 by default) from your PHP container.
 
 ## 📧 Email System
 
