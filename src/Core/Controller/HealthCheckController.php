@@ -42,7 +42,7 @@ class HealthCheckController extends AbstractApplicationController
             ]);
         } catch (\Exception $e) {
             return $this->json([
-                'message' => 'Default tables do not exist. Please run the database setup script at data/setup.sql',
+                'message' => 'Default tables do not exist. Run: bin/console app:database:setup',
                 'success' => false,
             ]);
         }

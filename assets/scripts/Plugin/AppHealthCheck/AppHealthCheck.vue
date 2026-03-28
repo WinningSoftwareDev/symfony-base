@@ -63,13 +63,20 @@ runChecks().then(() => {
 </script>
 
 <template>
-  <div class="px-4 py-3 rounded-lg bg-primary/10">
-    <h2 class="font-bold mt-1">Application Health Check</h2>
-    <div>
+  <div class="bg-gray-900/50 rounded-2xl border border-gray-800 overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-800 bg-gray-800/30 flex justify-between items-center">
+      <h2 class="text-sm font-bold tracking-widest uppercase text-gray-400">System Integrity</h2>
+      <i v-if="isLoading" class="fa-duotone fa-spinner-third fa-spin text-indigo-400"></i>
+    </div>
+
+    <div class="p-4 space-y-3">
       <HealthCheckItem v-for="(item, index) in checkResults"
                        :key="index"
                        :result="item" />
-      <i v-if="isLoading" class="fa-duotone fa-light fa-fan fa-spin fa-3x mt-2"></i>
+
+      <div v-if="isLoading && checkResults.length < 4" class="p-4 border-2 border-dashed border-gray-800 rounded-xl animate-pulse flex items-center justify-center">
+        <span class="text-gray-600 text-xs italic tracking-widest">Running Diagnostics...</span>
+      </div>
     </div>
   </div>
 </template>
