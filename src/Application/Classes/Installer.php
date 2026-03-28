@@ -127,11 +127,11 @@ final readonly class Installer
 
     private function cleanupSetupFiles(): void
     {
-        $setupScript = sprintf('%s/bin/setup', dirname(__FILE__, 4));
         $envTemplate = sprintf('%s/.env.template', dirname(__FILE__, 4));
         $readme = sprintf('%s/README.md', dirname(__FILE__, 4));
         $changelog = sprintf('%s/CHANGELOG.md', dirname(__FILE__, 4));
         $changelogTemplate = sprintf('%s/CHANGELOG.template.md', dirname(__FILE__, 4));
+        $viteTemplate = sprintf('%s/vite.config.template.ts', dirname(__FILE__, 4));
 
         if (file_exists($readme)) {
             unlink($readme);
@@ -145,8 +145,8 @@ final readonly class Installer
             unlink($envTemplate);
         }
 
-        if (file_exists($setupScript)) {
-            unlink($setupScript);
+        if (file_exists($viteTemplate)) {
+            unlink($viteTemplate);
         }
 
         if (file_exists($changelogTemplate)) {
@@ -191,10 +191,6 @@ final readonly class Installer
                 $gitignoreContent = str_replace('/vite.config.ts', '', $gitignoreContent);
                 file_put_contents($gitignoreFilePath, $gitignoreContent);
             }
-        }
-
-        if (file_exists($templateFile)) {
-            unlink($templateFile);
         }
     }
 }

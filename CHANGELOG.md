@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Updated default icon logo displayed on app index
 
 ### Fixed
+- Fixed login/registration form submissions when database is not yet configured
 - Fix to ensure that `vite.config.template.ts` is deleted on correctly app install
 
 ## [2.0.1] - 2026-03-28
