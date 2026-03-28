@@ -35,21 +35,30 @@ export default defineConfig({
         }
     },
     server: {
-        host: '0.0.0.0',
         port: 3000,
         strictPort: true,
-        https: {
-            key: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.key'),
-            cert: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.crt'),
-        },
-        cors: true,
-        watch: {
-            usePolling: true,
-        },
         hmr: {
-            host: '{APP_NAME}.app',
-            protocol: 'wss',
-            clientPort: 3000
+            host: 'localhost',
+            port: 3000,
+            protocol: 'ws'
         }
-    }
+    },
+    // server: {
+    //     host: '0.0.0.0',
+    //     port: 3000,
+    //     strictPort: true,
+    //     https: {
+    //         key: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.key'),
+    //         cert: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.crt'),
+    //     },
+    //     cors: true,
+    //     watch: {
+    //         usePolling: true,
+    //     },
+    //     hmr: {
+    //         host: '{APP_NAME}.app',
+    //         protocol: 'wss',
+    //         clientPort: 3000
+    //     }
+    // }
 });
