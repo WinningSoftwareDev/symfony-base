@@ -49,11 +49,8 @@ class RegistrationController extends AbstractApplicationController
         $data = new RegistrationDTO();
         $form = $this->createForm(RegistrationForm::class, $data);
         $form->handleRequest($request);
-        $errors = [];
 
         if ($form->isSubmitted()) {
-            $errors = $this->validator->validate($data);
-
             try {
                 $this->entityManager->getRepository(User::class)->find(1);
             } catch (\Exception $e) {
@@ -98,7 +95,7 @@ class RegistrationController extends AbstractApplicationController
 
         return $this->json([
             'success' => false,
-            'errors' => $this->getValidationErrors($data, $errors),
+            'errors' => $this->getValidationErrors($data, $this->validator->validate($data)),
             'redirect' => $this->generateUrl('app_index'),
         ]);
     }
