@@ -1,214 +1,193 @@
 # Symfony Base Template
 
 <p>
-<!-- Version Badge -->
-<img src="https://img.shields.io/badge/Version-1.0.0-blue" alt="Version 1.0.0">
-<!-- License Badge -->
+<img src="https://img.shields.io/badge/Version-2.0.0-blue" alt="Version 2.0.0">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
+<img src="https://img.shields.io/badge/Symfony-7.3-black?logo=symfony" alt="Symfony 7.3">
 </p>
 
-A _highly opinionated_, ready-to-use Symfony 7 app starter template.
+A **highly opinionated**, production-ready Symfony 7.3 starter template designed for rapid application development with a modern frontend stack.
 
-## Table of Contents
+---
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Standards & Quality Tools](#standards--quality-tools)
-- [Development Workflow](#development-workflow)
-- [Available Routes](#available-routes)
-- [Customizing](#customizing)
+## 🚀 Features
 
-## Prerequisites
+* **Core:** Symfony 7.3 + Doctrine ORM/DBAL.
+* **Templating:** [Latte](https://latte.nette.org/) — with custom Vite integration for **Instant Live-Reload**.
+* **Frontend:** Vue.js 3, Vite, TailwindCSS, TypeScript, and SCSS.
+* **Auth System:** Full "out-of-the-box" flow (Login, Registration, Password Reset, Email Verification).
+* **Email Builder:** A database-driven utility for generating templated HTML emails.
+* **Quality Gates:** Pre-configured PHPStan (Max Level), PHP-CS-Fixer, and ESLint.
+* **Health Checks:** Built-in endpoints for DB connectivity and environment requirements.
 
-Before you begin, ensure you have the following installed:
+---
 
-- **PHP 8.3+** - Required for Symfony 7.3
-- **Composer** - Dependency management
-- **Node.js & npm** - Used for frontend assets (Vue.js, Vite, TailwindCSS). Only required on your machine if you are 
-  building your assets locally (i.e. not inside a container)
+## 🛠 Installation
 
-### Development Environment
+1.  **Create the project:**
+    ```bash
+    composer create-project winningsoftware/symfony-base my-project
+    ```
 
-This project can run in various environments:
+2.  **Environment Setup:**
+    ```bash
+    cd my-project
+    cp .env.template .env
+    # See the "Environment Configuration" section below for details
+    ```
 
-- **Local PHP Server**: Use `php -S localhost:8000 -t public/` for quick testing
-- **Docker**: Recommended for production-like development (PHP, Nginx, MySQL, Mailcatcher)
-- **MySQL Database**: Can use local or remote database connections
-- **Email**: Works with local Mailcatcher or remote services like Mailtrap
-
-## Installation
-
-```bash
-composer create-project winningsoftware/symfony-base my-project
-```
-
-## Features
-
-- **Symfony 7.3** - Latest stable Symfony version
-- **Latte Templating Engine** - Clean, intuitive templating
-- **Full Authentication System** - Login, Registration, Password Reset and Email Verification
-- **Doctrine ORM/DBAL** - Database abstraction layer
-- **Frontend Stack** - NPM with Vite, Vue.js 3, TailwindCSS, TypeScript, SCSS
-- **Email Builder** - Built-in email template system
-- **Health Checks** - Database connection, table existence, PHP/Symfony version checks
-- **Standards Enforcement** - PHPStan (max level), PHP-CS-Fixer, ESLint
-
-## Project Structure
-
-```
-src/
-├── Core/              # Core framework components
-│   ├── Controller/     # Base controllers and utilities
-│   ├── Entity/         # Base entity classes
-│   └── ...
-├── Application/        # Main application code
-│   ├── Command/        # Console commands
-│   ├── Controller/     # Application controllers
-│   └── ...
-├── Authentication/     # Authentication system
-│   ├── Controller/     # Auth controllers
-│   ├── Entity/         # User, tokens, etc.
-│   └── ...
-└── Kernel.php          # Symfony kernel
-
-assets/
-├── Plugin/            # Vue.js plugins
-│   └── AuthCore/       # Authentication UI components
-├── scripts/           # TypeScript/Vue components
-├── styles/            # SCSS/Tailwind styles
-└── ...
-
-templates/
-├── application/       # Main application templates
-├── authentication/    # Auth templates
-└── ...
-```
-
-## Standards & Quality Tools
-
-This project enforces high code quality standards using:
-
-### PHP Tools
-
-**PHPStan** - Static analysis tool for PHP
-```bash
-composer stan
-```
-- Configuration: `phpstan.neon`
-- Level: `max` (most strict)
-- Includes Doctrine extension for entity analysis
-
-**PHP-CS-Fixer** - Code style fixer
-```bash
-composer cs
-```
-- Automatically fixes code style issues
-- Run with `--diff` to see changes before applying
-- Apply fixes: `composer cs -- --allow-risky=yes`
-
-### JavaScript/TypeScript Tools
-
-**ESLint** - JavaScript/TypeScript linter
-```bash
-npm run lint
-```
-- Configuration: `eslint.config.mts`
-- Lints `.ts`, `.vue` files in `assets/`
-- Includes Vue.js and TypeScript support
-
-## Development Workflow
-
-### Getting Started
-1. Install dependencies:
+3.  **Install Dependencies:**
     ```bash
     composer install
     npm install
     ```
 
-2. Configure environment settings:
-    ```bash
-    cp .env.template .env 
-    ```
-
-3. (Optional) If using MySQL, you can run the out of the box DB setup for the authentication and email system:
+4.  **Database Initialization:**
     ```bash
     php bin/console app:database:setup
+    # Or manually import data/setup.sql
     ```
 
-4. Build assets:
-    ```bash
-    symfony serve -d
-    npm run vite:build
-    ```
+---
 
-#### Hot Module Reloading
-To make use of Vite's Hot Module Reloading, you will need containers setup to expose port 3000 of the PHP container. 
-HMR **will not** work out of the box - check out the `server` block in `vite.config.ts` and adapt this to suit your 
-setup.
+## ⚙️ Environment Configuration
 
-### Quality Checks
-Run these before committing:
-```bash
-# Check PHP code quality
-composer stan
+Before running the app, update your `.env` file with the following key variables:
 
-# Fix PHP code style
-composer cs
+| Variable             | Default / Example         | Description                                         |
+|:---------------------|:--------------------------|:----------------------------------------------------|
+| `APP_NAME`           | `My App`                  | The name of your application                        |
+| `DEFAULT_URI`        | `http://localhost`        | Used for generating absolute URLs                   |
+| `DB_HOST`            | `localhost`               | Database host (use `mysql` if using Docker)         |
+| `MAILER_DSN`         | `smtp://mailcatcher:1025` | SMTP connection string                              |
+| `USE_HMR`            | `false`                   | Set to `true` to enable Vite Hot Module Replacement |
+| `FONTAWESOME_KIT_ID` | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                    |
 
-# Check JavaScript/TypeScript quality
-npm run lint
+---
+
+## 💻 Development Workflow
+
+This template supports both local and containerized development. Choose the method that fits your environment.
+
+### 1. Running the Project
+The simplest way to get started is using PHP's built-in server:
+
+* **Terminal A (PHP):** `php -S localhost:8000 -t public/`
+* **Terminal B (Vite):** `npm run vite:dev`
+* **Config:** Set `USE_HMR=true` and `DEFAULT_URI=http://localhost:8000` in your `.env`.
+
+### 2. Hot Module Replacement (HMR)
+HMR is configured for both Vue/SCSS assets and Latte templates.
+
+* **Local Dev:** The default `server` block in `vite.config.ts` works out of the box for local PHP/Vite setups.
+* **Docker/Advanced Dev:** For containerized environments (e.g., Nginx with HTTPS reverse proxy), a commented-out configuration block is provided in `vite.config.ts` as a reference for mapping certs and adjusting HMR protocols (`wss`).
+
+### 3. Quality Control
+Run these commands before committing to maintain high standards:
+
+| Tool             | Command         | Description                   |
+|:-----------------|:----------------|:------------------------------|
+| **PHPStan**      | `composer stan` | Static analysis (Level: Max)  |
+| **PHP-CS-Fixer** | `composer cs`   | Auto-fix coding standards     |
+| **ESLint**       | `npm run lint`  | Lint Vue and TypeScript files |
+---
+
+## 📂 Project Structure
+
+This template uses a modular, domain-oriented structure. The `src/` directory handles PHP logic, while `assets/scripts/` organizes Vue components and frontend utilities into feature-based plugins.
+
+```text
+src/
+├── Application/    # Domain: Where you build your app logic
+├── Authentication/ # Module: Self-contained User & Security logic
+├── Core/           # Internal: Base classes and framework extensions
+└── Kernel.php
+
+assets/
+├── scripts/
+│   ├── Core/       # Frontend utilities (ComponentLoader, FlashHandler)
+│   ├── Plugin/     
+│   │   ├── AppCore/         # Homepage UI (IntroCard and sub-components)
+│   │   ├── AppHealthCheck/  # Health check UI components
+│   │   └── AuthCore/        # Authentication UI components
+│   └── app.ts      # Main JS entry point
+└── styles/         # SCSS and Tailwind directives
 ```
 
-### Common Commands
+## 🗄 Database Schema
 
-- **Clear cache**: `php bin/console cache:clear`
-- **Build assets**: `npm run vite:build`
+This project uses a **multi-schema approach** to maintain strict separation between the Authentication system and other 
+areas of the application.
 
-## Basic Usage
+The `php bin/console app:database:setup` command executes `data/setup.sql`, which creates the following:
 
-After installation, run `npm install` to install node dependencies. This has been excluded from the auto-setup script to
-allow you to run this in your container or your own environment without requiring node/npm locally.
+* **`Authentication` Schema**: Contains `tblUser`, `tblVerificationToken`, and `tblPasswordResetToken`.
+* **`Core` Schema**: Contains `ublEmailType` (Look-up table for email subjects and templates).
 
-Update your projects `.env` file with your database credentials and run the SQL manually (`data/setup.sql`).
+> **IMPORTANT**: Before running the setup command, review `data/setup.sql`. If your database user does not have `CREATE SCHEMA` 
+> permissions, or if you prefer a different database setup, you will need to modify this script and the corresponding 
+> Doctrine Entity mappings.
 
-## Customizing
+## 📧 Email System
 
-This is just a template project with some helpful features baked in. Modify anything and everything to suit your needs.
+The built-in `EmailBuilder` utility allows you to generate emails by referencing a "Handle" stored in the `Core.ublEmailType` table.
 
-Your app homepage route is defined in `src/Application/IndexController.php` and the template is located 
-at `templates/application/index.latte` - remove the default content and replace it with your own.
+**Example Usage:**
+```php
+$email = $this->emailBuilder->getEmail(
+    EmailType::VERIFY_EMAIL_ADDRESS,
+    'user@example.com',
+    [
+        'verificationUrl' => $this->urlGenerator->generate(
+            'authenticate_verify_email',
+            ['token' => $token->getToken()],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        ),
+    ]
+);
 
-### Authentication
+$this->mailer->send($email);
+```
 
-All the backend authentication code has been included and can be found in the `src/Authentication` directory. Out of the 
-box this includes:
+## 🛣 Available Routes
 
-- Login
-- Registration
-- Password Reset
-- Email Verification
-- Entities for: User, Verification Token and Password Reset Token
+| Namespace              | Name                                    | Method       | Path                                 |
+|:-----------------------|-----------------------------------------|--------------|--------------------------------------|
+| **App\Core**           | `app_health_check_database_connection`  | `GET`        | `/health-check/database-connection`  |
+| **App\Core**           | `app_health_check_default_tables_exist` | `GET`        | `/health-check/default-tables-exist` |
+| **App\Core**           | `app_health_check_php_version`          | `GET`        | `/health-check/php-version`          |
+| **App\Core**           | `app_health_check_symfony_version`      | `GET`        | `/health-check/symfony-version`      |
+| **App\Application**    | `app_index`                             | `GET`        | `/`                                  |
+| **App\Authentication** | `authenticate`                          | `GET`        | `/authenticate`                      |
+| **App\Authentication** | `authenticate_request_password_reset`   | `GET`,`POST` | `/authenticate/password-reset`       |
+| **App\Authentication** | `authenticate_password_reset`           | `GET`,`POST` | `/authenticate/password-reset/reset` |
+| **App\Authentication** | `authenticate_login`                    | `GET`,`POST` | `/authenticate/login`                |
+| **App\Authentication** | `authenticate_logout`                   | `GET`        | `/authenticate/logout`               |
+| **App\Authentication** | `authenticate_get_logged_in_user`       | `GET`        | `/authenticate/current-user`         |
+| **App\Authentication** | `authenticate_register`                 | `POST`       | `/authenticate/register`             |
+| **App\Authentication** | `authenticate_verify_email`             | `GET`        | `/authenticate/verify`               |
 
-For the frontend side of the built-in Authentication system, check out the `assets/Plugin/AuthCore` directory.
+> Run `php bin/console debug:router` for the full list of included endpoints.
 
-## Available Routes
+---
 
-Out of the box, this project includes the following routes:
+## 🔧 Customizing
 
-| Name                                    | Method       | Path                                 |
-|-----------------------------------------|--------------|--------------------------------------|
-| `app_health_check_database_connection`  | `GET`        | `/health-check/database-connection`  |
-| `app_health_check_default_tables_exist` | `GET`        | `/health-check/default-tables-exist` |
-| `app_health_check_php_version`          | `GET`        | `/health-check/php-version`          |
-| `app_health_check_symfony_version`      | `GET`        | `/health-check/symfony-version`      |
-| `app_index`                             | `GET`        | `/`                                  |
-| `authenticate`                          | `GET`        | `/authenticate`                      |
-| `authenticate_request_password_reset`   | `GET`,`POST` | `/authenticate/password-reset`       |
-| `authenticate_password_reset`           | `GET`,`POST` | `/authenticate/password-reset/reset` |
-| `authenticate_login`                    | `GET`,`POST` | `/authenticate/login`                |
-| `authenticate_logout`                   | `GET`        | `/authenticate/logout`               |
-| `authenticate_get_logged_in_user`       | `GET`        | `/authenticate/current-user`         |
-| `authenticate_register`                 | `POST`       | `/authenticate/register`             |
-| `authenticate_verify_email`             | `GET`        | `/authenticate/verify`               |
+* **Homepage:** The main entry point is defined in `src/Application/IndexController.php` with the template at 
+`templates/application/index.latte`. This template renders a single `IntroCard` Vue component, which acts as a wrapper 
+for various internal components. You can find and modify these in `assets/scripts/Plugin/AppCore`.
+* **Authentication:** All backend logic resides in `src/Authentication`. This includes Login, Registration, Password 
+Reset, and Email Verification.
+* **Auth UI:** For the frontend side of the built-in system, this project uses Vue components found in the 
+`assets/scripts/Plugin/AuthCore` directory.
+* **Styles:** Global styles, Tailwind directives, and SCSS variables are managed in `assets/styles/app.scss`.
+
+---
+
+## 🐳 Docker & Advanced Setup
+
+The recommended approach for a production-like environment is a containerized setup (PHP, Nginx, MySQL, and Mailcatcher).
+
+If you are using a custom Docker setup, ensure you update the `server` block in `vite.config.ts` to use the commented out 
+section. If you're using HTTP instead of HTTPS inside your containers, remove `server.https` and `server.hmr.protocol` to 
+`ws`.

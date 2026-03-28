@@ -1,6 +1,6 @@
 {
   "name": "winningsoftware/symfony-base",
-  "description": "A base Symfony 7.3 project template with Latte templating",
+  "description": "A base Symfony 7.3 project template with Latte + Vue",
   "type": "project",
   "license": "GPL-3.0-or-later",
   "version": "1.0.0",
@@ -41,7 +41,8 @@
     "post-create-project-cmd": [
       "@php -r \"copy('.env.template', '.env');\"",
       "@php bin/console app:install",
-      "mkdir -p var/cache var/log && chmod -R 777 var/"
+      "mkdir -p var/cache var/log && chmod -R 777 var/",
+      "rm -rf src/Application/Classes/ src/Application/Command/SetupCommand.php"
     ]
   },
   "require-dev": {
