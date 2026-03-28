@@ -78,7 +78,7 @@ final readonly class Installer
      */
     private function updateComposerJson(string $projectName, string $packageName): void
     {
-        $composerFile = sprintf('%s/composer.json', dirname(__FILE__, 3));
+        $composerFile = sprintf('%s/composer.json', dirname(__FILE__, 4));
 
         if (!file_exists($composerFile)) {
             $this->io->error('Error: composer.json file not found!');
@@ -127,11 +127,11 @@ final readonly class Installer
 
     private function cleanupSetupFiles(): void
     {
-        $setupScript = sprintf('%s/bin/setup', dirname(__FILE__, 3));
-        $envTemplate = sprintf('%s/.env.template', dirname(__FILE__, 3));
-        $readme = sprintf('%s/README.md', dirname(__FILE__, 3));
-        $changelog = sprintf('%s/CHANGELOG.md', dirname(__FILE__, 3));
-        $changelogTemplate = sprintf('%s/CHANGELOG.template.md', dirname(__FILE__, 3));
+        $setupScript = sprintf('%s/bin/setup', dirname(__FILE__, 4));
+        $envTemplate = sprintf('%s/.env.template', dirname(__FILE__, 4));
+        $readme = sprintf('%s/README.md', dirname(__FILE__, 4));
+        $changelog = sprintf('%s/CHANGELOG.md', dirname(__FILE__, 4));
+        $changelogTemplate = sprintf('%s/CHANGELOG.template.md', dirname(__FILE__, 4));
 
         if (file_exists($readme)) {
             unlink($readme);
@@ -156,8 +156,8 @@ final readonly class Installer
 
     private function setupViteConfig(string $projectName): void
     {
-        $templateFile = sprintf('%s/vite.config.template.ts', dirname(__FILE__, 3));
-        $configFile = sprintf('%s/vite.config.ts', dirname(__FILE__, 3));
+        $templateFile = sprintf('%s/vite.config.template.ts', dirname(__FILE__, 4));
+        $configFile = sprintf('%s/vite.config.ts', dirname(__FILE__, 4));
 
         if (!file_exists($templateFile)) {
             $this->io->error('Error: vite.config.template.ts file not found!');
@@ -182,7 +182,7 @@ final readonly class Installer
         $configContent = str_replace('{APP_NAME}', strtolower(str_replace(' ', '-', $projectName)), $configContent);
         file_put_contents($configFile, $configContent);
 
-        $gitignoreFilePath = sprintf('%s/.gitignore', dirname(__FILE__, 3));
+        $gitignoreFilePath = sprintf('%s/.gitignore', dirname(__FILE__, 4));
 
         if (file_exists($gitignoreFilePath)) {
             $gitignoreContent = file_get_contents($gitignoreFilePath);
