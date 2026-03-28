@@ -11,8 +11,11 @@ withDefaults(defineProps<IProps>(), {
 </script>
 
 <template>
-  <span class="px-5 py-3.5 cursor-pointer text-xl flex-1 text-center transition duration-150"
-        :class="{'bg-primary hover:bg-accent hover:text-light-text text-dark-text': active, 'hover:bg-accent/30': !active}">
+  <span class="px-5 py-4 cursor-pointer text-sm uppercase tracking-widest font-bold flex-1 text-center transition-all duration-200"
+        :class="{
+          'bg-primary text-dark-text shadow-inner': active,
+          'text-gray-400 hover:text-white hover:bg-white/5': !active
+        }">
     {{ text }}
   </span>
 </template>

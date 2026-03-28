@@ -19,21 +19,26 @@ withDefaults(defineProps<IProps>(), {
 </script>
 
 <template>
-  <div>
-    <label class="font-semibold">{{ label }} <span v-if="required" class="text-accent">*</span></label>
+  <div class="space-y-1.5">
+    <label :for="id" class="text-sm font-medium text-gray-300 ml-1">
+      {{ label }} <span v-if="required" class="text-primary">*</span>
+    </label>
     <input :type="type"
-           class="mt-1 p-2 block w-full rounded-md border caret-accent font-bold placeholder-gray-500 focus:outline-none focus:ring-primary focus:ring focus:border-primary/40"
-           :class="{'bg-red-200/10': errors?.length}"
+           class="block w-full px-4 py-3 rounded-xl border transition-all duration-200
+                  bg-gray-900/50 border-gray-600 text-white placeholder-gray-500
+                  focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
+           :class="{'border-red-500/50 bg-red-500/5': errors?.length}"
            :name="name"
            :id="id"
            :placeholder="placeholder"
            v-model="model"
            :required="required" />
-    <div v-if="errors?.length" class="text-red-300">
+
+    <div v-if="errors?.length" class="px-1">
       <p v-for="(err, key) in errors"
          :key="key"
-         class="text-sm mt-1 first:mt-2">
-        {{ err }}
+         class="text-xs text-red-400 mt-1 flex items-center gap-1">
+        <i class="fa-solid fa-circle-exclamation text-[10px]"></i> {{ err }}
       </p>
     </div>
   </div>

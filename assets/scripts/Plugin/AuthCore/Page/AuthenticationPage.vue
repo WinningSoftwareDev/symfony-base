@@ -41,8 +41,8 @@ setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
 </script>
 
 <template>
-  <div class="border-2 border-gray-800 rounded-md overflow-hidden w-[96vw] mx-auto sm:w-[500px] min-h-[580px]">
-    <div class="flex border-b border-gray-700">
+  <div class="bg-gray-800/40 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden w-[96vw] mx-auto sm:w-[500px] min-h-[580px] shadow-2xl mt-12">
+    <div class="flex border-b border-gray-700/50 bg-gray-900/20">
       <FormToggle text="Login"
                   :active="activeComponent === LoginForm"
                   @click="setActiveComponent(LoginForm)" />
@@ -50,9 +50,8 @@ setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
                   :active="activeComponent === RegistrationForm"
                   @click="setActiveComponent(RegistrationForm)" />
     </div>
-    <div class="py-4 px-8">
-      <component :is="activeComponent"
-                 v-bind="activeComponentProps" />
+    <div class="py-10 px-10"> <component :is="activeComponent"
+                                         v-bind="activeComponentProps" />
     </div>
   </div>
 </template>

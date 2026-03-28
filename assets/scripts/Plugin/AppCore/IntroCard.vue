@@ -57,7 +57,6 @@ onMounted(() => {
               </div>
 
               <div class="flex gap-4 items-center">
-                <a href="/dashboard" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-lg font-bold transition">Go to Dashboard</a>
                 <IntroCardLink url="/authenticate/logout" text="Logout" class="text-gray-400 hover:text-white" />
               </div>
             </div>
@@ -65,7 +64,7 @@ onMounted(() => {
             <div v-if="!isLoading && !user" >
               <div class="flex flex-col sm:flex-row gap-4">
                 <a href="/authenticate?form=LoginForm"
-                   class="flex items-center justify-center gap-2 bg-primary hover:bg-orange-400 text-dark-text px-8 py-3 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-primary/20">
+                   class="flex items-center justify-center gap-2 bg-primary hover:bg-accent text-dark-text hover:text-light-text px-8 py-3 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-primary/20">
                   <i class="fa-duotone fa-right-to-bracket"></i>
                   Login to Account
                 </a>
@@ -89,8 +88,8 @@ onMounted(() => {
 
     <div class="mt-12 pt-6 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest text-gray-500">
       <div class="flex items-center gap-4">
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-code-branch text-indigo-400"></i> dev mode</span>
         <span class="flex items-center gap-1.5"><i class="fa-solid fa-server text-indigo-400"></i> Symfony 7.x</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-server text-indigo-400"></i> Symfony Base 2.0.0</span>
       </div>
       <p class="font-bold text-gray-400">{{ name }} &copy; {{ new Date().getFullYear() }}</p>
     </div>

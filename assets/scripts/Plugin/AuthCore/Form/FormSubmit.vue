@@ -10,8 +10,7 @@ withDefaults(defineProps<IProps>(), {
 </script>
 
 <template>
-  <button type="submit"
-          class="w-full py-2 px-4 cursor-pointer bg-primary font-semibold text-dark-text rounded-lg hover:bg-accent hover:text-light-text transition duration-150">
+  <button class="w-full cursor-pointer flex items-center justify-center gap-2 bg-primary hover:bg-accent text-dark-text hover:text-light-text px-8 py-3 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 shadow-lg shadow-primary/20 mt-6">
     {{ text }}
   </button>
 </template>
