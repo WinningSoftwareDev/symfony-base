@@ -6,7 +6,8 @@
 <img src="https://img.shields.io/badge/Symfony-7.3-black?logo=symfony" alt="Symfony 7.3">
 </p>
 
-A **highly opinionated**, production-ready Symfony 7.3 starter template designed for rapid application development with a modern frontend stack.
+A **highly opinionated**, production-ready Symfony 7.3 starter template designed for rapid application development with 
+a modern frontend stack.
 
 ---
 
@@ -69,18 +70,27 @@ Before running the app, update your `.env` file with the following key variables
 
 This template supports both local and containerized development. Choose the method that fits your environment.
 
-### 1. Running the Project
+### 1. Running the Project (Local)
 The simplest way to get started is using PHP's built-in server:
-
 * **Terminal A (PHP):** `php -S localhost:8000 -t public/`
 * **Terminal B (Vite):** `npm run vite:dev`
 * **Config:** Set `USE_HMR=true` and `DEFAULT_URI=http://localhost:8000` in your `.env`.
 
-### 2. Hot Module Replacement (HMR)
-HMR is configured for both Vue/SCSS assets and Latte templates.
+### 2. Docker Setup (Recommended)
+For a production-like environment, we recommend using **Docker**. A standard setup should include:
+* **PHP-FPM** (8.3+)
+* **Server (Nginx/Apache/Caddy etc)**
+* **MySQL 8.0+**
+* **Mailcatcher/Mailtrap** (for local email testing)
 
-* **Local Dev:** The default `server` block in `vite.config.ts` works out of the box for local PHP/Vite setups.
-* **Docker/Advanced Dev:** For containerized environments (e.g., Nginx with HTTPS reverse proxy), a commented-out configuration block is provided in `vite.config.ts` as a reference for mapping certs and adjusting HMR protocols (`wss`).
+> If using a custom Docker setup with an HTTPS reverse proxy, use the commented-out `server` block in `vite.config.ts` 
+> to map your certificates and enable `wss` for HMR. You will need to manually copy the certificate and key from your 
+> reverse proxy container into the referenced locations in your PHP container.
+
+### 3. Hot Module Replacement (HMR)
+HMR is configured for both Vue/SCSS assets and Latte templates.
+* **Local Dev:** The default `server` block in `vite.config.ts` works out of the box.
+* **Containerized Dev:** If running over plain HTTP in Docker, ensure `server.https` is `false` and `server.hmr.protocol` is set to `ws`.
 
 ### 3. Quality Control
 Run these commands before committing to maintain high standards:
@@ -94,7 +104,8 @@ Run these commands before committing to maintain high standards:
 
 ## 📂 Project Structure
 
-This template uses a modular, domain-oriented structure. The `src/` directory handles PHP logic, while `assets/scripts/` organizes Vue components and frontend utilities into feature-based plugins.
+This template uses a modular, domain-oriented structure. The `src/` directory handles PHP logic, while `assets/scripts/` 
+organizes Vue components and frontend utilities into feature-based plugins.
 
 ```text
 src/
