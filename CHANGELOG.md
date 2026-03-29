@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 - Improved the styling of the default error page
+- Reworked index to use components for logged in/logged-out user cards
 
 ## [2.0.2] - 2026-03-28
 ### Changed
