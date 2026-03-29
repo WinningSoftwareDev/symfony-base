@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Authentication\Entity;
 
+use App\Authentication\Interface\SimpleEntityInterface;
 use App\Core\Entity\AbstractBaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,9 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'tblRole', schema: 'Authentication')]
-class Role extends AbstractBaseEntity
+class Role extends AbstractBaseEntity implements SimpleEntityInterface
 {
-    const string ROLE_USER = 'ROLE_USER';
+    public const string ROLE_USER = 'ROLE_USER';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,11 +36,18 @@ class Role extends AbstractBaseEntity
     #[ORM\InverseJoinColumn(name: 'intPermissionId', referencedColumnName: 'intPermissionId')]
     private Collection $permissions;
 
-    public function __construct(string $name, string $handle)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->handle = $handle;
         $this->permissions = new ArrayCollection();
+    }
+
+    public static function create(string $name, string $handle): self
+    {
+        $role = new self();
+        $role->name = $name;
+        $role->handle = $handle;
+
+        return $role;
     }
 
     public function getName(): string

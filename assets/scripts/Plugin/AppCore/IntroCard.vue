@@ -31,10 +31,15 @@ onMounted(() => {
 });
 </script>
 
-<template>
-  <div class="w-full max-w-6xl mx-auto mt-12 px-4">
-    <IntroCardHeader :name="name" class="mb-8" />
+<style scoped>
+@reference 'tailwindcss/theme';
 
+.flex-center {
+  @apply flex items-center;
+}
+</style>
+<template>
+  <div class="w-full max-w-6xl mx-auto mt-12">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
       <div class="lg:col-span-7 space-y-6">
@@ -88,15 +93,6 @@ onMounted(() => {
       <div class="lg:col-span-5">
         <AppHealthCheck />
       </div>
-
-    </div>
-
-    <div class="mt-12 pt-6 border-t border-gray-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest text-gray-500">
-      <div class="flex items-center gap-4">
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-server text-indigo-400"></i> Symfony 7.x</span>
-        <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer text-indigo-400"></i> Symfony Base 2.0.2</span>
-      </div>
-      <p class="font-bold text-gray-400">{{ name }} &copy; {{ new Date().getFullYear() }}</p>
     </div>
   </div>
 </template>

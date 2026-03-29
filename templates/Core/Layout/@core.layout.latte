@@ -2,11 +2,17 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    {include '../../Core/Components/head.latte'}
+    {include '../../Core/Components/Theme/head.latte'}
     <body class="bg-page text-light-text">
         {include '../../Core/Components/flash-messages.latte'}
 
-        {block content}{/block}
+        <div class="max-w-6xl mx-auto">
+            {include '../../Core/Components/Theme/header.latte'}
+
+            {block content}{/block}
+
+            {include '../../Core/Components/Theme/footer.latte'}
+        </div>
 
         {if $_ENV['USE_HMR'] !== 'true'}
             {asset 'app.js'}

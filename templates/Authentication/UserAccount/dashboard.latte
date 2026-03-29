@@ -1,14 +1,12 @@
 {extends '../../Core/Layout/@core.layout.latte'}
 {varType App\Authentication\Entity\User $user}
-{varType string[] $_ENV}
 
 {block content}
-    <div class="w-full max-w-6xl mx-auto mt-12 px-4">
-        <IntroCardHeader name="{$_ENV['APP_NAME']}" />
+    <div class="w-full mt-12 px-4">
         <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <span class="text-primary uppercase tracking-[0.3em] text-[10px] font-bold mb-2 block">Account Overview</span>
-                <h1 class="text-5xl font-extrabold text-white tracking-tight">
+                <h1 class="text-4xl font-extrabold text-white tracking-tight">
                     Welcome back, <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">{$user->getEmail()}!</span>
                 </h1>
             </div>
