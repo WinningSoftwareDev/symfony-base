@@ -31,13 +31,6 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-@reference 'tailwindcss/theme';
-
-.flex-center {
-  @apply flex items-center;
-}
-</style>
 <template>
   <div class="w-full max-w-6xl mx-auto mt-12">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
