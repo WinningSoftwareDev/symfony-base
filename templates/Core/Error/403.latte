@@ -1,0 +1,7 @@
+{extends '../Layout/@core.layout.latte'}
+
+{block content}
+    {include 'error.latte',
+        heading: 'Error 403: Access Denied',
+        text: 'You do not have permission to access the required resource.'}
+{/block}

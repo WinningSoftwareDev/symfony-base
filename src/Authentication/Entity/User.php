@@ -6,6 +6,8 @@ namespace App\Authentication\Entity;
 
 use App\Authentication\Classes\DTO\RegistrationDTO;
 use App\Core\Entity\AbstractBaseEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -33,9 +35,18 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     private bool $isVerified;
 
     /**
-     * @var string[]
+     * @var Collection<int, Role>
      */
-    private array $roles = [];
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    #[ORM\JoinTable(name: 'tblUserRole', schema: 'Authentication')]
+    #[ORM\JoinColumn(name: 'intUserId', referencedColumnName: 'intUserId')]
+    #[ORM\InverseJoinColumn(name: 'intRoleId', referencedColumnName: 'intRoleId')]
+    private Collection $roles;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     public static function create(RegistrationDTO $dto, UserPasswordHasherInterface $passwordHasher): self
     {
@@ -80,18 +91,29 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->roles->map(fn (Role $role) => $role->getHandle())->toArray();
     }
 
     /**
-     * @param string[] $roles
+     * @return Collection<int, Role>
      */
-    public function setRoles(array $roles): void
+    public function getRoleObjects(): Collection
     {
-        $this->roles = $roles;
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): void
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+    }
+
+    public function removeRole(Role $role): void
+    {
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
+        }
     }
 
     /**

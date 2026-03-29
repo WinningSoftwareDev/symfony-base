@@ -14,10 +14,12 @@ class ErrorController extends AbstractApplicationController
         $statusCode = $exception->getStatusCode();
         $page = match ($statusCode) {
             Response::HTTP_INTERNAL_SERVER_ERROR => '500',
+            Response::HTTP_FORBIDDEN => '403',
             default => '404',
         };
         $pageTitle = match ($statusCode) {
             Response::HTTP_INTERNAL_SERVER_ERROR => 'Server Error',
+            Response::HTTP_FORBIDDEN => 'Access Denied',
             default => 'Page Not Found',
         };
 

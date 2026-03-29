@@ -19,6 +19,48 @@ CREATE TABLE Authentication.tblUser (
     INDEX I_tblUser_dtmCreated (dtmCreated)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE Authentication.tblRole (
+    intRoleId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    strRoleName VARCHAR(50) NOT NULL,
+    strHandle VARCHAR(50) NOT NULL,
+    dtmCreated DATETIME NOT NULL DEFAULT NOW(),
+    dtmUpdated DATETIME ON UPDATE NOW(),
+    PRIMARY KEY (intRoleId),
+    UNIQUE KEY UK_tblRole_strHandle (strHandle)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE Authentication.tblPermission (
+    intPermissionId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    strPermissionName VARCHAR(50) NOT NULL,
+    strHandle VARCHAR(50) NOT NULL,
+    dtmCreated DATETIME NOT NULL DEFAULT NOW(),
+    dtmUpdated DATETIME ON UPDATE NOW(),
+    PRIMARY KEY (intPermissionId),
+    UNIQUE KEY UK_tblPermission_strHandle (strHandle)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE Authentication.tblRolePermission (
+    intRoleId INT UNSIGNED NOT NULL,
+    intPermissionId INT UNSIGNED NOT NULL,
+    dtmCreated DATETIME NOT NULL DEFAULT NOW(),
+    dtmUpdated DATETIME ON UPDATE NOW(),
+    PRIMARY KEY (intRoleId, intPermissionId),
+    FOREIGN KEY FK_tblRolePermission_intRoleId (intRoleId)
+        REFERENCES Authentication.tblRole(intRoleId),
+    FOREIGN KEY FK_tblRolePermission_intPermissionId (intPermissionId)
+        REFERENCES Authentication.tblPermission(intPermissionId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE Authentication.tblUserRole (
+    intUserId INT UNSIGNED NOT NULL,
+    intRoleId INT UNSIGNED NOT NULL,
+    dtmCreated DATETIME NOT NULL DEFAULT NOW(),
+    dtmUpdated DATETIME ON UPDATE NOW(),
+    PRIMARY KEY (intUserId, intRoleId),
+    FOREIGN KEY FK_tblUserRole_intUserId (intUserId) REFERENCES Authentication.tblUser(intUserId),
+    FOREIGN KEY FK_tblUserRole_intRoleId (intRoleId) REFERENCES Authentication.tblRole(intRoleId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE Authentication.tblVerificationToken (
     intVerificationTokenId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     intUserId INT UNSIGNED NOT NULL,
@@ -61,3 +103,8 @@ INSERT INTO Core.ublEmailType
 VALUES
     ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', 'Core/Email/verify-email.latte'),
     ('Reset your password', 'PASSWORD_RESET', 'Core/Email/reset-password.latte');
+
+INSERT INTO Authentication.tblRole
+    (strRoleName, strHandle)
+VALUES
+    ('User', 'ROLE_USER');

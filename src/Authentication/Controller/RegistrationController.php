@@ -6,6 +6,7 @@ namespace App\Authentication\Controller;
 
 use App\Authentication\Classes\DTO\RegistrationDTO;
 use App\Authentication\Classes\Email\EmailVerificationService;
+use App\Authentication\Entity\Role;
 use App\Authentication\Entity\User;
 use App\Authentication\Form\RegistrationForm;
 use App\Core\Controller\AbstractApplicationController;
@@ -76,7 +77,12 @@ class RegistrationController extends AbstractApplicationController
                     ]);
                 }
 
+                $roleUser = $this->entityManager->getRepository(Role::class)->findOneBy(['handle' => Role::ROLE_USER]);
                 $user = User::create($data, $passwordHasher);
+
+                if ($roleUser instanceof Role) {
+                    $user->addRole($roleUser);
+                }
 
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();

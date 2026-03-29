@@ -57,6 +57,11 @@ onMounted(() => {
               </div>
 
               <div class="flex gap-4 items-center">
+                <a href="/user/account"
+                   class="flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 px-5 py-2 rounded-xl text-sm font-bold transition-all border border-indigo-500/20">
+                  <i class="fa-duotone fa-objects-column"></i>
+                  Go to Account Dashboard
+                </a>
                 <IntroCardLink url="/authenticate/logout" text="Logout" class="text-gray-400 hover:text-white" />
               </div>
             </div>
