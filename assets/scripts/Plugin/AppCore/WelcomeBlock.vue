@@ -15,7 +15,7 @@
         View the Repo
       </a>
       <span class="text-gray-700">|</span>
-      <span class="text-gray-500 italic">v2.0.2</span>
+      <span class="text-gray-500 italic">v2.1.0</span>
     </div>
   </div>
 </template>
