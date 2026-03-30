@@ -4,7 +4,7 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: "PHP 8.4: Code Standards"
+          name: "PHP 8.3: Code Standards"
           caches:
             - composer
           script:
