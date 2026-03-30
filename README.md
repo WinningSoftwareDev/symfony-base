@@ -18,14 +18,22 @@ a modern frontend stack.
 * **Email Builder:** A database-driven utility for generating templated HTML emails.
 * **Quality Gates:** Pre-configured PHPStan (Max Level), PHP-CS-Fixer, and ESLint.
 
+![index.png](screenshots/index.png)
+![authentication.png](screenshots/authentication.png)
+![user-overview.png](screenshots/user-overview.png)
+![error-page.png](screenshots/error-page.png)
+
 ## 🛠 Installation
 ### Create your project
 ```bash
 composer create-project winningsoftware/symfony-base my-project
 ```
 
-This will run the installer as part of the post create project command. The installer creates the required directories
-and copies the relevant config files as well as running `composer install`, so you don't need to run this manually.
+This will download the Symfony Base project to a new "my-project" directory in your current working directory. 
+
+This also runs the installer as part of the post create project command which creates the required directories, copies 
+the relevant config files, cleans up unnecessary files and runs `composer install` - so you don't need to run this 
+manually.
     
 ### Configure your environment
 Update your `.env` file to suit your application/development environment. See the "Environment Configuration" section

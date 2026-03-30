@@ -41,7 +41,7 @@
       "@php -r \"copy('.env.template', '.env');\"",
       "@php bin/console app:install",
       "mkdir -p var/cache var/log && chmod -R 777 var/",
-      "rm -rf src/Application/Classes/ src/Application/Command/SetupCommand.php"
+      "rm -rf src/Application/Classes/ src/Application/Command/SetupCommand.php screenshots/"
     ]
   },
   "require-dev": {
