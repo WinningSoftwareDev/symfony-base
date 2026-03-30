@@ -8,7 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 ### Added
 - Added `Role` and `Permission` entities to support authorisation checks
-- Added new controller and endpoint for user account overview
+- Added new controller and endpoint for user account overview: `UserAccountController` and `/user/account`
+- Added support for static image assets in Vue/TS; will now build any explicitly imported images to `public/assets/images` + 
+  ensured image loading works correctly for both `vite:dev` and `vite:build`
 
 ### Changed
 - Improved the styling of the default error page

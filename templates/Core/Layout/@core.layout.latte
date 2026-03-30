@@ -1,4 +1,5 @@
 {varType array $_ENV}
+{varType bool $isErrorPage}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,15 +8,19 @@
         {include '../../Core/Components/flash-messages.latte'}
 
         <div class="max-w-6xl mx-auto">
-            {include '../../Core/Components/Theme/header.latte'}
+            {if !isset($isErrorPage)}
+                {include '../../Core/Components/Theme/header.latte'}
+            {/if}
 
             {block content}{/block}
 
-            {include '../../Core/Components/Theme/footer.latte'}
+            {if !isset($isErrorPage)}
+                {include '../../Core/Components/Theme/footer.latte'}
+            {/if}
         </div>
 
         {if $_ENV['USE_HMR'] !== 'true'}
-            {asset 'app.js'}
+            <script type="module" src="/assets/app.js"></script>
         {/if}
     </body>
 </html>

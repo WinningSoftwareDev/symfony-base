@@ -8,7 +8,8 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "types": ["vite/client"]
   },
   "include": [
     "assets/scripts/**",

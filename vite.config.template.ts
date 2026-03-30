@@ -1,8 +1,8 @@
-import {defineConfig, loadEnv, ViteDevServer} from 'vite';
+import { defineConfig, loadEnv, ViteDevServer } from 'vite';
 import vuePlugin from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
 import * as fs from 'node:fs';
-import {fileURLToPath} from "node:url";
+import { fileURLToPath } from 'node:url';
 
 const latteReloadPlugin = {
     name: 'latte-reload',

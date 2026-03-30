@@ -10,7 +10,7 @@
         {block content}{/block}
 
         {if $_ENV['USE_HMR'] !== 'true'}
-            {asset 'app.js'}
+            <script type="module" src="/assets/app.js"></script>
         {/if}
     </body>
 </html>

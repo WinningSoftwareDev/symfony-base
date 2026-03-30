@@ -11,7 +11,7 @@
         <script type="module" src="{$_ENV['DEFAULT_URI']}:{$_ENV['VITE_LOCAL_PORT']}/@vite/client"></script>
         <script type="module" src="{$_ENV['DEFAULT_URI']}:{$_ENV['VITE_LOCAL_PORT']}/assets/scripts/app.ts"></script>
     {else}
-        {asset 'app.css'}
+        {asset 'css/app.css'}
     {/if}
     <script src="https://kit.fontawesome.com/{$_ENV['FONTAWESOME_KIT_ID']}.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/x-icon" href="{$_ENV['DEFAULT_URI']}/favicon.png">

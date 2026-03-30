@@ -25,6 +25,7 @@ class ErrorController extends AbstractApplicationController
 
         return $this->renderTemplate(sprintf('Core/Error/%s', $page), [
             'title' => $pageTitle,
+            'isErrorPage' => true,
         ]);
     }
 }

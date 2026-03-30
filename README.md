@@ -159,6 +159,7 @@ $this->mailer->send($email);
 | **App\Authentication** | `authenticate_get_logged_in_user`       | `GET`        | `/authenticate/current-user`         |
 | **App\Authentication** | `authenticate_register`                 | `POST`       | `/authenticate/register`             |
 | **App\Authentication** | `authenticate_verify_email`             | `GET`        | `/authenticate/verify`               |
+| **App\Authentication** | `user_account`                          | `GET`        | `/user/account`                      |
 
 > Run `php bin/console debug:router` for the full list of included endpoints.
 
