@@ -1,6 +1,10 @@
 {varType string|null $form}
+{varType string $loginToken}
+{varType string $registrationToken}
 {layout 'Layout/@auth.layout.latte'}
 
 {block content}
-    <AuthenticationPage form="{$form}" />
+    <AuthenticationPage form="{$form}"
+                        login-token="{$loginToken}"
+                        registration-token="{$registrationToken}" />
 {/block}

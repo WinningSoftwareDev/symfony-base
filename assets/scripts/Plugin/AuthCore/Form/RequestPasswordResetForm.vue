@@ -6,11 +6,19 @@ import FormSubmit from './FormSubmit.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import IFormField from '../Interface/IFormField';
 
+const props = withDefaults(defineProps<IAuthFormInternalProps>(), {
+  name: 'request_password_reset_link_form',
+  title: 'Reset Your Password',
+});
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
     value: 'testuser@example.com',
     errors: [],
   },
+  '_token': {
+    value: props.token,
+    errors: [],
+  }
 });
 const email = computed({
   get: () => formFields.email.value,
@@ -33,11 +41,6 @@ const handleSubmit = async (): Promise<boolean> => {
 
   return validate();
 }
-
-withDefaults(defineProps<IAuthFormInternalProps>(), {
-  name: 'request_password_reset_link_form',
-  title: 'Reset Your Password',
-});
 </script>
 
 <template>
@@ -47,7 +50,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
             :handler="handleSubmit"
             @submission:failed="() => {}"
             :name="name"
-            :data="getFormData()">
+            :data="getFormData()"
+            :token="token">
     <FormField type="email"
                label="Email"
                v-model="email"

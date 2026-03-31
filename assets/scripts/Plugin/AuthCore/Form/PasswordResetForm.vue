@@ -10,6 +10,7 @@ interface IProps
   name: string;
   title: string;
   token: string;
+  csrfToken: string;
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -24,6 +25,10 @@ const formFields = reactive<Record<string, IFormField>>({
   },
   'confirm_password': {
     value: 'noodlepot',
+    errors: [],
+  },
+  '_token': {
+    value: props.csrfToken,
     errors: [],
   }
 });

@@ -9,7 +9,9 @@ use App\Authentication\Classes\DTO\RequestPasswordResetDTO;
 use App\Authentication\Classes\Email\PasswordResetService;
 use App\Authentication\Entity\PasswordResetToken;
 use App\Authentication\Entity\User;
+use App\Authentication\Form\LoginForm;
 use App\Authentication\Form\PasswordResetForm;
+use App\Authentication\Form\RegistrationForm;
 use App\Authentication\Form\RequestPasswordResetLinkForm;
 use App\Core\Controller\AbstractApplicationController;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,11 +43,16 @@ class AuthenticationController extends AbstractApplicationController
             $tab = 'false';
         }
 
+        $registrationFormCsrfToken = $this->createForm(RegistrationForm::class)->createView()->children['_token']->vars['value'];
+        $loginFormCsrfToken = $this->createForm(LoginForm::class)->createView()->children['_token']->vars['value'];
+
         return $this->renderTemplate(
             'Authentication/authenticate',
             [
                 'title' => 'Authenticate',
                 'form' => $tab,
+                'registrationToken' => $registrationFormCsrfToken,
+                'loginToken' => $loginFormCsrfToken,
             ]
         );
     }
@@ -91,11 +98,16 @@ class AuthenticationController extends AbstractApplicationController
             'Authentication/request-password-reset',
             [
                 'title' => 'Password Reset',
+                'csrfToken' => $form->createView()->children['_token']->vars['value'],
             ]
         );
     }
 
-    #[Route(path: '/authenticate/password-reset/reset', name: 'authenticate_password_reset', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    #[Route(
+        path: '/authenticate/password-reset/reset',
+        name: 'authenticate_password_reset',
+        methods: [Request::METHOD_GET, Request::METHOD_POST]
+    )]
     public function passwordReset(Request $request): Response
     {
         $token = (string) $request->query->get('token');
@@ -137,6 +149,7 @@ class AuthenticationController extends AbstractApplicationController
             [
                 'title' => 'Password Reset',
                 'token' => $token,
+                'csrfToken' => $form->createView()->children['_token']->vars['value'],
             ]
         );
     }

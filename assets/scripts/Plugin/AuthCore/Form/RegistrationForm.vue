@@ -7,6 +7,11 @@ import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import IFormField from '../Interface/IFormField';
 import IntroCardLink from '../../AppCore/IntroCardLink.vue';
 
+const props = withDefaults(defineProps<IAuthFormInternalProps>(), {
+  name: 'registration_form',
+  title: 'Register',
+  token: '',
+});
 const formFields = reactive<Record<string, IFormField>>({
   'email': {
     value: 'testuser@example.com',
@@ -18,6 +23,10 @@ const formFields = reactive<Record<string, IFormField>>({
   },
   'confirm_password': {
     value: 'noodlepot',
+    errors: [],
+  },
+  '_token': {
+    value: props.token,
     errors: [],
   }
 });
@@ -72,11 +81,6 @@ const handleFailedSubmit = (errors: Record<string, string[]>) => {
     formFields.email.errors.push(...errors.email);
   }
 }
-
-withDefaults(defineProps<IAuthFormInternalProps>(), {
-  name: 'registration_form',
-  title: 'Register',
-});
 </script>
 
 <template>
@@ -86,7 +90,8 @@ withDefaults(defineProps<IAuthFormInternalProps>(), {
             :handler="handleSubmit"
             @submission:failed="handleFailedSubmit"
             :name="name"
-            :data="getFormData()">
+            :data="getFormData()"
+            :token="token">
     <FormField type="email"
                label="Email"
                v-model="email"

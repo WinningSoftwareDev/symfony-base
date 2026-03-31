@@ -8,6 +8,8 @@ import RegistrationForm from '../Form/RegistrationForm.vue';
 interface IProps
 {
   form: string|null;
+  loginToken: string;
+  registrationToken: string;
 }
 
 type AuthenticationFormComponent = typeof LoginForm | typeof RegistrationForm;
@@ -19,11 +21,13 @@ const activeComponent: ShallowRef<AuthenticationFormComponent> = shallowRef(
 const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
     name: 'registration_form',
-    title: 'Register'
+    title: 'Register',
+    token: props.registrationToken
   },
   LoginForm: {
     name: 'login_form',
     title: 'Login',
+    token: props.loginToken
   }
 }
 const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(props.form === 'LoginForm' ? componentProps.LoginForm : componentProps.RegistrationForm);
@@ -50,8 +54,8 @@ setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
                   :active="activeComponent === RegistrationForm"
                   @click="setActiveComponent(RegistrationForm)" />
     </div>
-    <div class="py-10 px-10"> <component :is="activeComponent"
-                                         v-bind="activeComponentProps" />
+    <div class="py-10 px-10">
+      <component :is="activeComponent" v-bind="activeComponentProps" />
     </div>
   </div>
 </template>
