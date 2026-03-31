@@ -68,6 +68,6 @@ const handleSubmission = async (e: Event) => {
     <div v-if="isSubmitting" class="text-center">
       <i class="fa-duotone fa-light mx-auto fa-fan fa-spin fa-3x mt-2"></i>
     </div>
-    <input type="text" class="hidden" :name="`${name}[_token]`" :value="token" />
+    <input type="text" class="hidden" :name="`${name}[_token]`" :value="csrfToken" />
   </form>
 </template>

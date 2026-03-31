@@ -91,7 +91,7 @@ const handleFailedSubmit = (errors: Record<string, string[]>) => {
             @submission:failed="handleFailedSubmit"
             :name="name"
             :data="getFormData()"
-            :token="token">
+            :csrfToken="token">
     <FormField type="email"
                label="Email"
                v-model="email"

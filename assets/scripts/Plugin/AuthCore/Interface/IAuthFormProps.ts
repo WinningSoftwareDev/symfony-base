@@ -8,5 +8,5 @@ export default interface IAuthFormProps
     handler: () => Promise<boolean>;
     name: string;
     data: Record<string, IFormField>;
-    token: string;
+    csrfToken: string;
 }

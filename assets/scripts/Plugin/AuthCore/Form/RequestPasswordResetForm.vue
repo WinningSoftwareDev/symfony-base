@@ -51,7 +51,7 @@ const handleSubmit = async (): Promise<boolean> => {
             @submission:failed="() => {}"
             :name="name"
             :data="getFormData()"
-            :token="token">
+            :csrfToken="token">
     <FormField type="email"
                label="Email"
                v-model="email"
