@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class VerificationController extends AbstractApplicationController
+class EmailVerificationController extends AbstractApplicationController
 {
     #[Route(path: '/authenticate/verify', name: 'authenticate_verify_email', methods: [Request::METHOD_GET])]
     public function verify(Request $request, EmailVerificationService $emailVerificationService): Response
