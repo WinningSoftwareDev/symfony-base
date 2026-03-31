@@ -29,10 +29,10 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     private string $password;
 
     #[ORM\Column(name: 'bolActive', type: 'boolean', nullable: false)]
-    private bool $isActive;
+    private bool $isActive = true;
 
     #[ORM\Column(name: 'bolVerified', type: 'boolean', nullable: false)]
-    private bool $isVerified;
+    private bool $isVerified = false;
 
     /**
      * @var Collection<int, Role>
@@ -54,8 +54,6 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
 
         $user->setEmail($dto->getEmail());
         $user->setPassword($passwordHasher->hashPassword($user, $dto->getPassword()));
-        $user->activate();
-        $user->unverify();
 
         return $user;
     }
