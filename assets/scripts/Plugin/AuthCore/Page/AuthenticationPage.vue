@@ -22,12 +22,12 @@ const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
     name: 'registration_form',
     title: 'Register',
-    token: props.registrationToken
+    csrfToken: props.registrationToken
   },
   LoginForm: {
     name: 'login_form',
     title: 'Login',
-    token: props.loginToken
+    csrfToken: props.loginToken
   }
 }
 const activeComponentProps: Ref<IAuthFormInternalProps> = ref<IAuthFormInternalProps>(props.form === 'LoginForm' ? componentProps.LoginForm : componentProps.RegistrationForm);

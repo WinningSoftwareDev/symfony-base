@@ -18,7 +18,7 @@ const formFields = reactive<Record<string, IFormField>>({
     errors: [],
   },
   '_token': {
-    value: props.token,
+    value: props.csrfToken,
     errors: [],
   }
 });
@@ -71,7 +71,7 @@ const handleFailedSubmit = (errors: Record<string, string[]>) => {
             @submission:failed="handleFailedSubmit"
             :name="name"
             :data="getFormData()"
-            :csrfToken="token">
+            :csrfToken="csrfToken">
     <FormField type="email"
                label="Email"
                v-model="email"

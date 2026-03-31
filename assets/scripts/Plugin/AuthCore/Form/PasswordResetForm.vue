@@ -82,7 +82,8 @@ const handleSubmit = async (): Promise<boolean> => {
             :handler="handleSubmit"
             @submission:failed="() => {}"
             :name="name"
-            :data="getFormData()">
+            :data="getFormData()"
+            :csrfToken="csrfToken">
     <FormField type="password"
                label="Password"
                v-model="password"
