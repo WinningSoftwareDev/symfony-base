@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 - Renamed `VerificationToken` to `EmailVerificationToken` to be more explicit
+- No longer deletes the verification token on successful verification, marks `dtmVerified` instead (for better traceability)
 
 ## [2.1.0] - 2026-03-30
 ### Added
