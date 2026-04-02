@@ -63,6 +63,7 @@ class VerificationController extends AbstractApplicationController
         if (!is_string($csrfToken) || !$this->isCsrfTokenValid('resend_verification_email', $csrfToken)) {
             return new JsonResponse([
                 'message' => 'Something went wrong.',
+                'success' => false,
             ], 403);
         }
 
@@ -71,6 +72,7 @@ class VerificationController extends AbstractApplicationController
         if (!$user instanceof User) {
             return new JsonResponse([
                 'message' => 'User not found.',
+                'success' => false,
             ], 403);
         }
 
@@ -81,11 +83,12 @@ class VerificationController extends AbstractApplicationController
         if ($existingToken instanceof EmailVerificationToken) {
             return new JsonResponse([
                 'message' => 'Please wait before resending verification email.',
+                'success' => false,
             ], 403);
         }
 
         $this->emailVerificationService->sendVerificationEmail($user);
 
-        return new JsonResponse([], 200);
+        return new JsonResponse(['success' => true], 200);
     }
 }
