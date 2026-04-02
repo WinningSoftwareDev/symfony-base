@@ -70,7 +70,7 @@ This template supports both local and containerized development. Choose the meth
 The simplest way to get started is using PHP's built-in server:
 * **Terminal A (PHP):** `php -S localhost:8000 -t public/`
 * **Terminal B (Vite):** `npm run vite:dev`
-* **Config:** Set `USE_HMR=true` and `DEFAULT_URI=http://localhost:8000` in your `.env`.
+* **Config:** Set `USE_HMR=true` and `DEFAULT_URI=http://localhost` in your `.env`.
 
 ### 2. Docker Setup (Recommended)
 For a production-like environment, we recommend using **Docker**. A standard setup should include:

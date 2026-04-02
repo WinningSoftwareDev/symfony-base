@@ -51,7 +51,7 @@ const resendEmail = async () => {
     }).then((json: ISimpleResponse) => {
       resendStatus.value = json.success ? SendingStatus.SUCCESS : SendingStatus.ERROR;
     });
-  } catch (e) {
+  } catch {
     resendStatus.value = SendingStatus.ERROR;
   } finally {
     isSending.value = false;
