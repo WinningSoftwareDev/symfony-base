@@ -61,14 +61,15 @@ CREATE TABLE Authentication.tblUserRole (
     FOREIGN KEY FK_tblUserRole_intRoleId (intRoleId) REFERENCES Authentication.tblRole(intRoleId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE Authentication.tblVerificationToken (
-    intVerificationTokenId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE Authentication.tblEmailVerificationToken (
+    intEmailVerificationTokenId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     intUserId INT UNSIGNED NOT NULL,
     strToken VARCHAR(100) NOT NULL,
     dtmExpires DATETIME NOT NULL,
+    dtmVerified DATETIME,
     dtmCreated DATETIME NOT NULL DEFAULT NOW(),
     dtmUpdated DATETIME ON UPDATE NOW(),
-    PRIMARY KEY (intVerificationTokenId),
+    PRIMARY KEY (intEmailVerificationTokenId),
     FOREIGN KEY FK_tblVerificationToken_intUserId (intUserId)
         REFERENCES Authentication.tblUser(intUserId),
     UNIQUE KEY UK_tblVerificationToken_strToken (strToken),

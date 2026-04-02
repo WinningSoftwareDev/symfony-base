@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Authentication\Entity;
 
+use App\Authentication\Repository\EmailVerificationTokenRepository;
 use App\Core\Entity\AbstractBaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Random\RandomException;
 
-#[ORM\Entity]
-#[ORM\Table(name: 'tblVerificationToken', schema: 'Authentication')]
-class VerificationToken extends AbstractBaseEntity
+#[ORM\Entity(repositoryClass: EmailVerificationTokenRepository::class)]
+#[ORM\Table(name: 'tblEmailVerificationToken', schema: 'Authentication')]
+class EmailVerificationToken extends AbstractBaseEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'intVerificationTokenId', type: 'integer', options: ['unsigned' => true])]
+    #[ORM\Column(name: 'intEmailVerificationTokenId', type: 'integer', options: ['unsigned' => true])]
     protected ?int $id = null;
 
     #[ORM\Column(name: 'strToken', type: 'string', length: 100, unique: true)]
@@ -26,6 +27,9 @@ class VerificationToken extends AbstractBaseEntity
 
     #[ORM\Column(name: 'dtmExpires', type: 'datetime')]
     private \DateTimeInterface $expiresAt;
+
+    #[ORM\Column(name: 'dtmVerified', type: 'datetime')]
+    private \DateTimeInterface $verifiedAt;
 
     /**
      * @throws RandomException
@@ -54,5 +58,15 @@ class VerificationToken extends AbstractBaseEntity
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    public function getVerifiedAt(): \DateTimeInterface
+    {
+        return $this->verifiedAt;
+    }
+
+    public function markVerified(): void
+    {
+        $this->verifiedAt = new \DateTime();
     }
 }

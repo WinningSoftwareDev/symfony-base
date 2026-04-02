@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Authentication\Classes\Email;
 
 use App\Authentication\Entity\User;
-use App\Authentication\Entity\VerificationToken;
+use App\Authentication\Entity\EmailVerificationToken;
 use App\Core\Controller\EmailBuilder;
 use App\Core\Entity\EmailType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 readonly class EmailVerificationService
 {
     public function __construct(
-        private EntityManagerInterface $em,
+        private EntityManagerInterface $entityManager,
         private MailerInterface $mailer,
         private UrlGeneratorInterface $urlGenerator,
         private EmailBuilder $emailBuilder
@@ -27,11 +27,14 @@ readonly class EmailVerificationService
     /**
      * @throws \Exception|TransportExceptionInterface|RandomException
      */
-    public function sendVerificationEmail(User $user): void
+    public function sendVerificationEmail(User $user, ?EmailVerificationToken $existingToken = null): void
     {
-        $token = VerificationToken::create($user);
-        $this->em->persist($token);
-        $this->em->flush();
+        $token = $existingToken ?? EmailVerificationToken::create($user);
+
+        if (!$existingToken) {
+            $this->entityManager->persist($token);
+            $this->entityManager->flush();
+        }
 
         $this->mailer->send($this->emailBuilder->getEmail(
             EmailType::VERIFY_EMAIL_ADDRESS,
@@ -48,17 +51,19 @@ readonly class EmailVerificationService
 
     public function verifyToken(string $token): ?User
     {
-        $tokenEntity = $this->em->getRepository(VerificationToken::class)->findOneBy(['token' => $token]);
+        $tokenEntity = $this->entityManager->getRepository(EmailVerificationToken::class)
+            ->findOneBy(['token' => $token]);
 
         if (!$tokenEntity || $tokenEntity->isExpired()) {
             return null;
         }
 
         $user = $tokenEntity->getUser();
+
+        $tokenEntity->markVerified();
         $user->verify();
 
-        $this->em->remove($tokenEntity);
-        $this->em->flush();
+        $this->entityManager->flush();
 
         return $user;
     }

@@ -1,7 +1,9 @@
+{varType CloudBase\LatteHelper\Classes\LatteAwareApplication $app}
 {extends 'Layout/@core.layout.latte'}
 
 {varType array $_ENV}
 
 {block content}
-    <IntroCard name="{$_ENV['APP_NAME']}" />
+    <IntroCard name="{$_ENV['APP_NAME']}"
+               csrf-token="{$app->getCsrf('resend_verification_email')}" />
 {/block}

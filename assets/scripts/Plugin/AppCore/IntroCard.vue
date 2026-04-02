@@ -9,6 +9,7 @@ import LoginLinks from './LoginLinks.vue';
 interface IProps
 {
   name: string;
+  csrfToken: string;
 }
 
 const user = ref<IUser|null>(null);
@@ -22,6 +23,7 @@ onMounted(() => {
         return response.json();
       }).then((json: IUser) => {
         isLoading.value = false;
+
         if (!json.email.length) {
           return;
         }
@@ -40,7 +42,7 @@ onMounted(() => {
           <WelcomeBlock />
 
           <div class="mt-8 pt-8 border-t border-gray-700/50">
-            <LoggedInUserPanel :user="user" />
+            <LoggedInUserPanel :user="user" :csrfToken="csrfToken" />
             <LoginLinks v-if="!isLoading" :user="user" />
           </div>
         </div>
