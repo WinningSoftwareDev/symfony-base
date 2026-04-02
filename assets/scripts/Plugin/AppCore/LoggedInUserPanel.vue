@@ -35,7 +35,6 @@ const resendEmail = async () => {
 
   isSending.value = true;
   resendStatus.value = SendingStatus.IDLE;
-  console.log(isSending.value);
 
   try {
     await fetch('/authenticate/resend-verification-email', {
