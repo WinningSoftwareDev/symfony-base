@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Authentication\Classes\Email;
 
-use App\Authentication\Entity\User;
 use App\Authentication\Entity\EmailVerificationToken;
+use App\Authentication\Entity\User;
 use App\Core\Controller\EmailBuilder;
 use App\Core\Entity\EmailType;
 use Doctrine\ORM\EntityManagerInterface;

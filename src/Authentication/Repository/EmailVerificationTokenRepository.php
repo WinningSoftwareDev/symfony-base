@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Authentication\Repository;
 
-use App\Authentication\Entity\User;
 use App\Authentication\Entity\EmailVerificationToken;
+use App\Authentication\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
