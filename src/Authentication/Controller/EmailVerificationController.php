@@ -19,7 +19,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class VerificationController extends AbstractApplicationController
+class EmailVerificationController extends AbstractApplicationController
 {
     public function __construct(
         private readonly EmailVerificationService $emailVerificationService,

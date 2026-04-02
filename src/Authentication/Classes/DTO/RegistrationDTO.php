@@ -70,12 +70,4 @@ class RegistrationDTO
     {
         return $this->passwordsMatch() && !$this->userExists();
     }
-
-    /**
-     * @return string[]
-     */
-    public function getValidationFailures(): array
-    {
-        return [];
-    }
 }

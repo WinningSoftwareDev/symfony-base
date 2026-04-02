@@ -43,13 +43,13 @@ class RegistrationController extends AbstractApplicationController
             return $this->json([
                 'success' => false,
                 'errors' => [],
-                'redirect' => $this->generateUrl('app_index'),
             ]);
         }
 
         $data = new RegistrationDTO();
         $form = $this->createForm(RegistrationForm::class, $data);
         $form->handleRequest($request);
+        $errors = $this->validator->validate($data);
 
         if ($form->isSubmitted()) {
             try {
@@ -67,8 +67,6 @@ class RegistrationController extends AbstractApplicationController
                     ->getRepository(User::class)
                     ->findOneBy(['email' => $data->getEmail()]);
                 $data->setUserExists($existingUser instanceof User);
-
-                $errors = $this->validator->validate($data);
 
                 if (!$data->validate() || count($errors)) {
                     return $this->json([
@@ -101,8 +99,7 @@ class RegistrationController extends AbstractApplicationController
 
         return $this->json([
             'success' => false,
-            'errors' => $this->getValidationErrors($data, $this->validator->validate($data)),
-            'redirect' => $this->generateUrl('app_index'),
+            'errors' => $this->getValidationErrors($data, $errors),
         ]);
     }
 

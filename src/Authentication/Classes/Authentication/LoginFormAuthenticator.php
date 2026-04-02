@@ -80,7 +80,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         return new JsonResponse([
             'success' => false,
             'errors' => [
-                'email' => [$exception->getMessage()],
+                'email' => ['Could not log you in with these credentials'],
             ],
         ]);
     }
