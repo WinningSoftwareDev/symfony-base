@@ -123,7 +123,7 @@ final readonly class Installer
     {
         $projectNameSlug = strtolower(str_replace(' ', '-', $projectName));
         $adminEmail = sprintf('admin@%s.com', $projectNameSlug);
-        
+
         $this->io->writeln('');
         $this->io->writeln('<fg=green;options=bold>✓ Project created successfully!</>');
         $this->io->writeln("<fg=green>✓ APP_NAME set to: {$projectName}</>");
