@@ -1,7 +1,7 @@
-Core:
+Administration:
   resource:
-    path: ../src/Core/Controller/
-    namespace: App\Core\Controller
+    path: ../src/Administration/Controller/
+    namespace: App\Administration\Controller
   type: attribute
 Application:
   resource:
@@ -12,4 +12,9 @@ Authentication:
   resource:
     path: ../src/Authentication/Controller/
     namespace: App\Authentication\Controller
+  type: attribute
+Core:
+  resource:
+    path: ../src/Core/Controller/
+    namespace: App\Core\Controller
   type: attribute
