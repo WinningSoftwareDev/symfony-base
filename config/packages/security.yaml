@@ -24,7 +24,7 @@ security:
         target: app_index
 
   access_control:
-    - { path: ^/auth, roles: PUBLIC_ACCESS }
+    - { path: ^/authenticate, roles: PUBLIC_ACCESS }
     - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:

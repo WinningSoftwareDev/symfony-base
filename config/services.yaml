@@ -19,8 +19,8 @@ services:
       $dbPassword: '%env(DB_PASSWORD)%'
     tags: [ 'console.command' ]
 
-  App\Core\Controller\:
-    resource: '../src/Core/Controller'
+  App\Administration\Controller\:
+    resource: '../src/Administration/Controller'
     tags: [ 'controller.service_arguments' ]
     calls:
       - setLatteFactory: ['@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory']
@@ -36,3 +36,9 @@ services:
     tags: [ 'controller.service_arguments' ]
     calls:
       - setLatteFactory: ['@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory']
+
+  App\Core\Controller\:
+    resource: '../src/Core/Controller'
+    tags: [ 'controller.service_arguments' ]
+    calls:
+      - setLatteFactory: [ '@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory' ]
