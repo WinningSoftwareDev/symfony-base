@@ -13,22 +13,25 @@ final readonly class Installer
     }
 
     /**
-     * @throws \JsonException
+     * @throws \InvalidArgumentException|\JsonException|\RuntimeException
      */
     public function install(): void
     {
         $projectName = $this->io->ask('<fg=yellow>Enter your project name:</>', 'My Symfony App');
-        $packageName = $this->io->ask('<fg=yellow>Enter your composer package name (vendor/package):</>', 'myvendor/myproject', function (string $answer) {
-            if (!preg_match('/^[a-z0-9\-]+\/[a-z0-9\-]+$/', $answer)) {
-                $answer = 'myvendor/myproject';
-            }
+        $packageName = $this->io->ask(
+            '<fg=yellow>Enter your composer package name (vendor/package):</>',
+            'myvendor/myproject',
+            function (string $answer) {
+                if (!preg_match('/^[a-z0-9\-]+\/[a-z0-9\-]+$/', $answer)) {
+                    $answer = 'myvendor/myproject';
+                }
 
-            return $answer;
-        });
+                return $answer;
+            }
+        );
 
         if (!is_string($projectName) || !is_string($packageName)) {
-            $this->io->error('Project name was not in the expected format.');
-            exit(1);
+            throw new \InvalidArgumentException('Project name or package name was not in the expected format.');
         }
 
         $this->updateEnvFile($projectName);
@@ -43,15 +46,13 @@ final readonly class Installer
         $envFile = __DIR__ . '/../../../.env';
 
         if (!file_exists($envFile)) {
-            $this->io->error('Error: .env file not found!');
-            exit(1);
+            throw new \RuntimeException('Error: .env file not found!');
         }
 
         $envContent = file_get_contents($envFile);
 
         if (!is_string($envContent)) {
-            $this->io->error('Error: .env content was not readable!');
-            exit(1);
+            throw new \RuntimeException('Error: .env content was not readable!');
         }
 
         $envContent = preg_replace(
@@ -61,8 +62,7 @@ final readonly class Installer
         );
 
         if (!is_string($envContent)) {
-            $this->io->error('Error: .env content was not readable!');
-            exit(1);
+            throw new \RuntimeException('Error: .env content was not readable!');
         }
 
         $envContent = preg_replace(
@@ -70,36 +70,42 @@ final readonly class Installer
             'MAIL_FROM_NAME="' . addslashes($projectName) . '"',
             $envContent
         );
+
+        if (!is_string($envContent)) {
+            throw new \RuntimeException('Error: .env content was not readable!');
+        }
+
+        $projectNameSlug = strtolower(str_replace(' ', '-', $projectName));
+        $envContent = preg_replace(
+            '/^ADMIN_USER=.*$/m',
+            sprintf('ADMIN_USER=admin@%s.com', $projectNameSlug),
+            $envContent
+        );
+
         file_put_contents($envFile, $envContent);
     }
 
     /**
-     * @throws \JsonException
+     * @throws \JsonException|\RuntimeException
      */
     private function updateComposerJson(string $projectName, string $packageName): void
     {
         $composerFile = sprintf('%s/composer.json', dirname(__FILE__, 4));
 
         if (!file_exists($composerFile)) {
-            $this->io->error('Error: composer.json file not found!');
-
-            return;
+            throw new \RuntimeException('Error: composer.json file not found!');
         }
 
         $composerContent = file_get_contents($composerFile);
 
         if (!is_string($composerContent)) {
-            $this->io->error('Error: composer.json file is not a string!');
-
-            return;
+            throw new \RuntimeException('Error: composer.json file is not a string!');
         }
 
         $composerData = json_decode($composerContent, true, 512, JSON_THROW_ON_ERROR);
 
         if (!is_array($composerData)) {
-            $this->io->error('Error: composer.json content is not an array!');
-
-            return;
+            throw new \RuntimeException('Error: composer.json content is not an array!');
         }
 
         $composerData['name'] = $packageName;
@@ -115,11 +121,15 @@ final readonly class Installer
 
     private function showSuccessMessage(string $projectName, string $packageName): void
     {
+        $projectNameSlug = strtolower(str_replace(' ', '-', $projectName));
+        $adminEmail = sprintf('admin@%s.com', $projectNameSlug);
+        
         $this->io->writeln('');
         $this->io->writeln('<fg=green;options=bold>✓ Project created successfully!</>');
         $this->io->writeln("<fg=green>✓ APP_NAME set to: {$projectName}</>");
         $this->io->writeln("<fg=green>✓ Composer package set to: {$packageName}</>");
         $this->io->writeln('<fg=green>✓ Version set to: 1.0.0</>');
+        $this->io->writeln("<fg=green>✓ Admin user email set to: {$adminEmail}</>");
         $this->io->writeln('');
         $this->io->writeln('<fg=gray>Happy coding! 🚀</>');
         $this->io->writeln('');
@@ -154,29 +164,26 @@ final readonly class Installer
         }
     }
 
+    /**
+     * @throws \RuntimeException
+     */
     private function setupViteConfig(string $projectName): void
     {
         $templateFile = sprintf('%s/vite.config.template.ts', dirname(__FILE__, 4));
         $configFile = sprintf('%s/vite.config.ts', dirname(__FILE__, 4));
 
         if (!file_exists($templateFile)) {
-            $this->io->error('Error: vite.config.template.ts file not found!');
-
-            return;
+            throw new \RuntimeException('Error: vite.config.template.ts file not found!');
         }
 
         if (!copy($templateFile, $configFile)) {
-            $this->io->error('Error: Failed to copy vite.config.template.ts to vite.config.ts!');
-
-            return;
+            throw new \RuntimeException('Error: Failed to copy vite.config.template.ts to vite.config.ts!');
         }
 
         $configContent = file_get_contents($configFile);
 
         if (!is_string($configContent)) {
-            $this->io->error('Error: vite.config.ts content was not readable!');
-
-            return;
+            throw new \RuntimeException('Error: vite.config.ts content was not readable!');
         }
 
         $configContent = str_replace('{APP_NAME}', strtolower(str_replace(' ', '-', $projectName)), $configContent);

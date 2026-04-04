@@ -38,7 +38,12 @@ class SetupCommand extends Command
         $io->writeln('');
 
         $installer = new Installer($io);
-        $installer->install();
+
+        try {
+            $installer->install();
+        } catch (\Exception $exception) {
+            $io->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+        }
 
         return Command::SUCCESS;
     }
