@@ -108,4 +108,5 @@ VALUES
 INSERT INTO Authentication.tblRole
     (strRoleName, strHandle)
 VALUES
-    ('User', 'ROLE_USER');
+    ('User', 'ROLE_USER'),
+    ('Administrator', 'ROLE_ADMIN');

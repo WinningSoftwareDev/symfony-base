@@ -21,6 +21,24 @@ class RegistrationDTO
 
     private bool $userExists = false;
 
+    /**
+     * @param array{
+     *     email: string,
+     *     password: string,
+     *     confirmPassword: string,
+     * } $data
+     */
+    public static function create(array $data): self
+    {
+        $dto = new self();
+
+        $dto->email = $data['email'];
+        $dto->password = $data['password'];
+        $dto->confirmPassword = $data['confirmPassword'];
+
+        return $dto;
+    }
+
     public function getEmail(): string
     {
         return $this->email;

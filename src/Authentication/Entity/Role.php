@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'tblRole', schema: 'Authentication')]
 class Role extends AbstractBaseEntity implements SimpleEntityInterface
 {
+    public const string ROLE_ADMIN = 'ROLE_ADMIN';
     public const string ROLE_USER = 'ROLE_USER';
 
     #[ORM\Id]
