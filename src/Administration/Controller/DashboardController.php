@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Administration\Controller;
 
-use App\Core\Controller\AbstractApplicationController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/admin')]
-class DashboardController extends AbstractApplicationController
+class DashboardController extends AbstractAdministrationController
 {
-    #[Route(path: '/', name: 'dashboard')]
-    public function dashboard(): Response
+    #[Route('/admin/{vue_routing}', name: 'admin_entry', requirements: ['vue_routing' => '.*'])]
+    public function admin(): Response
     {
-        return $this->renderTemplate('Administration/index', []);
+        return $this->renderTemplate('Administration/index', [
+            'title' => 'Dashboard',
+        ]);
     }
 }

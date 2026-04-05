@@ -37,6 +37,7 @@
     "stan": "php -d memory_limit=2G ./vendor/bin/phpstan analyse -c phpstan.neon",
     "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes",
+    "cache:clean": "./bin/console cache:clear --env=prod --no-debug && ./bin/console cache:warmup --env=prod",
     "post-create-project-cmd": [
       "@php -r \"copy('.env.template', '.env');\"",
       "@php bin/console app:install",

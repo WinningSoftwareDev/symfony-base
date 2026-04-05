@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Authentication\Entity;
 
 use App\Authentication\Classes\DTO\RegistrationDTO;
+use App\Authentication\Repository\UserRepository;
 use App\Core\Entity\AbstractBaseEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'tblUser', schema: 'Authentication')]
 class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
