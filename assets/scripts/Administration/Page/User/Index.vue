@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import AdminTable from '../../Component/AdminTable.vue';
+import IPagination from '../../../Core/Interface/IPagination';
+import IRouteMeta from '../../../Core/Interface/IRouteMeta';
 
 const loading = ref(true);
 const responseData = ref({ data: [], meta: {} });
@@ -29,7 +31,10 @@ onMounted(fetchUsers);
       </div>
     </div>
 
-    <AdminTable :items="responseData.data" :loading="loading" :pagination="responseData.meta" @changePage="fetchUsers">
+    <AdminTable :items="responseData.data"
+                :loading="loading"
+                :pagination="(responseData.meta as IPagination)"
+                @changePage="(page: number) => fetchUsers(page)">
       <template #headings>
         <th class="p-4 font-bold">Email</th>
         <th class="p-4 font-bold">Roles</th>
