@@ -1,11 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  <p>Hello, admin panel!</p>
+  <p>Welcome to your brand new admin panel.</p>
 </template>
-
-<style scoped>
-
-</style>
