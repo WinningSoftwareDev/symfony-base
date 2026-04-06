@@ -1,6 +1,6 @@
 import '../styles/app.scss';
 import { createApp } from 'vue';
-import {createRouter, createWebHistory, Router} from 'vue-router';
+import { createRouter, createWebHistory, Router } from 'vue-router';
 import AdminPanel from './Administration/AdminPanel.vue';
 import Dashboard from './Administration/Page/Dashboard.vue';
 import SettingsIndex from './Administration/Page/Settings/Index.vue';

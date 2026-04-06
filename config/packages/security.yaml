@@ -26,6 +26,7 @@ security:
   access_control:
     - { path: ^/authenticate, roles: PUBLIC_ACCESS }
     - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/api/admin, roles: ROLE_ADMIN }
 
 when@test:
   security:

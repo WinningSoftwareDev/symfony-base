@@ -40,17 +40,15 @@ class UserController extends AbstractApplicationController
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'roles' => $user->getRoles(),
-                // Add a formatted date if you have a createdAt field
-                // 'createdAt' => $user->getCreatedAt()?->format('Y-m-d H:i'),
             ];
         }
 
         return $this->json([
             'data' => $users,
             'meta' => [
-                'current_page' => $page,
-                'last_page' => $pagesCount,
-                'per_page' => $limit,
+                'currentPage' => $page,
+                'lastPage' => $pagesCount,
+                'perPage' => $limit,
                 'total' => $totalItems,
             ],
         ]);
