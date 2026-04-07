@@ -26,6 +26,11 @@ class UserRepository extends EntityRepository
 
         $query->setFirstResult(($page - 1) * $limit)->setMaxResults($limit);
 
-        return new Paginator($query);
+        /**
+         * @var Paginator<User> $paginator
+         */
+        $paginator = new Paginator($query);
+
+        return $paginator;
     }
 }
