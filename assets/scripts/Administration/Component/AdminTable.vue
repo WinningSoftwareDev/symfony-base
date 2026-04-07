@@ -20,7 +20,7 @@ const emit = defineEmits(['changePage']);
       </thead>
       <tbody class="divide-y divide-gray-800">
         <tr v-if="loading && items.length === 0">
-          <td colspan="100%" class="p-12 text-center text-orange-400 animate-pulse text-sm uppercase tracking-widest font-bold">
+          <td colspan="100%" class="p-12 text-center text-primary animate-pulse text-sm uppercase tracking-widest font-bold">
             Loading Data...
           </td>
         </tr>

@@ -43,7 +43,7 @@ onMounted(fetchUsers);
           </div>
         </td>
         <td class="p-4 text-right">
-          <button class="text-orange-400 hover:text-white transition-colors text-sm font-semibold cursor-pointer">
+          <button class="text-primary hover:text-accent transition-colors text-sm font-semibold cursor-pointer">
             Edit
           </button>
         </td>

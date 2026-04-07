@@ -32,7 +32,7 @@ const emit = defineEmits(['changePage']);
                 :class="[
                 'w-8 h-8 rounded-md text-xs font-bold transition-all border cursor-pointer',
                 pagination.currentPage === page
-                  ? 'bg-orange-400/10 border-orange-400/50 text-orange-400 shadow-[0_0_10px_rgba(255,179,102,0.1)]'
+                  ? 'bg-primary/10 border-primary/50 text-primary shadow-[0_0_10px_rgba(255,179,102,0.1)]'
                   : 'border-transparent text-gray-500 hover:border-gray-700 hover:text-gray-300'
               ]">
           {{ page }}

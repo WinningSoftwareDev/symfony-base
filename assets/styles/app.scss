@@ -1,8 +1,8 @@
 @use 'tailwindcss';
 
 @theme {
-  --color-primary: var(--color-orange-300);
-  --color-accent: var(--color-orange-700);
+  --color-primary: var(--color-green-200);
+  --color-accent: var(--color-green-400);
 
   --color-page: var(--color-gray-900);
   --color-light-text: var(--color-gray-300);
@@ -17,4 +17,12 @@
 ::selection {
   color: var(--color-accent);
   background: var(--color-primary);
+}
+
+.nav-link {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-all;
+
+  &.active-nav {
+    @apply bg-primary/10 text-primary;
+  }
 }

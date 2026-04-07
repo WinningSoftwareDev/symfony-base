@@ -52,7 +52,7 @@ onMounted(() => {
 
     <div class="p-4 border-t border-gray-800 bg-black/20">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-orange-400 flex items-center justify-center text-xs font-bold text-black">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-black">
           <i class="fa-solid fa-user"></i>
         </div>
         <div class="overflow-hidden">
@@ -63,13 +63,3 @@ onMounted(() => {
     </div>
   </aside>
 </template>
-
-<style scoped>
-@reference 'tailwindcss/theme';
-.nav-link {
-  @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-all;
-}
-.active-nav {
-  @apply bg-orange-400/10 text-orange-400;
-}
-</style>
