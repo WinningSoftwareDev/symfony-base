@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - Added default admin user creation to the database setup command, using new environment variables
 - Added additional output to the installer command to reflect new admin user credentials
+- Added new admin UI including controllers, API and Vue components
 
 ### Changed
 - Code improvements in `Installer.php`

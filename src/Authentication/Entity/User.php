@@ -163,7 +163,7 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     }
 
     /**
-     * @return array<string, int|string|boolean|null>
+     * @return array<string, int|string|bool|null>
      */
     public function jsonSerialize(): array
     {
