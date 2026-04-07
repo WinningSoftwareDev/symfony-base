@@ -22,7 +22,7 @@ class UserController extends AbstractApplicationController
     public function listAll(Request $request): JsonResponse
     {
         $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 1);
+        $limit = $request->query->getInt('limit', 10);
         $search = $request->query->get('search');
 
         /**
@@ -30,8 +30,6 @@ class UserController extends AbstractApplicationController
          */
         $userRepository = $this->entityManager->getRepository(User::class);
         $paginator = $userRepository->getPaginatedUsers($page, $limit, $search);
-        $totalItems = count($paginator);
-        $pagesCount = (int) ceil($totalItems / $limit);
 
         $users = [];
 
@@ -47,9 +45,9 @@ class UserController extends AbstractApplicationController
             'data' => $users,
             'meta' => [
                 'currentPage' => $page,
-                'lastPage' => $pagesCount,
+                'lastPage' => (int) ceil(count($paginator) / $limit),
                 'perPage' => $limit,
-                'total' => $totalItems,
+                'total' => count($paginator),
             ],
         ]);
     }
