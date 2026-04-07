@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue';
 import AdminTable from '../../Component/AdminTable.vue';
 import IPagination from '../../../Core/Interface/IPagination';
-import IRouteMeta from '../../../Core/Interface/IRouteMeta';
 
 const loading = ref(true);
 const responseData = ref({ data: [], meta: {} });
@@ -24,13 +23,6 @@ onMounted(fetchUsers);
 
 <template>
   <div>
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">User Management</h1>
-      <div v-if="loading" class="text-xs text-orange-400 animate-pulse uppercase tracking-widest font-bold">
-        Updating...
-      </div>
-    </div>
-
     <AdminTable :items="responseData.data"
                 :loading="loading"
                 :pagination="(responseData.meta as IPagination)"

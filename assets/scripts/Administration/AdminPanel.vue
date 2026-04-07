@@ -14,7 +14,7 @@ const pageTitle = computed(() => {
 </script>
 <template>
   <div class="flex h-screen overflow-hidden bg-page text-light-text">
-    <SidePanel appName="Symfony Base" />
+    <SidePanel />
 
     <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
       <AdminHeader :pageTitle="pageTitle" />

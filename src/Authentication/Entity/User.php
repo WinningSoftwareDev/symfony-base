@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'tblUser', schema: 'Authentication')]
-class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface
+class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -160,5 +160,18 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
 
     public function eraseCredentials(): void
     {
+    }
+
+    /**
+     * @return array<string, int|string|boolean|null>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'email' => $this->getEmail(),
+            'createdAt' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
+            'verified' => $this->isVerified(),
+        ];
     }
 }

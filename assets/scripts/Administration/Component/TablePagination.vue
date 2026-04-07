@@ -47,7 +47,3 @@ const emit = defineEmits(['changePage']);
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
