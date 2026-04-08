@@ -3,7 +3,7 @@ import IPagination from '../../Core/Interface/IPagination';
 import TablePagination from './TablePagination.vue';
 
 defineProps<{
-  items: any[],
+  items: [],
   pagination?: IPagination,
   loading?: boolean
 }>();

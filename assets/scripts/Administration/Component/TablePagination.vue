@@ -2,7 +2,7 @@
 import IPagination from '../../Core/Interface/IPagination';
 
 defineProps<{
-  items: any[];
+  items: [];
   pagination?: IPagination;
   loading: boolean;
 }>();

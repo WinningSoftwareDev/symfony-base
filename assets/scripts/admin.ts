@@ -2,14 +2,14 @@ import '../styles/app.scss';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory, Router } from 'vue-router';
 import AdminPanel from './Administration/AdminPanel.vue';
-import Dashboard from './Administration/Page/Dashboard.vue';
-import SettingsIndex from './Administration/Page/Settings/Index.vue';
-import UserIndex from './Administration/Page/User/Index.vue';
+import AdminDashboard from './Administration/Page/AdminDashboard.vue';
+import SettingsSettingsIndex from './Administration/Page/Settings/SettingsIndex.vue';
+import UserUserIndex from './Administration/Page/User/UserIndex.vue';
 
 const routes = [
-    {path: '/admin', component: Dashboard, meta: {title: 'Dashboard'}},
-    {path: '/admin/users', component: UserIndex, meta: {title: 'Users'}},
-    {path: '/admin/settings', component: SettingsIndex, meta: {title: 'Settings'}},
+    {path: '/admin', component: AdminDashboard, meta: {title: 'Dashboard'}},
+    {path: '/admin/users', component: UserUserIndex, meta: {title: 'Users'}},
+    {path: '/admin/settings', component: SettingsSettingsIndex, meta: {title: 'Settings'}},
 ];
 
 const router: Router = createRouter({history: createWebHistory(), routes});
