@@ -3,15 +3,15 @@
 <p>
 <img src="https://img.shields.io/badge/Version-2.3.1-blue" alt="Version 2.3.1">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
-<img src="https://img.shields.io/badge/Symfony-7.3-black?logo=symfony" alt="Symfony 7.3">
+<img src="https://img.shields.io/badge/Symfony-8.0-black?logo=symfony" alt="Symfony 8.0">
 </p>
 
-A **highly opinionated**, production-ready Symfony 7.3 starter template designed for rapid application development with 
+A **highly opinionated**, production-ready Symfony 8 starter template designed for rapid application development with 
 a modern frontend stack.
 
 ## 🚀 Features
 
-* **Core:** Symfony 7.3 + Doctrine ORM/DBAL.
+* **Core:** Symfony 8 + Doctrine ORM/DBAL.
 * **Templating:** [Latte](https://latte.nette.org/) — with custom Vite integration for **Instant Live-Reload**.
 * **Frontend:** Vue.js 3, Vite, TailwindCSS, TypeScript, and SCSS.
 * **Auth System:** Full "out-of-the-box" flow (Login, Registration, Password Reset, Email Verification).
