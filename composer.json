@@ -6,21 +6,21 @@
   "require": {
     "php": ">=8.3",
     "cloudbase/asset-node": "^1.0",
-    "cloudbase/latte-helper": "^1.2.0",
+    "cloudbase/latte-helper": "^1.2.1",
     "doctrine/dbal": "^4.3",
-    "doctrine/doctrine-bundle": "^2.18",
+    "doctrine/doctrine-bundle": "^3.2",
     "doctrine/orm": "^3.5",
-    "symfony/console": "7.3.*",
-    "symfony/dotenv": "7.3.*",
-    "symfony/form": "^7.3",
-    "symfony/framework-bundle": "7.3.*",
-    "symfony/mailer": "^7.3",
-    "symfony/mime": "^7.3",
-    "symfony/runtime": "7.3.*",
-    "symfony/security-bundle": "^7.3",
-    "symfony/validator": "^7.3",
+    "symfony/console": "^8.0",
+    "symfony/dotenv": "^8.0",
+    "symfony/form": "^8.0",
+    "symfony/framework-bundle": "^8.0",
+    "symfony/mailer": "^8.0",
+    "symfony/mime": "^8.0",
+    "symfony/runtime": "^8.0",
+    "symfony/security-bundle": "^8.0",
+    "symfony/validator": "^8.0",
     "symfony/var-exporter": "<8.0",
-    "symfony/yaml": "7.3.*"
+    "symfony/yaml": "^8.0"
   },
   "config": {
     "allow-plugins": {
@@ -35,7 +35,6 @@
   },
   "scripts": {
     "stan": "php -d memory_limit=2G ./vendor/bin/phpstan analyse -c phpstan.neon",
-    "badge": "./vendor/bin/badger badge:version . && ./vendor/bin/badger badge:license .",
     "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes",
     "cache:clean": "./bin/console cache:clear --env=prod --no-debug && ./bin/console cache:warmup --env=prod",
     "post-create-project-cmd": [
@@ -47,7 +46,6 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.89",
-    "loomsoftware/badger": "^1.0",
     "phpstan/phpstan": "^2.1",
     "phpstan/phpstan-doctrine": "^2.0"
   }
