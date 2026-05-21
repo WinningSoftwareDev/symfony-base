@@ -20,6 +20,7 @@ const latteReloadPlugin = {
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
+    const devPort: string = env.VITE_LOCAL_PORT || '3000';
 
     return {
         base: './',
@@ -29,11 +30,27 @@ export default defineConfig(({ mode }) => {
             outDir: './public/assets',
             emptyOutDir: true,
             rolldownOptions: {
-                input: './assets/scripts/app.ts',
+                input: {
+                    app: './assets/scripts/app.ts',
+                    admin: './assets/scripts/admin.ts'
+                },
                 output: {
                     entryFileNames: `[name].js`,
                     chunkFileNames: `[name].js`,
-                    assetFileNames: `[name].[ext]`,
+                    assetFileNames: (assetInfo): string => {
+                        const originalName = assetInfo.names?.[0] ?? '';
+                        const extType = originalName.split('.').pop()?.toLowerCase() ?? '';
+
+                        if (/\.(png|jpe?g|gif|svg|webp|avif)$/i.test(originalName)) {
+                            return `images/[name].[ext]`;
+                        }
+
+                        if (/\.(woff2?|eot|ttf|otf)$/i.test(originalName)) {
+                            return `fonts/[name].[ext]`;
+                        }
+
+                        return extType ? `${extType}/[name].[ext]` : `[name].[ext]`;
+                    }
                 }
             }
         },
@@ -48,6 +65,7 @@ export default defineConfig(({ mode }) => {
         },
         // server: {
         //     host: '0.0.0.0',
+        //     origin: `${env.DEFAULT_URI}:${devPort}`,
         //     port: parseInt(env.VITE_SERVER_PORT || '3000'),
         //     strictPort: true,
         //     https: {
