@@ -32,7 +32,8 @@ export default defineConfig(({ mode }) => {
             rolldownOptions: {
                 input: {
                     app: './assets/scripts/app.ts',
-                    admin: './assets/scripts/admin.ts'
+                    admin: './assets/scripts/admin.ts',
+                    stylesheet: './assets/styles/app.css'
                 },
                 output: {
                     entryFileNames: `[name].js`,

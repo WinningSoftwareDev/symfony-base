@@ -78,7 +78,7 @@ final readonly class Installer
         $projectNameSlug = strtolower(str_replace(' ', '-', $projectName));
         $envContent = preg_replace(
             '/^ADMIN_USER=.*$/m',
-            sprintf('ADMIN_USER=admin@%s.com', $projectNameSlug),
+            sprintf('ADMIN_USER=admin@%s.app', $projectNameSlug),
             $envContent
         );
 
