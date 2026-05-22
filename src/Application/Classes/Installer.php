@@ -71,6 +71,12 @@ final readonly class Installer
             $envContent
         );
 
+        $envContent = preg_replace(
+            '/^DEFAULT_URI=.*$/m',
+            'DEFAULT_URI=https://' . $projectName . '.app',
+            $envContent
+        );
+
         if (!is_string($envContent)) {
             throw new \RuntimeException('Error: .env content was not readable!');
         }

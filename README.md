@@ -1,7 +1,7 @@
 # Symfony Base Template
 
 <p>
-<img src="https://img.shields.io/badge/Version-2.3.2-blue" alt="Version 2.3.2">
+<img src="https://img.shields.io/badge/Version-2.3.3-blue" alt="Version 2.3.3">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <img src="https://img.shields.io/badge/Symfony-8.0-black?logo=symfony" alt="Symfony 8.0">
 </p>
