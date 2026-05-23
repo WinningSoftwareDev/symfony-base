@@ -45,6 +45,8 @@ npm install
 ```
 
 ### Database initialisation
+Check the script at `data/setup.sql` to see what SQL will be executed by the following command:
+
 ```bash
 php bin/console app:database:setup
 # Or manually import data/setup.sql
