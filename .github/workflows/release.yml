@@ -20,7 +20,7 @@ jobs:
               run: |
                   VERSION=$(grep -oP '^## \[\K[^\]]+' CHANGELOG.md | head -1)
                   echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-                  echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+                  echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Check if tag exists
               id: tag_check
