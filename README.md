@@ -1,7 +1,7 @@
 # Symfony Base Template
 
 <p>
-<img src="https://img.shields.io/badge/Version-2.3.4-blue" alt="Version 2.3.4">
+<img src="https://img.shields.io/badge/Version-2.3.5-blue" alt="Version 2.3.5">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
 <img src="https://img.shields.io/badge/Symfony-8.0-black?logo=symfony" alt="Symfony 8.0">
 </p>
@@ -74,7 +74,7 @@ The simplest way to get started is using PHP's built-in server:
 
 ### 2. Docker Setup (Recommended)
 For a production-like environment, we recommend using **Docker**. A standard setup should include:
-* **PHP-FPM** (8.3+)
+* **PHP-FPM** (8.4+)
 * **Server (Nginx/Apache/Caddy etc)**
 * **MySQL 8.0+**
 * **Mailcatcher/Mailtrap** (for local email testing)

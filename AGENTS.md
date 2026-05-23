@@ -9,7 +9,7 @@ composer create-project winningsoftware/symfony-base my-project
 ```
 
 - **License**: GPL-3.0-or-later
-- **PHP**: >=8.3
+- **PHP**: >=8.4
 - **Backend**: Symfony 8.0, Doctrine ORM 3.x, Latte templating
 - **Frontend**: Vue 3, Vite 8, TailwindCSS v4, TypeScript, SCSS
 
@@ -88,7 +88,7 @@ entity properties, only SQL columns use Hungarian notation.
 ## Database
 
 - **Multi-schema**: `Authentication` (users, roles, permissions, tokens) and `Core` (email types).
-- **No Doctrine Migrations**: This project NEVER uses Ddoctrine migrations. Schema changes are written manually in SQL. 
+- **No Doctrine Migrations**: This project NEVER uses Doctrine migrations. Schema changes are written manually in SQL. 
 New SQL files should be created in `data/{YYYY}/{mm}/YYYY-mm-dd-{i}.sql`.
 - **Setup**: Run `php bin/console app:database:setup` which executes `data/setup.sql`, creates default roles 
 (`ROLE_USER`, `ROLE_ADMIN`), and seeds an admin user from `ADMIN_USER` / `ADMIN_PASSWORD` env vars.
@@ -129,7 +129,7 @@ Key variables in `.env`:
 
 ## CI/CD
 
-Bitbucket Pipelines (`.bitbucket-pipelines.yml`):
+GitHub Workflow (`.github/workflows/CI.yml`):
 
-1. **PHP 8.3**: `composer install` → `composer cs` → `composer stan`
+1. **PHP 8.4**: `composer install` → `composer cs` → `composer stan`
 2. **TypeScript**: `npm install` → `npm run lint`

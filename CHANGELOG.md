@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to 
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.5] - 2026-05-23
+### Added
+- Added new GitHub CI workflow
+- Add an `AGENTS.md` for base project information
+
+### Changed
+- Updated PHP version requirements to 8.4+
+
+### Removed
+- Remove BitBucket pipeline script
+
 ## [2.3.4] - 2026-05-23
 ### Changed
 - Updated the repository link in the welcome template
