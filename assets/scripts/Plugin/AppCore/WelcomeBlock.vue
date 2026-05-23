@@ -8,10 +8,10 @@
       UI stack; so you can focus on building features instead of boilerplate.
     </p>
     <div class="flex items-center gap-4 text-sm">
-      <a href="https://bitbucket.org/winningsoftware/symfony-base/src/main/"
+      <a href="https://github.com/WinningSoftwareDev/symfony-base"
          target="_blank"
          class="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition font-semibold">
-        <i class="fa-brands fa-bitbucket"></i>
+        <i class="fa-brands fa-github"></i>
         View the Repo
       </a>
       <span class="text-gray-700">|</span>
