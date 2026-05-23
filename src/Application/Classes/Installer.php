@@ -21,8 +21,8 @@ final readonly class Installer
         $packageName = $this->io->ask(
             '<fg=yellow>Enter your composer package name (vendor/package):</>',
             'myvendor/myproject',
-            function (string $answer) {
-                if (!preg_match('/^[a-z0-9\-]+\/[a-z0-9\-]+$/', $answer)) {
+            static function (mixed $answer): mixed {
+                if (is_string($answer) && !preg_match('/^[a-z0-9\-]+\/[a-z0-9\-]+$/', $answer)) {
                     $answer = 'myvendor/myproject';
                 }
 
@@ -70,6 +70,10 @@ final readonly class Installer
             'MAIL_FROM_NAME="' . addslashes($projectName) . '"',
             $envContent
         );
+
+        if (!is_string($envContent)) {
+            throw new \RuntimeException('Error: .env content was not readable!');
+        }
 
         $envContent = preg_replace(
             '/^DEFAULT_URI=.*$/m',
