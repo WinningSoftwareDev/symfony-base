@@ -1,3 +1,11 @@
+<script setup lang="ts">
+interface IProps
+{
+  appVersion: string;
+}
+
+withDefaults(defineProps<IProps>(), {});
+</script>
 <template>
   <div class="text-left space-y-4">
     <h1 class="text-4xl font-extrabold text-white tracking-tight">
@@ -15,7 +23,15 @@
         View the Repo
       </a>
       <span class="text-gray-700">|</span>
-      <span class="text-gray-500 italic">v2.3.0</span>
+      <span class="text-gray-500 italic">v{{ appVersion }}</span>
+    </div>
+    <div>
+      <a href="/monitor/health"
+         class="inline-flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 mt-3 px-5 py-2 rounded-xl text-sm font-bold transition-all border border-indigo-500/20"
+         target="_blank">
+        <i class="fa-duotone fa-solid fa-book-medical"></i>
+        Health Checks
+      </a>
     </div>
   </div>
 </template>
