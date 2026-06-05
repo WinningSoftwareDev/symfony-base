@@ -1,9 +1,9 @@
 # Symfony Base Template
 
 <p>
-<img src="https://img.shields.io/badge/Version-2.3.6-blue" alt="Version 2.3.6">
+<img src="https://img.shields.io/badge/Version-3.0.0-blue" alt="Version 3.0.0">
 <img src="https://img.shields.io/badge/License-GPL--3.0--or--later-40adbc" alt="License GPL-3.0-or-later">
-<img src="https://img.shields.io/badge/Symfony-8.0-black?logo=symfony" alt="Symfony 8.0">
+<img src="https://img.shields.io/badge/Symfony-8.0.13-black?logo=symfony" alt="Symfony 8.0.13">
 </p>
 
 A **highly opinionated**, production-ready Symfony 8 starter template designed for rapid application development with 

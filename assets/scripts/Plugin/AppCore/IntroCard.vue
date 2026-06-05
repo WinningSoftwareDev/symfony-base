@@ -41,6 +41,13 @@ onMounted(() => {
         <div class="mt-8 pt-8 border-t border-gray-700/50">
           <LoggedInUserPanel :user="user" :csrfToken="csrfToken" />
           <LoginLinks v-if="!isLoading" :user="user" />
+
+          <a href="/monitor/health"
+             class="flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 mt-3 px-5 py-2 rounded-xl text-sm font-bold transition-all border border-indigo-500/20"
+             target="_blank">
+            <i class="fa-duotone fa-solid fa-book-medical"></i>
+            Health Checks
+          </a>
         </div>
       </div>
     </div>

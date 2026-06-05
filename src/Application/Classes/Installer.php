@@ -38,6 +38,7 @@ final readonly class Installer
         $this->updateComposerJson($projectName, $packageName);
         $this->setupViteConfig($projectName);
         $this->showSuccessMessage($projectName, $packageName);
+        $this->installMonitorAssets();
         $this->cleanupSetupFiles();
     }
 
@@ -209,5 +210,10 @@ final readonly class Installer
                 file_put_contents($gitignoreFilePath, $gitignoreContent);
             }
         }
+    }
+
+    private function installMonitorAssets(): void
+    {
+        exec('php bin/console assets:install --symlink --relative');
     }
 }

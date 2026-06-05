@@ -7,7 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 ## Added
-- Added `liip/monitor-bundle` for built in health checks
+- Added `liip/monitor-bundle` for built-in health checks
+- Default home page now includes a link to the health checks
+- Default home page now includes a link to the admin panel for logged in admin users
 
 ## Changed
 - Change capitalisation of the `DEFAULT_URI` environment variable in the installer

@@ -100,12 +100,6 @@ const resendEmail = async () => {
         <i class="fa-duotone fa-solid fa-screwdriver-wrench"></i>
         Admin Panel
       </a>
-      <a v-if="user.roles.includes('ROLE_ADMIN')"
-         href="/monitor/health"
-         class="flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 px-5 py-2 rounded-xl text-sm font-bold transition-all border border-indigo-500/20">
-        <i class="fa-duotone fa-solid fa-book-medical"></i>
-        Health Checks
-      </a>
       <IntroCardLink url="/authenticate/logout" text="Logout" class="text-gray-400 hover:text-white" />
     </div>
   </div>
