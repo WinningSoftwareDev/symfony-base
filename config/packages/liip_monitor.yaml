@@ -3,6 +3,11 @@ liip_monitor:
   checks:
     groups:
       default:
+        doctrine_dbal: ['default']
         php_version:
           '8.4': '>='
-        php_extensions: [xdebug]
+        php_extensions: [mbstring, pdo, pdo_mysql, xdebug, ctype, dom, fileinfo, iconv, intl, json, phar, tokenizer, xml]
+        opcache_memory:
+          warning: 70
+          critical: 90
+        symfony_version: ~

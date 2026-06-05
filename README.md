@@ -116,7 +116,6 @@ assets/
 │   ├── Core/       # Frontend utilities (ComponentLoader, FlashHandler)
 │   ├── Plugin/     
 │   │   ├── AppCore/         # Homepage UI (IntroCard and sub-components)
-│   │   ├── AppHealthCheck/  # Health check UI components
 │   │   └── AuthCore/        # Authentication UI components
 │   └── app.ts      # Main JS entry point
 └── styles/         # SCSS and Tailwind directives
@@ -156,10 +155,6 @@ $this->mailer->send($email);
 
 | Namespace              | Name                                    | Method       | Path                                 |
 |:-----------------------|-----------------------------------------|--------------|--------------------------------------|
-| **App\Core**           | `app_health_check_database_connection`  | `GET`        | `/health-check/database-connection`  |
-| **App\Core**           | `app_health_check_default_tables_exist` | `GET`        | `/health-check/default-tables-exist` |
-| **App\Core**           | `app_health_check_php_version`          | `GET`        | `/health-check/php-version`          |
-| **App\Core**           | `app_health_check_symfony_version`      | `GET`        | `/health-check/symfony-version`      |
 | **App\Application**    | `app_index`                             | `GET`        | `/`                                  |
 | **App\Authentication** | `authenticate`                          | `GET`        | `/authenticate`                      |
 | **App\Authentication** | `authenticate_request_password_reset`   | `GET`,`POST` | `/authenticate/password-reset`       |

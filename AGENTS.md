@@ -32,7 +32,6 @@ assets/
 │   ├── Core/                     # ComponentLoader, FlashHandler, interfaces
 │   ├── Plugin/AppCore/           # Homepage Vue components
 │   ├── Plugin/AuthCore/          # Auth UI forms & pages
-│   ├── Plugin/AppHealthCheck/    # Health check UI
 │   └── Administration/           # Admin SPA pages & components
 └── styles/app.scss               # Tailwind config + CSS variables
 

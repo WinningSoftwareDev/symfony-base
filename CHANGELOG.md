@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## Added
+- Added `liip/monitor-bundle` for built in health checks
+
 ## Changed
 - Change capitalisation of the `DEFAULT_URI` environment variable in the installer
+
+## Removed
+- Removed custom `HealthCheckController` and Vue components
 
 ## [2.3.6] - 2025-05-23
 ### Added

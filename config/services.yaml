@@ -42,3 +42,7 @@ services:
     tags: [ 'controller.service_arguments' ]
     calls:
       - setLatteFactory: [ '@CloudBase\LatteHelper\Classes\Latte\LatteEngineFactory' ]
+
+  App\Core\Classes\HealthCheck\DatabaseSetupCheck:
+    tags:
+      - { name: 'liip_monitor.check', group: 'database' }

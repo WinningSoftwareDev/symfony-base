@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import AppHealthCheck from '../AppHealthCheck/AppHealthCheck.vue';
 import IUser from '../AuthCore/Interface/IUser';
 import WelcomeBlock from './WelcomeBlock.vue';
 import LoggedInUserPanel from './LoggedInUserPanel.vue';
@@ -46,10 +45,6 @@ onMounted(() => {
             <LoginLinks v-if="!isLoading" :user="user" />
           </div>
         </div>
-      </div>
-
-      <div class="lg:col-span-5">
-        <AppHealthCheck />
       </div>
     </div>
   </div>

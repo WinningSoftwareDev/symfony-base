@@ -1,4 +1,4 @@
-import '../styles/app.scss';
+import '../styles/app.css';
 import { createApp } from 'vue';
 import { createRouter, createWebHistory, Router } from 'vue-router';
 import AdminPanel from './Administration/AdminPanel.vue';
