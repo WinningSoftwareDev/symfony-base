@@ -102,7 +102,7 @@ class HealthCheckController extends AbstractApplicationController
 
         if (isset($composerJson['require']) && is_array($composerJson['require'])) {
             $symfonyVersion = isset($composerJson['require']['symfony/console']) && is_string($composerJson['require']['symfony/console'])
-                ? (float) $composerJson['require']['symfony/console']
+                ? (float) str_replace('^', '', $composerJson['require']['symfony/console'])
                 : null;
         }
 

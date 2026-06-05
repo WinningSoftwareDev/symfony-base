@@ -66,7 +66,6 @@ runChecks().then(() => {
   <div class="bg-gray-900/50 rounded-2xl border border-gray-800 overflow-hidden">
     <div class="px-6 py-4 border-b border-gray-800 bg-gray-800/30 flex justify-between items-center">
       <h2 class="text-sm font-bold tracking-widest uppercase text-gray-400">System Integrity</h2>
-      <i v-if="isLoading" class="fa-duotone fa-spinner-third fa-spin text-indigo-400"></i>
     </div>
 
     <div class="p-4 space-y-3">
