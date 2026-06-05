@@ -172,11 +172,12 @@ class AuthenticationController extends AbstractApplicationController
         $user = $this->getUser();
 
         if ($user instanceof User) {
-            return $this->json(['email' => $user->getEmail(), 'verified' => $user->isVerified()]);
+            return $this->json(['email' => $user->getEmail(), 'roles' => $user->getRoles(), 'verified' => $user->isVerified()]);
         }
 
         return $this->json([
             'email' => '',
+            'roles' => [],
             'verified' => false,
         ]);
     }

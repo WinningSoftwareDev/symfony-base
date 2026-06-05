@@ -3,7 +3,7 @@
     <h1 class="text-4xl font-extrabold text-white tracking-tight">
       Launch your <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">ideas faster.</span>
     </h1>
-    <p class="text-lg text-gray-400 leading-relaxed max-w-xl">
+    <p class="text-lg text-gray-400 leading-relaxed max-w-3xl">
       This is your new <strong>Symfony Base</strong> project. Pre-configured authentication and a modern
       UI stack; so you can focus on building features instead of boilerplate.
     </p>
