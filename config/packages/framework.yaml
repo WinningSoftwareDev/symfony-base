@@ -1,6 +1,7 @@
 framework:
   secret: '%env(APP_SECRET)%'
   session: true
+  assets: true
 
 when@prod:
   framework:

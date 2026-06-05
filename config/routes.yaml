@@ -18,3 +18,7 @@ Core:
     path: ../src/Core/Controller/
     namespace: App\Core\Controller
   type: attribute
+
+_monitor:
+  resource: '@LiipMonitorBundle/Resources/config/routing.yaml'
+  prefix: /monitor/health

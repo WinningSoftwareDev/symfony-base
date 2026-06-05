@@ -1,0 +1,8 @@
+liip_monitor:
+  enable_controller: true
+  checks:
+    groups:
+      default:
+        php_version:
+          '8.4': '>='
+        php_extensions: [xdebug]

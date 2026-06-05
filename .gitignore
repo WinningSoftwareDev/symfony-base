@@ -9,3 +9,5 @@
 /.php-cs-fixer.cache
 /public/assets/
 /vite.config.ts
+/config/reference.php
+/public/bundles
