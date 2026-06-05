@@ -77,7 +77,7 @@ final readonly class Installer
 
         $envContent = preg_replace(
             '/^DEFAULT_URI=.*$/m',
-            'DEFAULT_URI=https://' . $projectName . '.app',
+            'DEFAULT_URI=https://' . strtolower(str_replace(' ', '-', $projectName)) . '.app',
             $envContent
         );
 
