@@ -25,6 +25,11 @@ export default defineConfig(({ mode }) => {
     return {
         base: './',
         publicDir: false,
+        resolve: {
+            alias: {
+                '@awesome.me/fa-pro': fileURLToPath(new URL('node_modules/@awesome.me/kit-fa638a4507/icons/js', import.meta.url))
+            }
+        },
         plugins: [vuePlugin({}), tailwindcss(), latteReloadPlugin],
         build: {
             outDir: './public/assets',
@@ -56,32 +61,23 @@ export default defineConfig(({ mode }) => {
             }
         },
         server: {
+            host: '0.0.0.0',
+            origin: `${env.DEFAULT_URI}:${devPort}`,
             port: parseInt(env.VITE_SERVER_PORT || '3000'),
             strictPort: true,
+            https: {
+                key: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.key'),
+                cert: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.crt'),
+            },
+            cors: true,
+            watch: {
+                usePolling: true,
+            },
             hmr: {
-                host: 'localhost',
-                port: parseInt(env.VITE_LOCAL_PORT || '3000'),
-                protocol: 'ws'
+                host: '{APP_NAME}.app',
+                protocol: 'wss',
+                clientPort: parseInt(env.VITE_LOCAL_PORT || '3000')
             }
-        },
-        // server: {
-        //     host: '0.0.0.0',
-        //     origin: `${env.DEFAULT_URI}:${devPort}`,
-        //     port: parseInt(env.VITE_SERVER_PORT || '3000'),
-        //     strictPort: true,
-        //     https: {
-        //         key: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.key'),
-        //         cert: fs.readFileSync('/etc/nginx/certs/{APP_NAME}.crt'),
-        //     },
-        //     cors: true,
-        //     watch: {
-        //         usePolling: true,
-        //     },
-        //     hmr: {
-        //         host: '{APP_NAME}.app',
-        //         protocol: 'wss',
-        //         clientPort: parseInt(env.VITE_LOCAL_PORT || '3000')
-        //     }
-        // }
+        }
     }
 });

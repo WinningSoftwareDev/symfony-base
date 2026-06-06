@@ -121,7 +121,6 @@ Key variables in `.env`:
 | `MAIL_FROM_NAME/ADDRESS`      | Default sender                        |
 | `ADMIN_USER/PASSWORD`         | Default admin credentials             |
 | `USE_HMR`                     | Toggle Vite HMR                       |
-| `FONTAWESOME_KIT_ID`          | FontAwesome kit                       |
 | `VITE_SERVER_PORT/LOCAL_PORT` | Vite dev server ports                 |
 
 ---

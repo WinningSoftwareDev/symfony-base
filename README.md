@@ -72,7 +72,6 @@ Before running the app, update your `.env` file with the following key variables
 | `VITE_SERVER_PORT`           | `3000`                    | Vite dev server port                                      |
 | `VITE_LOCAL_PORT`            | `3000`                    | Local port mapped to Vite server (e.g. in Docker)         |
 | `USE_HMR`                    | `false`                   | Set to `true` to enable Vite Hot Module Replacement       |
-| `FONTAWESOME_KIT_ID`         | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                          |
 | `OAUTH_GITHUB_CLIENT_ID`     | —                         | GitHub OAuth App client ID                                |
 | `OAUTH_GITHUB_CLIENT_SECRET` | —                         | GitHub OAuth App client secret                            |
 | `OAUTH_GOOGLE_CLIENT_ID`     | —                         | Google OAuth 2.0 client ID                                |
