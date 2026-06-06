@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { OAUTH_PROVIDERS } from '../../../Plugin/AuthCore/Constant/OauthProvider';
 import AdminTable from '../../Component/AdminTable.vue';
 import IPagination from '../../../Core/Interface/IPagination';
 
 const loading = ref(true);
 const responseData = ref({ data: [], meta: {} });
+
+const getOauthIcon = (handle: string): string => {
+  const provider = OAUTH_PROVIDERS.find(p => p.service === handle);
+  return provider?.icon ?? '';
+};
 
 const fetchUsers = async (page = 1) => {
   try {
@@ -30,6 +36,7 @@ onMounted(fetchUsers);
       <template #headings>
         <th class="p-4 font-bold">Email</th>
         <th class="p-4 font-bold">Roles</th>
+        <th class="p-4 font-bold w-24">OAuth</th>
         <th class="p-4 font-bold text-right">Actions</th>
       </template>
       <template #row="{ item: user }">
@@ -41,6 +48,14 @@ onMounted(fetchUsers);
               {{ role.replace('ROLE_', '') }}
             </span>
           </div>
+        </td>
+        <td class="p-4">
+          <div v-if="user.oauthProviders?.length" class="flex gap-2">
+            <i v-for="handle in user.oauthProviders" :key="handle"
+               :class="[getOauthIcon(handle), 'text-base text-gray-400']"
+               :title="handle" />
+          </div>
+          <span v-else class="text-[10px] text-gray-600">—</span>
         </td>
         <td class="p-4 text-right">
           <button class="text-primary hover:text-accent transition-colors text-sm font-semibold cursor-pointer">

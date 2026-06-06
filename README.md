@@ -14,7 +14,7 @@ a modern frontend stack.
 * **Core:** Symfony 8 + Doctrine ORM/DBAL.
 * **Templating:** [Latte](https://latte.nette.org/) — with custom Vite integration for **Instant Live-Reload**.
 * **Frontend:** Vue.js 3, Vite, TailwindCSS, TypeScript, and SCSS.
-* **Auth System:** Full "out-of-the-box" flow (Login, Registration, Password Reset, Email Verification).
+* **Auth System:** Full "out-of-the-box" flow (Login, Registration, Password Reset, Email Verification, OAuth).
 * **Email Builder:** A database-driven utility for generating templated HTML emails.
 * **Quality Gates:** Pre-configured PHPStan (Max Level), PHP-CS-Fixer, and ESLint.
 
@@ -56,20 +56,30 @@ php bin/console app:database:setup
 
 Before running the app, update your `.env` file with the following key variables:
 
-| Variable             | Default / Example         | Description                                         |
-|:---------------------|:--------------------------|:----------------------------------------------------|
-| `APP_NAME`           | `My App`                  | The name of your application                        |
-| `DEFAULT_URI`        | `http://localhost`        | Used for generating absolute URLs and OAuth redirect URLs |
-| `DB_HOST`            | `localhost`               | Database host (use `mysql` if using Docker)         |
-| `MAILER_DSN`         | `smtp://mailcatcher:1025` | SMTP connection string                              |
-| `USE_HMR`            | `false`                   | Set to `true` to enable Vite Hot Module Replacement |
-| `FONTAWESOME_KIT_ID` | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                    |
-| `OAUTH_GITHUB_CLIENT_ID` | —                      | GitHub OAuth App client ID                          |
-| `OAUTH_GITHUB_CLIENT_SECRET` | —                  | GitHub OAuth App client secret                      |
-| `OAUTH_GOOGLE_CLIENT_ID` | —                      | Google OAuth 2.0 client ID                          |
-| `OAUTH_GOOGLE_CLIENT_SECRET` | —                  | Google OAuth 2.0 client secret                      |
+| Variable                     | Default / Example         | Description                                               |
+|:-----------------------------|:--------------------------|:----------------------------------------------------------|
+| `APP_NAME`                   | `My App`                  | The name of your application                              |
+| `DEFAULT_URI`                | `http://localhost`        | Used for generating absolute URLs and OAuth redirect URLs |
+| `DB_HOST`                    | `localhost`               | Database host (use `mysql` if using Docker)               |
+| `DB_PORT`                    | `3306`                    | Database port                                             |
+| `DB_USER`                    | `root`                    | Database user                                             |
+| `DB_PASSWORD`                | `docker`                  | Database password                                         |
+| `ADMIN_USER`                 | `admin@my-app.com`        | Default admin email (created by `app:database:setup`)     |
+| `ADMIN_PASSWORD`             | `noodlepot`               | Default admin password                                    |
+| `MAILER_DSN`                 | `smtp://mailcatcher:1025` | SMTP connection string                                    |
+| `MAIL_FROM_NAME`             | —                         | Sender name for outgoing emails                           |
+| `MAIL_FROM_ADDRESS`          | `info@my-app.com`         | Sender address for outgoing emails                        |
+| `VITE_SERVER_PORT`           | `3000`                    | Vite dev server port                                      |
+| `VITE_LOCAL_PORT`            | `3000`                    | Local port mapped to Vite server (e.g. in Docker)         |
+| `USE_HMR`                    | `false`                   | Set to `true` to enable Vite Hot Module Replacement       |
+| `FONTAWESOME_KIT_ID`         | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                          |
+| `OAUTH_GITHUB_CLIENT_ID`     | —                         | GitHub OAuth App client ID                                |
+| `OAUTH_GITHUB_CLIENT_SECRET` | —                         | GitHub OAuth App client secret                            |
+| `OAUTH_GOOGLE_CLIENT_ID`     | —                         | Google OAuth 2.0 client ID                                |
+| `OAUTH_GOOGLE_CLIENT_SECRET` | —                         | Google OAuth 2.0 client secret                            |
 
-> **Note**: The OAuth redirect URL is constructed from your `DEFAULT_URI` env var. Ensure `DEFAULT_URI` uses the correct scheme (`https` in production) so the redirect URL matches what you registered with the provider.
+> **Note**: The OAuth redirect URL is constructed from your `DEFAULT_URI` env var. Ensure `DEFAULT_URI` uses the correct 
+> scheme (`https` in production) so the redirect URL matches what you registered with the provider.
 
 ### Obtaining OAuth Credentials
 
@@ -99,7 +109,7 @@ The simplest way to get started is using PHP's built-in server:
 * **Config:** Set `USE_HMR=true` and `DEFAULT_URI=http://localhost` in your `.env`.
 
 ### 2. Docker Setup (Recommended)
-For a production-like environment, we recommend using **Docker**. A standard setup should include:
+For a production-like environment, I recommend using **Docker**. A standard setup should include:
 * **PHP-FPM** (8.4+)
 * **Server (Nginx/Apache/Caddy etc)**
 * **MySQL 8.0+**
@@ -118,11 +128,11 @@ is set to `ws`.
 ### 4. Quality Control
 Run these commands before committing to maintain high standards:
 
-| Tool             | Command         | Description                   |
-|:-----------------|:----------------|:------------------------------|
-| **PHPStan**      | `composer stan` | Static analysis (Level: Max)  |
-| **PHP-CS-Fixer** | `composer cs`   | Auto-fix coding standards     |
-| **ESLint**       | `npm run lint`  | Lint Vue and TypeScript files |
+| Tool             | Command         | Description                      |
+|:-----------------|:----------------|:---------------------------------|
+| **PHPStan**      | `composer stan` | Static analysis (Level: Max)     |
+| **PHP-CS-Fixer** | `composer cs`   | Check coding standards (dry-run) |
+| **ESLint**       | `npm run lint`  | Lint Vue and TypeScript files    |
 
 ## 📂 Project Structure
 This template uses a modular, domain-oriented structure. The `src/` directory handles PHP logic, while `assets/scripts/` 
@@ -130,6 +140,7 @@ organizes Vue components and frontend utilities into feature-based plugins.
 
 ```text
 src/
+├── Administration/ # Module: Admin panel (Vue SPA) — controllers & API
 ├── Application/    # Domain: Where you build your app logic
 ├── Authentication/ # Module: Self-contained User & Security logic
 ├── Core/           # Internal: Base classes and framework extensions
@@ -142,7 +153,7 @@ assets/
 │   │   ├── AppCore/         # Homepage UI (IntroCard and sub-components)
 │   │   └── AuthCore/        # Authentication UI components
 │   └── app.ts      # Main JS entry point
-└── styles/         # SCSS and Tailwind directives
+└── styles/         # CSS and Tailwind directives
 ```
 
 ## 🗄 Database Schema
@@ -152,8 +163,9 @@ areas of your application.
 
 The `php bin/console app:database:setup` command executes `data/setup.sql`, which creates the following:
 
-* **`Authentication` Schema**: Contains `tblUser`, `tblVerificationToken`, and `tblPasswordResetToken`.
-* **`Core` Schema**: Contains `ublEmailType` (Look-up table for email subjects and templates).
+* **`Authentication` Schema**: Contains `tblUser`, `tblEmailVerificationToken`, `tblPasswordResetToken`, `tblRole`, 
+  `tblPermission`, `tblRolePermission`, `tblUserRole`, and `tblUserOauth`.
+* **`Core` Schema**: Contains `ublEmailType` and `ublOauthProvider` (look-up tables).
 
 > **IMPORTANT**: Before running the setup command, review `data/setup.sql`. If your database user does not have `CREATE SCHEMA` 
 > permissions, or if you prefer a different database setup, you will need to modify this script and the corresponding 
@@ -166,10 +178,10 @@ The built-in `EmailBuilder` utility allows you to generate emails by referencing
 **Example Usage:**
 ```php
 $email = $this->emailBuilder->getEmail(
-    EmailType::GREET_USER,
+    EmailType::VERIFY_EMAIL_ADDRESS,
     $user->getEmail(),
     [
-        'user' => $user,
+        'verificationUrl' => $this->generateUrl('authenticate_verify_email', ['token' => $token]),
     ]
 );
 $this->mailer->send($email);
@@ -177,21 +189,24 @@ $this->mailer->send($email);
 
 ## 🛣 Available Routes
 
-| Namespace              | Name                                  | Method       | Path                                 |
-|:-----------------------|---------------------------------------|--------------|--------------------------------------|
-| **App\Application**    | `app_index`                           | `GET`        | `/`                                  |
-| **App\Authentication** | `authenticate`                        | `GET`        | `/authenticate`                      |
-| **App\Authentication** | `authenticate_request_password_reset` | `GET`,`POST` | `/authenticate/password-reset`       |
-| **App\Authentication** | `authenticate_password_reset`         | `GET`,`POST` | `/authenticate/password-reset/reset` |
-| **App\Authentication** | `authenticate_login`                  | `GET`,`POST` | `/authenticate/login`                |
-| **App\Authentication** | `authenticate_logout`                 | `GET`        | `/authenticate/logout`               |
-| **App\Authentication** | `authenticate_get_logged_in_user`     | `GET`        | `/authenticate/current-user`         |
-| **App\Authentication** | `authenticate_register`               | `POST`       | `/authenticate/register`             |
-| **App\Authentication** | `authenticate_verify_email`           | `GET`        | `/authenticate/verify`               |
-| **App\Authentication** | `user_account`                        | `GET`        | `/user/account`                      |
-| **App\Authentication** | `connect_oauth_start`                 | `GET`        | `/connect/{service}`                 |
-| **App\Authentication** | `connect_github_check`                | `GET`        | `/connect/github/check`              |
-| **App\Authentication** | `connect_google_check`                | `GET`        | `/connect/google/check`              |
+| Namespace              | Name                                     | Method       | Path                                      |
+|:-----------------------|------------------------------------------|--------------|-------------------------------------------|
+| **App\Application**    | `app_index`                              | `GET`        | `/`                                       |
+| **App\Authentication** | `authenticate`                           | `GET`        | `/authenticate`                           |
+| **App\Authentication** | `authenticate_request_password_reset`    | `GET`,`POST` | `/authenticate/password-reset`            |
+| **App\Authentication** | `authenticate_password_reset`            | `GET`,`POST` | `/authenticate/password-reset/reset`      |
+| **App\Authentication** | `authenticate_login`                     | `GET`,`POST` | `/authenticate/login`                     |
+| **App\Authentication** | `authenticate_logout`                    | `GET`        | `/authenticate/logout`                    |
+| **App\Authentication** | `authenticate_get_logged_in_user`        | `GET`        | `/authenticate/current-user`              |
+| **App\Authentication** | `authenticate_register`                  | `POST`       | `/authenticate/register`                  |
+| **App\Authentication** | `authenticate_verify_email`              | `GET`        | `/authenticate/verify`                    |
+| **App\Authentication** | `authenticate_resend_verification_email` | `POST`       | `/authenticate/resend-verification-email` |
+| **App\Authentication** | `user_account`                           | `GET`        | `/user/account`                           |
+| **App\Authentication** | `connect_oauth_start`                    | `GET`        | `/connect/{service}`                      |
+| **App\Authentication** | `connect_github_check`                   | `GET`        | `/connect/github/check`                   |
+| **App\Authentication** | `connect_google_check`                   | `GET`        | `/connect/google/check`                   |
+| **App\Administration** | `admin_entry`                            | `ANY`        | `/admin/{vue_routing}`                    |
+| **Liip Monitor**       | `liip_monitor_health_interface`          | `ANY`        | `/monitor/health/`                        |
 
 > Run `php bin/console debug:router` for the full list of included endpoints.
 
@@ -204,12 +219,12 @@ for various internal components. You can find and modify these in `assets/script
 Reset, and Email Verification.
 * **Auth UI:** For the frontend side of the built-in system, this project uses Vue components found in the 
 `assets/scripts/Plugin/AuthCore` directory.
-* **Styles:** Global styles, Tailwind directives, and SCSS variables are managed in `assets/styles/app.scss`.
+* **OAuth Providers:** To add or remove OAuth sign-in options, update the `Core.ublOauthProvider` seed data in `data/setup.sql`, create a `KnpU\OAuth2ClientBundle` client config in `config/packages/knpu_oauth2_client.yaml`, register the callback route in `config/routes.yaml`, and add the provider entry to the `OAUTH_PROVIDERS` array in `assets/scripts/Plugin/AuthCore/Constant/OauthProvider.ts`.
+* **Styles:** Global styles, Tailwind directives, and SCSS variables are managed in `assets/styles/app.css`.
 
 ## 🐳 Docker & Advanced Setup
 
 The recommended approach for a production-like environment is a containerized setup (PHP, Nginx, MySQL, and Mailcatcher).
 
 If you are using a custom Docker setup, ensure you update the `server` block in `vite.config.ts` to use the commented out 
-section. If you're using HTTP instead of HTTPS inside your containers, remove `server.https` and `server.hmr.protocol` to 
-`ws`.
+section. If you're using plain HTTP inside your containers, remove `server.https` and set `server.hmr.protocol` to `ws`.

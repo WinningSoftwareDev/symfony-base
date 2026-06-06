@@ -18,7 +18,12 @@ class UserRepository extends EntityRepository
      */
     public function getPaginatedUsers(int $page = 1, int $limit = 1, ?string $search = null): Paginator
     {
-        $query = $this->createQueryBuilder('u')->orderBy('u.id', 'DESC');
+        $query = $this->createQueryBuilder('u')
+            ->leftJoin('u.oauthLinks', 'ol')
+            ->addSelect('ol')
+            ->leftJoin('ol.provider', 'p')
+            ->addSelect('p')
+            ->orderBy('u.id', 'DESC');
 
         if ($search) {
             $query->andWhere('u.email LIKE :search')->setParameter('search', '%' . $search . '%');

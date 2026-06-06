@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Administration\Controller\API;
 
 use App\Authentication\Entity\User;
+use App\Authentication\Entity\UserOauth;
 use App\Authentication\Repository\UserRepository;
 use App\Core\Controller\AbstractApplicationController;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,9 @@ class UserController extends AbstractApplicationController
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'roles' => $user->getRoles(),
+                'oauthProviders' => $user->getOauthLinks()->map(
+                    fn (UserOauth $link) => $link->getProviderHandle(),
+                )->toArray(),
             ];
         }
 
