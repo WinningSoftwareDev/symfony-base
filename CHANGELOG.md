@@ -6,15 +6,31 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## Added
+
+### Added
+- Added OAuth GitHub/Google authentication via `knpu/oauth2-client-bundle`
+- Added `Core.ublOauthProvider` table and entity for provider definitions
+- Added `Authentication.tblUserOauth` join table for multi-provider user linking
+- Added `OAuthAuthenticator` handling OAuth callback, user lookup, and account linking
+- Added OAuth sign-in buttons with icon/label to the authentication page
+- Added TypeScript `OAUTH_PROVIDERS` constants driving button rendering
 - Added `liip/monitor-bundle` for built-in health checks
 - Default home page now includes a link to the health checks
 - Default home page now includes a link to the admin panel for logged in admin users
 
-## Changed
+### Changed
+- Replaced custom health check controller action with Liip Monitor `doctrine_dbal` check
+- Replaced `strOauthProvider`/`strOauthId` columns on `tblUser` with normalized `tblUserOauth` join table
+- Replaced magic string OAuth provider references with `OauthProvider` handle constants
+- Moved form heading/intro above OAuth sign-in buttons on the authentication page
+- Rendered OAuth buttons via data-driven `v-for` loop instead of hardcoded markup
+- Updated `.php-cs-fixer.php` to exclude `config/reference.php`
+- Updated `jsonSerialize()` output from `oauthProvider` string to `oauthProviders` array
 - Change capitalisation of the `DEFAULT_URI` environment variable in the installer
 
-## Removed
+### Removed
+- Removed custom `checkDatabaseConnection` action from `HealthCheckController`
+- Removed `createFromOauth()`, `getOauthProvider()`, `setOauthProvider()`, `getOauthId()`, `setOauthId()` from `User` entity
 - Removed custom `HealthCheckController` and Vue components
 
 ## [2.3.6] - 2025-05-23

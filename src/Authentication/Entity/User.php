@@ -7,6 +7,7 @@ namespace App\Authentication\Entity;
 use App\Authentication\Classes\DTO\RegistrationDTO;
 use App\Authentication\Repository\UserRepository;
 use App\Core\Entity\AbstractBaseEntity;
+use App\Core\Entity\OauthProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,9 +16,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: 'tblUser', schema: 'Authentication', uniqueConstraints: [
-    new ORM\UniqueConstraint(name: 'UK_tblUser_strOauth', columns: ['strOauthProvider', 'strOauthId']),
-])]
+#[ORM\Table(name: 'tblUser', schema: 'Authentication')]
 class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     #[ORM\Id]
@@ -37,12 +36,6 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     #[ORM\Column(name: 'bolVerified', type: 'boolean', nullable: false)]
     private bool $isVerified = false;
 
-    #[ORM\Column(name: 'strOauthProvider', length: 32, nullable: true)]
-    private ?string $oauthProvider = null;
-
-    #[ORM\Column(name: 'strOauthId', length: 255, nullable: true)]
-    private ?string $oauthId = null;
-
     /**
      * @var Collection<int, Role>
      */
@@ -52,9 +45,16 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     #[ORM\InverseJoinColumn(name: 'intRoleId', referencedColumnName: 'intRoleId')]
     private Collection $roles;
 
+    /**
+     * @var Collection<int, UserOauth>
+     */
+    #[ORM\OneToMany(targetEntity: UserOauth::class, mappedBy: 'user', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $oauthLinks;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->oauthLinks = new ArrayCollection();
     }
 
     public static function create(RegistrationDTO $dto, UserPasswordHasherInterface $passwordHasher): self
@@ -67,16 +67,13 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
         return $user;
     }
 
-    public static function createFromOauth(string $email, string $provider, string $oauthId): self
+    public function linkOauth(OauthProvider $provider, string $oauthProviderId): UserOauth
     {
-        $user = new self();
+        $userOauth = new UserOauth($this, $provider, $oauthProviderId);
 
-        $user->setEmail($email);
-        $user->isVerified = true;
-        $user->setOauthProvider($provider);
-        $user->setOauthId($oauthId);
+        $this->oauthLinks->add($userOauth);
 
-        return $user;
+        return $userOauth;
     }
 
     public function getEmail(): string
@@ -152,24 +149,12 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
         $this->password = $password;
     }
 
-    public function getOauthProvider(): ?string
+    /**
+     * @return Collection<int, UserOauth>
+     */
+    public function getOauthLinks(): Collection
     {
-        return $this->oauthProvider;
-    }
-
-    public function setOauthProvider(?string $oauthProvider): void
-    {
-        $this->oauthProvider = $oauthProvider;
-    }
-
-    public function getOauthId(): ?string
-    {
-        return $this->oauthId;
-    }
-
-    public function setOauthId(?string $oauthId): void
-    {
-        $this->oauthId = $oauthId;
+        return $this->oauthLinks;
     }
 
     public function isActive(): bool
@@ -207,7 +192,7 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     }
 
     /**
-     * @return array<string, int|string|bool|null>
+     * @return array<string, int|string|bool|list<string>|null>
      */
     public function jsonSerialize(): array
     {
@@ -216,7 +201,7 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
             'email' => $this->getEmail(),
             'createdAt' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
             'verified' => $this->isVerified(),
-            'oauthProvider' => $this->getOauthProvider(),
+            'oauthProviders' => $this->oauthLinks->map(fn (UserOauth $link) => $link->getProviderHandle())->getValues(),
         ];
     }
 }

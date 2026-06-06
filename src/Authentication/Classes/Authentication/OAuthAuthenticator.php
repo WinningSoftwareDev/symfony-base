@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Authentication\Classes\Authentication;
 
 use App\Authentication\Entity\User;
+use App\Authentication\Entity\UserOauth;
+use App\Core\Entity\OauthProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
@@ -32,13 +34,24 @@ class OAuthAuthenticator extends OAuth2Authenticator
     {
         $route = $request->attributes->get('_route');
 
-        return $route === 'connect_github_check' || $route === 'connect_google_check';
+        return $route === 'connect_' . OauthProvider::GITHUB . '_check'
+            || $route === 'connect_' . OauthProvider::GOOGLE . '_check';
     }
 
     public function authenticate(Request $request): SelfValidatingPassport
     {
         $route = $request->attributes->get('_route');
-        $service = $route === 'connect_github_check' ? 'github' : 'google';
+        $service = match ($route) {
+            'connect_' . OauthProvider::GITHUB . '_check' => OauthProvider::GITHUB,
+            'connect_' . OauthProvider::GOOGLE . '_check' => OauthProvider::GOOGLE,
+            default => throw new AuthenticationException('Unknown OAuth service.'),
+        };
+
+        $provider = $this->entityManager->getRepository(OauthProvider::class)->findOneBy(['handle' => $service]);
+
+        if (!$provider instanceof OauthProvider) {
+            throw new AuthenticationException('OAuth provider not found.');
+        }
 
         $defaultUri = isset($_ENV['DEFAULT_URI']) && is_string($_ENV['DEFAULT_URI']) ? $_ENV['DEFAULT_URI'] : 'http://localhost';
         $redirectUrl = rtrim($defaultUri, '/') . '/connect/' . $service . '/check';
@@ -47,13 +60,13 @@ class OAuthAuthenticator extends OAuth2Authenticator
         $accessToken = $this->fetchAccessToken($client, ['redirect_uri' => $redirectUrl]);
 
         return new SelfValidatingPassport(
-            new UserBadge($accessToken->getToken(), function () use ($client, $accessToken, $service) {
+            new UserBadge($accessToken->getToken(), function () use ($client, $accessToken, $service, $provider) {
                 $oauthUser = $client->fetchUserFromToken($accessToken);
                 $oauthUserData = $oauthUser->toArray();
                 $email = isset($oauthUserData['email']) && is_string($oauthUserData['email']) ? $oauthUserData['email'] : null;
                 $oauthId = $oauthUser->getId();
 
-                if ($service === 'github' && is_string($email) && str_ends_with($email, '@users.noreply.github.com')) {
+                if ($service === OauthProvider::GITHUB && is_string($email) && str_ends_with($email, '@users.noreply.github.com')) {
                     $realEmail = $this->getGitHubEmail($accessToken);
 
                     if (is_string($realEmail)) {
@@ -71,28 +84,27 @@ class OAuthAuthenticator extends OAuth2Authenticator
 
                 $oauthIdStr = (string) $oauthId;
 
-                $user = $this->entityManager->getRepository(User::class)->findOneBy([
-                    'oauthProvider' => $service,
-                    'oauthId' => $oauthIdStr,
+                $userOauth = $this->entityManager->getRepository(UserOauth::class)->findOneBy([
+                    'provider' => $provider,
+                    'oauthProviderId' => $oauthIdStr,
                 ]);
 
-                if ($user instanceof User) {
-                    return $user;
+                if ($userOauth instanceof UserOauth) {
+                    return $userOauth->getUser();
                 }
 
                 $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-                if ($user instanceof User) {
-                    $user->setOauthProvider($service);
-                    $user->setOauthId($oauthIdStr);
+                if (!$user instanceof User) {
+                    $user = new User();
 
-                    $this->entityManager->flush();
+                    $user->setEmail($email);
+                    $user->verify();
 
-                    return $user;
+                    $this->entityManager->persist($user);
                 }
 
-                $user = User::createFromOauth($email, $service, $oauthIdStr);
-                $this->entityManager->persist($user);
+                $user->linkOauth($provider, $oauthIdStr);
                 $this->entityManager->flush();
 
                 return $user;

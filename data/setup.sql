@@ -10,13 +10,10 @@ CREATE TABLE Authentication.tblUser (
     strPassword VARCHAR(255) DEFAULT NULL COMMENT 'Hashed password (null for OAuth-only users)',
     bolVerified TINYINT(1) NOT NULL DEFAULT 0,
     bolActive TINYINT(1) NOT NULL DEFAULT 1,
-    strOauthProvider VARCHAR(32) DEFAULT NULL COMMENT 'OAuth provider name (github, google)',
-    strOauthId VARCHAR(255) DEFAULT NULL COMMENT 'OAuth provider user ID',
     dtmCreated DATETIME NOT NULL DEFAULT NOW(),
     dtmUpdated DATETIME ON UPDATE NOW(),
     PRIMARY KEY (intUserId),
     UNIQUE KEY UK_tblUser_strEmail (strEmail),
-    UNIQUE KEY UK_tblUser_strOauth (strOauthProvider, strOauthId),
     INDEX I_tblUser_bolActive (bolActive),
     INDEX I_tblUser_bolVerified (bolVerified),
     INDEX I_tblUser_dtmCreated (dtmCreated)
@@ -107,6 +104,35 @@ INSERT INTO Core.ublEmailType
 VALUES
     ('Verify your email address', 'VERIFY_EMAIL_ADDRESS', 'Core/Email/verify-email.latte'),
     ('Reset your password', 'PASSWORD_RESET', 'Core/Email/reset-password.latte');
+
+CREATE TABLE Core.ublOauthProvider (
+    intOauthProviderId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    strOauthProviderHandle VARCHAR(32) NOT NULL,
+    strOauthProviderLabel VARCHAR(100) NOT NULL,
+    strIcon VARCHAR(100) DEFAULT NULL,
+    PRIMARY KEY (intOauthProviderId),
+    UNIQUE KEY UK_ublOauthProvider_strHandle (strOauthProviderHandle)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO Core.ublOauthProvider
+    (strOauthProviderHandle, strOauthProviderLabel, strIcon)
+VALUES
+    ('github', 'GitHub', 'fa-brands fa-github'),
+    ('google', 'Google', 'fa-brands fa-google');
+
+CREATE TABLE Authentication.tblUserOauth (
+    intUserOauthId INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    intUserId INT UNSIGNED NOT NULL,
+    intOauthProviderId INT UNSIGNED NOT NULL,
+    strOauthProviderId VARCHAR(255) NOT NULL COMMENT 'Provider user ID (e.g. GitHub user ID, Google sub)',
+    dtmCreated DATETIME NOT NULL DEFAULT NOW(),
+    dtmUpdated DATETIME ON UPDATE NOW(),
+    PRIMARY KEY (intUserOauthId),
+    UNIQUE KEY UK_tblUserOauth_provider (intOauthProviderId, strOauthProviderId),
+    INDEX I_tblUserOauth_intUserId (intUserId),
+    FOREIGN KEY FK_tblUserOauth_intUserId (intUserId) REFERENCES Authentication.tblUser(intUserId),
+    FOREIGN KEY FK_tblUserOauth_intOauthProviderId (intOauthProviderId) REFERENCES Core.ublOauthProvider(intOauthProviderId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO Authentication.tblRole
     (strRoleName, strHandle)

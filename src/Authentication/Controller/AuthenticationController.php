@@ -14,6 +14,7 @@ use App\Authentication\Form\PasswordResetForm;
 use App\Authentication\Form\RegistrationForm;
 use App\Authentication\Form\RequestPasswordResetLinkForm;
 use App\Core\Controller\AbstractApplicationController;
+use App\Core\Entity\OauthProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -186,7 +187,7 @@ class AuthenticationController extends AbstractApplicationController
     #[Route(path: '/connect/{service}', name: 'connect_oauth_start', methods: [Request::METHOD_GET])]
     public function connect(string $service, ClientRegistry $clientRegistry): Response
     {
-        if (!in_array($service, ['github', 'google'], true)) {
+        if (!in_array($service, [OauthProvider::GITHUB, OauthProvider::GOOGLE], true)) {
             throw $this->createNotFoundException();
         }
 

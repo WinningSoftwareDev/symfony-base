@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, Ref, ref, ShallowRef, shallowRef } from 'vue';
+import { OAUTH_PROVIDERS } from '../Constant/OauthProvider';
 import FormToggle from '../Component/FormToggle.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import LoginForm from '../Form/LoginForm.vue';
@@ -66,15 +67,12 @@ setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
       </p>
 
       <div class="space-y-3 mb-6">
-        <a href="/connect/github"
+        <a v-for="provider in OAUTH_PROVIDERS"
+           :key="provider.service"
+           :href="'/connect/' + provider.service"
            class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl border border-gray-700/50 bg-gray-800/40 hover:bg-gray-700/40 transition-colors text-sm font-semibold text-gray-300 hover:text-white">
-          <i class="fa-brands fa-github text-lg"></i>
-          Continue with GitHub
-        </a>
-        <a href="/connect/google"
-           class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl border border-gray-700/50 bg-gray-800/40 hover:bg-gray-700/40 transition-colors text-sm font-semibold text-gray-300 hover:text-white">
-          <i class="fa-brands fa-google text-lg"></i>
-          Continue with Google
+          <i :class="provider.icon + ' text-lg'"></i>
+          Continue with {{ provider.label }}
         </a>
       </div>
 
