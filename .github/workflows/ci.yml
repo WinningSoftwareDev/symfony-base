@@ -44,6 +44,11 @@ jobs:
               with:
                   node-version: 24
 
+            - name: Configure FontAwesome registry
+              run: |
+                  cp .npmrc.template .npmrc
+                  sed -i "s|_authToken=$|_authToken=${{ secrets.FONTAWESOME_AUTH_TOKEN }}|" .npmrc
+
             - name: Cache npm dependencies
               uses: actions/cache@v5
               with:
