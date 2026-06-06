@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to 
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.0.0] - 2026-06-06
 ### Added
 - Added OAuth GitHub/Google authentication via `knpu/oauth2-client-bundle`
 - Added `Core.ublOauthProvider` table and entity for provider definitions
@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Removed custom `checkDatabaseConnection` action from `HealthCheckController`
 - Removed custom `HealthCheckController` and Vue components
 
-## [2.3.6] - 2025-05-23
+## [2.3.6] - 2026-05-23
 ### Added
 - Add new release workflow
 
