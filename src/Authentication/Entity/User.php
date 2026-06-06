@@ -15,7 +15,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: 'tblUser', schema: 'Authentication')]
+#[ORM\Table(name: 'tblUser', schema: 'Authentication', uniqueConstraints: [
+    new ORM\UniqueConstraint(name: 'UK_tblUser_strOauth', columns: ['strOauthProvider', 'strOauthId']),
+])]
 class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenticatedUserInterface, \JsonSerializable
 {
     #[ORM\Id]
@@ -26,14 +28,20 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     #[ORM\Column(name: 'strEmail', length: 180, unique: true, nullable: false)]
     private string $email;
 
-    #[ORM\Column(name: 'strPassword', length: 255, nullable: false, options: ['comment' => 'Hashed password'])]
-    private string $password;
+    #[ORM\Column(name: 'strPassword', length: 255, nullable: true, options: ['comment' => 'Hashed password (null for OAuth-only users)'])]
+    private ?string $password = null;
 
     #[ORM\Column(name: 'bolActive', type: 'boolean', nullable: false)]
     private bool $isActive = true;
 
     #[ORM\Column(name: 'bolVerified', type: 'boolean', nullable: false)]
     private bool $isVerified = false;
+
+    #[ORM\Column(name: 'strOauthProvider', length: 32, nullable: true)]
+    private ?string $oauthProvider = null;
+
+    #[ORM\Column(name: 'strOauthId', length: 255, nullable: true)]
+    private ?string $oauthId = null;
 
     /**
      * @var Collection<int, Role>
@@ -55,6 +63,18 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
 
         $user->setEmail($dto->getEmail());
         $user->setPassword($passwordHasher->hashPassword($user, $dto->getPassword()));
+
+        return $user;
+    }
+
+    public static function createFromOauth(string $email, string $provider, string $oauthId): self
+    {
+        $user = new self();
+
+        $user->setEmail($email);
+        $user->isVerified = true;
+        $user->setOauthProvider($provider);
+        $user->setOauthId($oauthId);
 
         return $user;
     }
@@ -90,7 +110,9 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
      */
     public function getRoles(): array
     {
-        return $this->roles->map(fn (Role $role) => $role->getHandle())->toArray();
+        $roles = $this->roles->map(fn (Role $role) => $role->getHandle())->toArray();
+
+        return !empty($roles) ? $roles : ['ROLE_USER'];
     }
 
     /**
@@ -98,7 +120,9 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
      */
     public function getRoleObjects(): Collection
     {
-        return $this->roles;
+        return !$this->roles->isEmpty()
+            ? $this->roles
+            : new ArrayCollection([Role::getDefault()]);
     }
 
     public function addRole(Role $role): void
@@ -118,14 +142,34 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
+    }
+
+    public function getOauthProvider(): ?string
+    {
+        return $this->oauthProvider;
+    }
+
+    public function setOauthProvider(?string $oauthProvider): void
+    {
+        $this->oauthProvider = $oauthProvider;
+    }
+
+    public function getOauthId(): ?string
+    {
+        return $this->oauthId;
+    }
+
+    public function setOauthId(?string $oauthId): void
+    {
+        $this->oauthId = $oauthId;
     }
 
     public function isActive(): bool
@@ -172,6 +216,7 @@ class User extends AbstractBaseEntity implements UserInterface, PasswordAuthenti
             'email' => $this->getEmail(),
             'createdAt' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
             'verified' => $this->isVerified(),
+            'oauthProvider' => $this->getOauthProvider(),
         ];
     }
 }

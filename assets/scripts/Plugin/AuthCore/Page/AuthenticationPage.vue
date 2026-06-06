@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, ShallowRef, shallowRef } from 'vue';
+import { computed, Ref, ref, ShallowRef, shallowRef } from 'vue';
 import FormToggle from '../Component/FormToggle.vue';
 import IAuthFormInternalProps from '../Interface/IAuthFormInternalProps';
 import LoginForm from '../Form/LoginForm.vue';
@@ -17,6 +17,11 @@ type AuthenticationFormComponent = typeof LoginForm | typeof RegistrationForm;
 const props = withDefaults(defineProps<IProps>(), {});
 const activeComponent: ShallowRef<AuthenticationFormComponent> = shallowRef(
     props.form === 'LoginForm' ? LoginForm : RegistrationForm
+);
+const activeIntroText = computed(() =>
+    activeComponent.value.__name === 'LoginForm'
+        ? 'Welcome back. Sign in to your account to access your information and members-only features.'
+        : 'Register to create your own account and access members-only features.'
 );
 const componentProps: Record<string, IAuthFormInternalProps> = {
   RegistrationForm: {
@@ -55,6 +60,33 @@ setActiveComponent(props.form === 'LoginForm' ? LoginForm : RegistrationForm);
                   @click="setActiveComponent(RegistrationForm)" />
     </div>
     <div class="py-10 px-10">
+      <h1 class="text-2xl font-bold text-center">{{ activeComponentProps.title }}</h1>
+      <p class="my-3 mb-6 text-center text-gray-400">
+        {{ activeIntroText }}
+      </p>
+
+      <div class="space-y-3 mb-6">
+        <a href="/connect/github"
+           class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl border border-gray-700/50 bg-gray-800/40 hover:bg-gray-700/40 transition-colors text-sm font-semibold text-gray-300 hover:text-white">
+          <i class="fa-brands fa-github text-lg"></i>
+          Continue with GitHub
+        </a>
+        <a href="/connect/google"
+           class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl border border-gray-700/50 bg-gray-800/40 hover:bg-gray-700/40 transition-colors text-sm font-semibold text-gray-300 hover:text-white">
+          <i class="fa-brands fa-google text-lg"></i>
+          Continue with Google
+        </a>
+      </div>
+
+      <div class="relative mb-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-700/50"></div>
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+          <span class="bg-gray-800/40 px-3 text-gray-500 tracking-widest">Or continue with email</span>
+        </div>
+      </div>
+
       <component :is="activeComponent" v-bind="activeComponentProps" />
     </div>
   </div>

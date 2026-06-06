@@ -59,11 +59,35 @@ Before running the app, update your `.env` file with the following key variables
 | Variable             | Default / Example         | Description                                         |
 |:---------------------|:--------------------------|:----------------------------------------------------|
 | `APP_NAME`           | `My App`                  | The name of your application                        |
-| `DEFAULT_URI`        | `http://localhost`        | Used for generating absolute URLs                   |
+| `DEFAULT_URI`        | `http://localhost`        | Used for generating absolute URLs and OAuth redirect URLs |
 | `DB_HOST`            | `localhost`               | Database host (use `mysql` if using Docker)         |
 | `MAILER_DSN`         | `smtp://mailcatcher:1025` | SMTP connection string                              |
 | `USE_HMR`            | `false`                   | Set to `true` to enable Vite Hot Module Replacement |
 | `FONTAWESOME_KIT_ID` | `abcdef1234`              | Your 10-digit FontAwesome Kit ID                    |
+| `OAUTH_GITHUB_CLIENT_ID` | —                      | GitHub OAuth App client ID                          |
+| `OAUTH_GITHUB_CLIENT_SECRET` | —                  | GitHub OAuth App client secret                      |
+| `OAUTH_GOOGLE_CLIENT_ID` | —                      | Google OAuth 2.0 client ID                          |
+| `OAUTH_GOOGLE_CLIENT_SECRET` | —                  | Google OAuth 2.0 client secret                      |
+
+> **Note**: The OAuth redirect URL is constructed from your `DEFAULT_URI` env var. Ensure `DEFAULT_URI` uses the correct scheme (`https` in production) so the redirect URL matches what you registered with the provider.
+
+### Obtaining OAuth Credentials
+
+#### GitHub
+1. Go to **Settings > Developer settings > [OAuth Apps](https://github.com/settings/developers)** and click **New OAuth App**.
+2. Fill in:
+   - **Application name:** Your app name
+   - **Homepage URL:** Your app's URL (e.g. `https://my-app.com`)
+   - **Authorization callback URL:** `https://my-app.com/connect/github/check`
+3. Click **Register application**.
+4. Copy the **Client ID** and generate a **Client Secret**. Set them as `OAUTH_GITHUB_CLIENT_ID` and `OAUTH_GITHUB_CLIENT_SECRET` in your `.env`.
+
+#### Google
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/), create or select a project.
+2. Navigate to **APIs & Services > [Credentials](https://console.cloud.google.com/apis/credentials)**.
+3. Click **Create Credentials > OAuth client ID**.
+4. Set **Application type** to **Web application**, add your callback URL under **Authorized redirect URIs**: `https://my-app.com/connect/google/check`.
+5. Click **Create**. Copy the **Client ID** and **Client Secret**. Set them as `OAUTH_GOOGLE_CLIENT_ID` and `OAUTH_GOOGLE_CLIENT_SECRET` in your `.env`.
 
 ## 💻 Development Workflow
 This template supports both local and containerized development. Choose the method that fits your environment.
@@ -153,18 +177,21 @@ $this->mailer->send($email);
 
 ## 🛣 Available Routes
 
-| Namespace              | Name                                    | Method       | Path                                 |
-|:-----------------------|-----------------------------------------|--------------|--------------------------------------|
-| **App\Application**    | `app_index`                             | `GET`        | `/`                                  |
-| **App\Authentication** | `authenticate`                          | `GET`        | `/authenticate`                      |
-| **App\Authentication** | `authenticate_request_password_reset`   | `GET`,`POST` | `/authenticate/password-reset`       |
-| **App\Authentication** | `authenticate_password_reset`           | `GET`,`POST` | `/authenticate/password-reset/reset` |
-| **App\Authentication** | `authenticate_login`                    | `GET`,`POST` | `/authenticate/login`                |
-| **App\Authentication** | `authenticate_logout`                   | `GET`        | `/authenticate/logout`               |
-| **App\Authentication** | `authenticate_get_logged_in_user`       | `GET`        | `/authenticate/current-user`         |
-| **App\Authentication** | `authenticate_register`                 | `POST`       | `/authenticate/register`             |
-| **App\Authentication** | `authenticate_verify_email`             | `GET`        | `/authenticate/verify`               |
-| **App\Authentication** | `user_account`                          | `GET`        | `/user/account`                      |
+| Namespace              | Name                                  | Method       | Path                                 |
+|:-----------------------|---------------------------------------|--------------|--------------------------------------|
+| **App\Application**    | `app_index`                           | `GET`        | `/`                                  |
+| **App\Authentication** | `authenticate`                        | `GET`        | `/authenticate`                      |
+| **App\Authentication** | `authenticate_request_password_reset` | `GET`,`POST` | `/authenticate/password-reset`       |
+| **App\Authentication** | `authenticate_password_reset`         | `GET`,`POST` | `/authenticate/password-reset/reset` |
+| **App\Authentication** | `authenticate_login`                  | `GET`,`POST` | `/authenticate/login`                |
+| **App\Authentication** | `authenticate_logout`                 | `GET`        | `/authenticate/logout`               |
+| **App\Authentication** | `authenticate_get_logged_in_user`     | `GET`        | `/authenticate/current-user`         |
+| **App\Authentication** | `authenticate_register`               | `POST`       | `/authenticate/register`             |
+| **App\Authentication** | `authenticate_verify_email`           | `GET`        | `/authenticate/verify`               |
+| **App\Authentication** | `user_account`                        | `GET`        | `/user/account`                      |
+| **App\Authentication** | `connect_oauth_start`                 | `GET`        | `/connect/{service}`                 |
+| **App\Authentication** | `connect_github_check`                | `GET`        | `/connect/github/check`              |
+| **App\Authentication** | `connect_google_check`                | `GET`        | `/connect/google/check`              |
 
 > Run `php bin/console debug:router` for the full list of included endpoints.
 

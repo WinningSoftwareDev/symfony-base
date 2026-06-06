@@ -7,13 +7,16 @@ CREATE SCHEMA Core;
 CREATE TABLE Authentication.tblUser (
     intUserId INT UNSIGNED NOT NULL AUTO_INCREMENT,
     strEmail VARCHAR(180) NOT NULL,
-    strPassword VARCHAR(255) NOT NULL COMMENT 'Hashed password',
+    strPassword VARCHAR(255) DEFAULT NULL COMMENT 'Hashed password (null for OAuth-only users)',
     bolVerified TINYINT(1) NOT NULL DEFAULT 0,
     bolActive TINYINT(1) NOT NULL DEFAULT 1,
+    strOauthProvider VARCHAR(32) DEFAULT NULL COMMENT 'OAuth provider name (github, google)',
+    strOauthId VARCHAR(255) DEFAULT NULL COMMENT 'OAuth provider user ID',
     dtmCreated DATETIME NOT NULL DEFAULT NOW(),
     dtmUpdated DATETIME ON UPDATE NOW(),
     PRIMARY KEY (intUserId),
     UNIQUE KEY UK_tblUser_strEmail (strEmail),
+    UNIQUE KEY UK_tblUser_strOauth (strOauthProvider, strOauthId),
     INDEX I_tblUser_bolActive (bolActive),
     INDEX I_tblUser_bolVerified (bolVerified),
     INDEX I_tblUser_dtmCreated (dtmCreated)

@@ -18,6 +18,7 @@ security:
 
       custom_authenticators:
         - App\Authentication\Classes\Authentication\LoginFormAuthenticator
+        - App\Authentication\Classes\Authentication\OAuthAuthenticator
 
       logout:
         path: authenticate_logout
@@ -25,6 +26,7 @@ security:
 
   access_control:
     - { path: ^/authenticate, roles: PUBLIC_ACCESS }
+    - { path: ^/connect, roles: PUBLIC_ACCESS }
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/api/admin, roles: ROLE_ADMIN }
 

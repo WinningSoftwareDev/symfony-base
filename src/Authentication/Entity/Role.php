@@ -80,4 +80,9 @@ class Role extends AbstractBaseEntity implements SimpleEntityInterface
     {
         $this->permissions->removeElement($permission);
     }
+
+    public static function getDefault(): self
+    {
+        return self::create('User', self::ROLE_USER);
+    }
 }

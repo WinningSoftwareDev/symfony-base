@@ -15,6 +15,7 @@ use App\Authentication\Form\RegistrationForm;
 use App\Authentication\Form\RequestPasswordResetLinkForm;
 use App\Core\Controller\AbstractApplicationController;
 use Doctrine\ORM\EntityManagerInterface;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -179,6 +180,21 @@ class AuthenticationController extends AbstractApplicationController
             'email' => '',
             'roles' => [],
             'verified' => false,
+        ]);
+    }
+
+    #[Route(path: '/connect/{service}', name: 'connect_oauth_start', methods: [Request::METHOD_GET])]
+    public function connect(string $service, ClientRegistry $clientRegistry): Response
+    {
+        if (!in_array($service, ['github', 'google'], true)) {
+            throw $this->createNotFoundException();
+        }
+
+        $defaultUri = isset($_ENV['DEFAULT_URI']) && is_string($_ENV['DEFAULT_URI']) ? $_ENV['DEFAULT_URI'] : 'http://localhost';
+        $redirectUrl = rtrim($defaultUri, '/') . '/connect/' . $service . '/check';
+
+        return $clientRegistry->getClient($service)->redirect([], [
+            'redirect_uri' => $redirectUrl,
         ]);
     }
 }

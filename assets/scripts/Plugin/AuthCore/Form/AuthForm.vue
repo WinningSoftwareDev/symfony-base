@@ -55,10 +55,6 @@ const handleSubmission = async (e: Event) => {
 </script>
 
 <template>
-  <h1 class="mt-2 text-2xl font-bold text-center">{{ title }}</h1>
-  <p class="my-3 text-center">
-    {{ text }}
-  </p>
   <form method="POST"
         class="space-y-5 mt-6"
         autocomplete="off"

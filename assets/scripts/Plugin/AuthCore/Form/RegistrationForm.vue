@@ -85,7 +85,6 @@ const handleFailedSubmit = (errors: Record<string, string[]>) => {
 
 <template>
   <AuthForm title="Register"
-            text="Register to create your own account and access members-only features."
             endpoint="/authenticate/register"
             :handler="handleSubmit"
             @submission:failed="handleFailedSubmit"
